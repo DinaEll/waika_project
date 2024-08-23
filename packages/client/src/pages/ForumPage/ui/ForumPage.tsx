@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import cls from './ForumPage.module.scss'
 
 interface ForumPageProps {
@@ -6,5 +5,5 @@ interface ForumPageProps {
 }
 
 export const ForumPage = (props: ForumPageProps) => {
-  return <div className={classNames(cls.ForumPage, {})}>ForumPage</div>
+  return <div className={cls.ForumPage}>ForumPage</div>
 }

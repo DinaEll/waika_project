@@ -1,27 +1,35 @@
-export enum pagesNames {
-  MAIN = 'main',
-  LOGIN = 'login',
-  REGISTRATION = 'registration',
-  PROFILE = 'profile',
-  GAME = 'game',
-  GAME_STARTUP = 'game-startup',
-  GAME_RESULTS = 'game-results',
-  LEADERBOARD = 'leaderboard',
-  FORUM = 'forum',
-  FORUM_TOPIC = 'forum-topic',
-  NOT_FOUND = 'not-found',
-}
+export const pagesPaths = {
+  main: '/',
+  login: '/login',
+  registration: '/registration',
+  profile: '/profile',
+  game: '/game',
+  'game-startup': '/game/startup',
+  'game-results': '/game/results',
+  leaderboard: '/leaderboard',
+  forum: '/forum',
+  'forum-topic': '/forum/:topicId',
+  'not-found': '*',
+} as const
 
-export const pagesPaths: Record<pagesNames, string> = {
-  [pagesNames.MAIN]: '/',
-  [pagesNames.LOGIN]: '/login',
-  [pagesNames.REGISTRATION]: '/registration',
-  [pagesNames.PROFILE]: '/profile',
-  [pagesNames.GAME]: '/game',
-  [pagesNames.GAME_STARTUP]: '/game/startup',
-  [pagesNames.GAME_RESULTS]: '/game/results',
-  [pagesNames.LEADERBOARD]: '/leaderboard',
-  [pagesNames.FORUM]: '/forum',
-  [pagesNames.FORUM_TOPIC]: '/forum/', // + :topicId
-  [pagesNames.NOT_FOUND]: '*',
+type PageName = keyof typeof pagesPaths
+
+type ReplaceParams<T extends string> =
+  T extends `${infer Start}:${string}/${infer Rest}`
+    ? `${Start}${string}/${ReplaceParams<Rest>}`
+    : T extends `${infer Start}:${string}`
+    ? `${Start}${string}`
+    : T
+
+export function getPageUrl<T extends PageName>(
+  page: T,
+  params?: T extends 'forum-topic' ? { topicId: string | number } : never
+): ReplaceParams<typeof pagesPaths[T]> {
+  let path = pagesPaths[page] as string
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      path = path.replace(`:${key}`, String(value))
+    })
+  }
+  return path as ReplaceParams<typeof pagesPaths[T]>
 }

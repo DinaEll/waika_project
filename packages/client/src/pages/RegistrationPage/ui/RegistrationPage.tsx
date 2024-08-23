@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import cls from './RegistrationPage.module.scss'
 
 interface RegistrationPageProps {
@@ -6,7 +5,5 @@ interface RegistrationPageProps {
 }
 
 export const RegistrationPage = (props: RegistrationPageProps) => {
-  return (
-    <div className={classNames(cls.RegistrationPage, {})}>RegistrationPage</div>
-  )
+  return <div className={cls.RegistrationPage}>RegistrationPage</div>
 }

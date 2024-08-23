@@ -6,7 +6,5 @@ interface GameResultsPageProps {
 }
 
 export const GameResultsPage = (props: GameResultsPageProps) => {
-  return (
-    <div className={classNames(cls.GameResultsPage, {})}>GameResultsPage</div>
-  )
+  return <div className={cls.GameResultsPage}>GameResultsPage</div>
 }

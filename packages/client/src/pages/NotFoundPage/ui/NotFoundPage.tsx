@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import cls from './NotFoundPage.module.scss'
 
 interface NotFoundPageProps {
@@ -6,5 +5,5 @@ interface NotFoundPageProps {
 }
 
 export const NotFoundPage = (props: NotFoundPageProps) => {
-  return <div className={classNames(cls.NotFoundPage, {})}>NotFoundPage</div>
+  return <div className={cls.NotFoundPage}>NotFoundPage</div>
 }

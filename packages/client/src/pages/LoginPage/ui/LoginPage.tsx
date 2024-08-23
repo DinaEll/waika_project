@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import cls from './LoginPage.module.scss'
 
 interface LoginPageProps {
@@ -6,5 +5,5 @@ interface LoginPageProps {
 }
 
 export const LoginPage = (props: LoginPageProps) => {
-  return <div className={classNames(cls.LoginPage, {})}>LoginPage</div>
+  return <div className={cls.LoginPage}>LoginPage</div>
 }

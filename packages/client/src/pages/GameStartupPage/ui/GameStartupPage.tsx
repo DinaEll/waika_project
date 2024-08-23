@@ -6,7 +6,5 @@ interface GameStartupPageProps {
 }
 
 export const GameStartupPage = (props: GameStartupPageProps) => {
-  return (
-    <div className={classNames(cls.GameStartupPage, {})}>GameStartupPage</div>
-  )
+  return <div className={cls.GameStartupPage}>GameStartupPage</div>
 }

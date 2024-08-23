@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import cls from './MainPage.module.scss'
 
 interface MainPageProps {
@@ -6,5 +5,5 @@ interface MainPageProps {
 }
 
 export const MainPage = (props: MainPageProps) => {
-  return <div className={classNames(cls.MainPage, {})}>Main page</div>
+  return <div className={cls.MainPage}>Main page</div>
 }

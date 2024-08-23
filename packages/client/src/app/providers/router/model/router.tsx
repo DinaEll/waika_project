@@ -1,6 +1,6 @@
 import { MainPage } from '@/pages/MainPage'
 import { createBrowserRouter } from 'react-router-dom'
-import { pagesNames, pagesPaths } from '@/shared/config/router/routerConfig'
+import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { Layout } from '@/widgets/Layout'
 import { ForumPage } from '@/pages/ForumPage'
 import { ForumTopicPage } from '@/pages/ForumTopicPage'
@@ -15,7 +15,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
   {
-    path: pagesPaths[pagesNames.MAIN],
+    path: getPageUrl('main'),
     element: <Layout />,
     children: [
       {
@@ -23,43 +23,43 @@ export const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: pagesPaths[pagesNames.FORUM],
+        path: getPageUrl('forum'),
         element: <ForumPage />,
       },
       {
-        path: pagesPaths[pagesNames.FORUM_TOPIC] + ':topicId',
+        path: getPageUrl('forum-topic', { topicId: ':topicId' }),
         element: <ForumTopicPage />,
       },
       {
-        path: pagesPaths[pagesNames.GAME],
+        path: getPageUrl('game'),
         element: <GamePage />,
       },
       {
-        path: pagesPaths[pagesNames.GAME_RESULTS],
+        path: getPageUrl('game-results'),
         element: <GameResultsPage />,
       },
       {
-        path: pagesPaths[pagesNames.GAME_STARTUP],
+        path: getPageUrl('game-startup'),
         element: <GameStartupPage />,
       },
       {
-        path: pagesPaths[pagesNames.LEADERBOARD],
+        path: getPageUrl('leaderboard'),
         element: <LeaderboardPage />,
       },
       {
-        path: pagesPaths[pagesNames.LOGIN],
+        path: getPageUrl('login'),
         element: <LoginPage />,
       },
       {
-        path: pagesPaths[pagesNames.PROFILE],
+        path: getPageUrl('profile'),
         element: <ProfilePage />,
       },
       {
-        path: pagesPaths[pagesNames.REGISTRATION],
+        path: getPageUrl('registration'),
         element: <RegistrationPage />,
       },
       {
-        path: pagesPaths[pagesNames.NOT_FOUND],
+        path: getPageUrl('not-found'),
         element: <NotFoundPage />,
       },
     ],
