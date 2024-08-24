@@ -14,4 +14,7 @@ export default {
       '<rootDir>/mocks/fileMock.js',
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
+  transform: {
+    '^.+\\.svg$': 'jest-transform-stub',
+  },
 }

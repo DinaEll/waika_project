@@ -1,7 +1,7 @@
 import cls from './RegistrationPage.module.scss'
 import { ChangeEvent, useState } from 'react'
 import { Form, Button, Input } from 'antd'
-import MainLogo from '@/app/assets/svg/main-logo.svg'
+import mainLogo from '@/app/assets/svg/main-logo.svg'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink } from 'react-router-dom'
 
@@ -44,7 +44,7 @@ export const RegistrationPage = () => {
         layout="vertical"
         onFinish={handleSubmit}>
         <div className={cls.registrationPageLogo}>
-          <img src={MainLogo} alt="My Icon" />
+          <img src={mainLogo} alt="Logo" />
         </div>
         <h3 className={cls.registrationPageTitle}>Sign Up</h3>
         <Form.Item
