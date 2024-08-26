@@ -51,7 +51,6 @@ export const RegistrationPage = () => {
         className={cls.registrationPageWrapper}
         layout="vertical"
         onFinish={handleSubmit}>
-        <LogoWithModal title="Sign Up"></LogoWithModal>
         <Form.Item
           className={cls.registrationPageItem}
           name="first_name"
