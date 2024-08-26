@@ -3,7 +3,6 @@ import { ChangeEvent, useState } from 'react'
 import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink } from 'react-router-dom'
-import { ModalLayout } from '@/widgets/ModalLayout'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
 
 const regInitialState = {
@@ -39,14 +38,15 @@ export const RegistrationPage = () => {
   }
 
   return (
-    <ModalLayout
+    <LogoWithModal
       open={true}
       centered={true}
       closable={false}
       footer={null}
       width={344}
       mask={false}
-      transitionName={''}>
+      transitionName={''}
+      title="Sign Up">
       <Form
         className={cls.registrationPageWrapper}
         layout="vertical"
@@ -148,6 +148,6 @@ export const RegistrationPage = () => {
           </NavLink>
         </Form.Item>
       </Form>
-    </ModalLayout>
+    </LogoWithModal>
   )
 }

@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 import cls from './LogoWithModal.module.scss'
 import { Logo } from '@/shared/ui/Icon'
-import { Typography } from 'antd'
+import { Modal, ModalProps, Typography } from 'antd'
 
-export interface LogoWithModalProps {
+type Props = {
   title: string
-}
+} & ModalProps
 
-export const LogoWithModal = (props: LogoWithModalProps) => {
+export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
+  children,
+  title,
+  ...modalProps
+}) => {
   return (
-    <div className={cls.logoWithModalContainer}>
-      <div className={cls.logoWithModalImage}>
-        <Logo size="Md"></Logo>
+    <Modal {...modalProps}>
+      <div className={cls.logoWithModalContainer}>
+        <div className={cls.logoWithModalImage}>
+          <Logo size="Md"></Logo>
+        </div>
+        <div className={cls.logoWithModalTitle}>
+          <Typography.Title level={3}>{title}</Typography.Title>
+        </div>
       </div>
-      <div className={cls.logoWithModalTitle}>
-        <Typography.Title level={3}>{props.title}</Typography.Title>
-      </div>
-    </div>
+      {children}
+    </Modal>
   )
 }
