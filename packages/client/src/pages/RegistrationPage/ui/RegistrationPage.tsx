@@ -3,9 +3,8 @@ import { ChangeEvent, useState } from 'react'
 import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink } from 'react-router-dom'
-import { Page } from '@/widgets/Page'
-import { ModalLayout } from '@/widgets/Modal'
-import { Logo } from '@/shared/ui/Icon'
+import { ModalLayout } from '@/widgets/ModalLayout'
+import { LogoWithModal } from '@/widgets/LogoWithModal'
 
 const regInitialState = {
   first_name: '',
@@ -39,124 +38,116 @@ export const RegistrationPage = () => {
     //TODO: add User sign up logic
   }
 
-  const modalOptions = {
-    open: true,
-    centered: true,
-    closable: false,
-    footer: null,
-    width: 344,
-    mask: false,
-    transitionName: '',
-  }
-
   return (
-    <Page>
-      <ModalLayout modalProps={modalOptions}>
-        <Form
-          className={cls.registrationPageWrapper}
-          layout="vertical"
-          onFinish={handleSubmit}>
-          <div className={cls.registrationPageLogo}>
-            <Logo></Logo>
-          </div>
-          <h3 className={cls.registrationPageTitle}>Sign Up</h3>
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="first_name"
-            label="First Name">
-            <Input
-              id="first_name"
-              type="text"
-              placeholder="First Name"
-              value={formData.first_name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+    <ModalLayout
+      open={true}
+      centered={true}
+      closable={false}
+      footer={null}
+      width={344}
+      mask={false}
+      transitionName={''}>
+      <Form
+        className={cls.registrationPageWrapper}
+        layout="vertical"
+        onFinish={handleSubmit}>
+        <LogoWithModal title="Sign Up"></LogoWithModal>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="first_name"
+          label="First Name">
+          <Input
+            id="first_name"
+            type="text"
+            placeholder="First Name"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="second_name"
-            label="Last Name">
-            <Input
-              id="second_name"
-              type="text"
-              placeholder="Last Name"
-              value={formData.second_name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="second_name"
+          label="Last Name">
+          <Input
+            id="second_name"
+            type="text"
+            placeholder="Last Name"
+            value={formData.second_name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="login"
-            label="Login">
-            <Input
-              id="login"
-              type="text"
-              placeholder="Login"
-              value={formData.login}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="login"
+          label="Login">
+          <Input
+            id="login"
+            type="text"
+            placeholder="Login"
+            value={formData.login}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="email"
-            label="Email">
-            <Input
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="email"
+          label="Email">
+          <Input
+            id="email"
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="phone"
-            label="Phone">
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="phone"
+          label="Phone">
+          <Input
+            id="phone"
+            type="tel"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item
-            className={cls.registrationPageItem}
-            name="password"
-            label="Password">
-            <Input
-              id="password"
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </Form.Item>
+        <Form.Item
+          className={cls.registrationPageItem}
+          name="password"
+          label="Password">
+          <Input
+            id="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </Form.Item>
 
-          <Form.Item className={cls.registrationPageButton}>
-            <Button type="primary" htmlType="submit">
-              Sign Up
-            </Button>
-          </Form.Item>
+        <Form.Item className={cls.registrationPageButton}>
+          <Button type="primary" htmlType="submit">
+            Sign Up
+          </Button>
+        </Form.Item>
 
-          <Form.Item className={cls.registrationPageButton}>
-            <NavLink to={getPageUrl('login')}>
-              <Button type="link">Sign In</Button>
-            </NavLink>
-          </Form.Item>
-        </Form>
-      </ModalLayout>
-    </Page>
+        <Form.Item className={cls.registrationPageButton}>
+          <NavLink to={getPageUrl('login')}>
+            <Button type="link">Sign In</Button>
+          </NavLink>
+        </Form.Item>
+      </Form>
+    </ModalLayout>
   )
 }
