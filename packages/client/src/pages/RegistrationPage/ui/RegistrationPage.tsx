@@ -1,11 +1,11 @@
 import cls from './RegistrationPage.module.scss'
 import { ChangeEvent, useState } from 'react'
 import { Form, Button, Input } from 'antd'
-import mainLogo from '@/app/assets/svg/main-logo.svg'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink } from 'react-router-dom'
 import { Page } from '@/widgets/Page'
 import { ModalLayout } from '@/widgets/Modal'
+import { Logo } from '@/shared/ui/Icon'
 
 const regInitialState = {
   first_name: '',
@@ -57,7 +57,7 @@ export const RegistrationPage = () => {
           layout="vertical"
           onFinish={handleSubmit}>
           <div className={cls.registrationPageLogo}>
-            <img src={mainLogo} alt="Logo" />
+            <Logo></Logo>
           </div>
           <h3 className={cls.registrationPageTitle}>Sign Up</h3>
           <Form.Item
