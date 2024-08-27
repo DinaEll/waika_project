@@ -32,9 +32,7 @@ export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
       className={cls.logoWithModal}
       closable={false}>
       <div className={cls.logoWithModalContainer}>
-        <div className={cls.logoWithModalImage}>
-          {logo ?? <Logo size="Md" />}
-        </div>
+        <div className={cls.logoWithModalImage}>{logo ?? <Logo />}</div>
         <div className={cls.logoWithModalTitle}>
           {isValidElement(title) ? (
             title
