@@ -1,0 +1,15 @@
+.loginPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.loginPageItem {
+  width: 100%;
+}
+
+.loginPageButton {
+  margin-bottom: 0;
+}

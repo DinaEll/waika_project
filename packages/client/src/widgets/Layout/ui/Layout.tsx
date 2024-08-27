@@ -9,6 +9,8 @@ export const Layout = () => {
     <div className={cls.layout}>
       <nav className={classNames(cls.navbar)}>
         <NavLink to={getPageUrl('main')}>Main</NavLink>
+        <NavLink to={getPageUrl('registration')}>Registration</NavLink>
+        <NavLink to={getPageUrl('login')}>Login</NavLink>
         <NavLink to={getPageUrl('forum')}>Forum</NavLink>
         <NavLink to={getPageUrl('forum-topic', { topicId: 'some-topic-name' })}>
           Forum topic
