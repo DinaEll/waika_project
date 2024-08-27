@@ -13,6 +13,9 @@ export const Layout = () => {
         <NavLink to={getPageUrl('registration')}>Registration</NavLink>
         <NavLink to={getPageUrl('login')}>Login</NavLink>
         <NavLink to={getPageUrl('forum')}>Forum</NavLink>
+        <NavLink to={getPageUrl('game-results')}>
+          Страница завершения игры
+        </NavLink>
         <NavLink to={getPageUrl('forum-topic', { topicId: 'some-topic-name' })}>
           Forum topic
         </NavLink>
