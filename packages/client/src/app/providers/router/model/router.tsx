@@ -1,7 +1,6 @@
 import { MainPage } from '@/pages/MainPage'
 import { createBrowserRouter } from 'react-router-dom'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { Layout } from '@/widgets/Layout'
 import { ForumPage } from '@/pages/ForumPage'
 import { ForumTopicPage } from '@/pages/ForumTopicPage'
 import { GamePage } from '@/pages/GamePage'
@@ -12,6 +11,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { RegistrationPage } from '@/pages/RegistrationPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { Layout } from '@/widgets/Layout'
 
 export const router = createBrowserRouter([
   {
