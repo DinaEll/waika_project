@@ -1,10 +1,10 @@
-import { Button, Form, Input, Avatar, Modal } from 'antd'
+import { Button, Form, Input, Avatar } from 'antd'
 import React, { useState } from 'react'
-import Title from 'antd/lib/typography/Title'
 import cls from './ProfilePage.module.scss'
 import { UserOutlined } from '@ant-design/icons'
 import { PasswordChangeModal } from '@/pages/ProfilePage/ui/PasswordChangeModal/PasswordChangeModal'
 import { AvatarChangeModal } from '@/pages/ProfilePage/ui/AvatarChangeModal/AvatarChangeModal'
+import { LogoWithModal } from '@/widgets'
 
 export const ProfilePage = () => {
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false)
@@ -20,25 +20,17 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <Modal
-        open
-        centered
-        mask={false}
-        closable={false}
-        closeIcon={null}
-        footer={null}
+      <LogoWithModal
+        title={'Your Profile'}
         width={500}
-        classNames={{
-          content: cls.profileModal,
-          wrapper: cls.profileModalWrap,
-        }}>
-        <Avatar
-          className={cls.profileAvatar}
-          size={108}
-          icon={<UserOutlined style={{ fontSize: '32px' }} />}
-        />
-        <Title level={3}>Your Profile</Title>
-        <Form layout="vertical">
+        logo={
+          <Avatar
+            className={cls.profileAvatar}
+            size={108}
+            icon={<UserOutlined style={{ fontSize: '32px' }} />}
+          />
+        }>
+        <Form layout="vertical" className={cls.profilePageForm}>
           <Form.Item name="first_name" label="First Name" layout="vertical">
             <Input
               id="first_name"
@@ -92,7 +84,7 @@ export const ProfilePage = () => {
             </Form.Item>
           </div>
         </Form>
-      </Modal>
+      </LogoWithModal>
       <PasswordChangeModal
         open={passwordChangeModalOpen}
         okText={'Save New Password'}
