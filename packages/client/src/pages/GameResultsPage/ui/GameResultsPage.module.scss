@@ -6,10 +6,26 @@
   padding: 8px;
 }
 
+.titleWrapper {
+  text-align: center;
+}
+
+.trophy {
+  font-size: 48px;
+  margin-bottom: 2px;
+}
+
 .gameOverPageItem {
   width: 100%;
+  text-align: center;
 }
 
 .gameOverPageButton {
   margin-bottom: 0;
+  text-align: center;
+}
+
+.gameOverPageItem .result,
+.gameOverPageItem .bestResult {
+  font-weight: bold;
 }

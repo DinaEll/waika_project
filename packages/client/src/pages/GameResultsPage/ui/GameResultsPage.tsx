@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import cls from './GameResultsPage.module.scss'
-import { Button, Form } from 'antd'
+import { Button } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
@@ -11,6 +11,7 @@ export const GameResultsPage = () => {
 
   return (
     <div className={classNames(cls.GameResultsPage)}>
+      {/*todo LogoWithModal решили убрать в следующем спринте, пока они необходимы в связи с общей разработкой*/}
       <LogoWithModal
         open={true}
         centered={true}
@@ -19,22 +20,25 @@ export const GameResultsPage = () => {
         width={344}
         mask={false}
         transitionName={''}
-        title="Congratulation!">
-        <Form className={cls.gameOverPageWrapper} layout="vertical">
-          <Form.Item className={cls.gameOverPageItem} label="Your Result">
+        title="Congratulation">
+        <div className={cls.gameOverPageWrapper}>
+          <div className={cls.gameOverPageItem}>
+            <label className={cls.label}>Your Result</label>
             <div className={cls.result}>{result}</div>
-          </Form.Item>
-
-          <Form.Item className={cls.gameOverPageItem} label="Your Best Result">
+          </div>
+          <div className={cls.gameOverPageItem}>
+            <label className={cls.label}>Your Best Result</label>
             <div className={cls.bestResult}>{bestResult}</div>
-          </Form.Item>
-
-          <Form.Item className={cls.gameOverPageButton}>
+          </div>
+          <div className={cls.titleWrapper}>
+            <div className={cls.trophy}>🏆</div>
+          </div>
+          <div className={cls.gameOverPageButton}>
             <NavLink to={getPageUrl('game')}>
               <Button type="primary">Play again</Button>
             </NavLink>
-          </Form.Item>
-        </Form>
+          </div>
+        </div>
       </LogoWithModal>
     </div>
   )
