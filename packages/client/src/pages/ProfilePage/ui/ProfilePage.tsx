@@ -24,11 +24,13 @@ export const ProfilePage = () => {
         open
         centered
         mask={false}
+        closable={false}
         closeIcon={null}
         footer={null}
         width={500}
         classNames={{
           content: cls.profileModal,
+          wrapper: cls.profileModalWrap,
         }}>
         <Avatar
           className={cls.profileAvatar}
