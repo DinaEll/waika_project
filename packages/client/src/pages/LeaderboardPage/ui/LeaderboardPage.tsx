@@ -3,7 +3,7 @@ import { LogoWithModal } from '@/widgets'
 import { UserAvatar } from '@/shared/ui'
 import { players } from '../model'
 import { LeaderboardPlayer } from './LeaderboardPlayer'
-import styles from './LeaderboardPage.module.scss'
+import cls from './LeaderboardPage.module.scss'
 
 const pageTitle = 'Leaderboard'
 
@@ -21,21 +21,21 @@ export const LeaderboardPage = () => {
   return (
     <LogoWithModal
       title={
-        <div className={styles.leaderInfo}>
-          <Typography.Title level={4} className={styles.noMargin}>
+        <div className={cls.leaderInfo}>
+          <Typography.Title level={4} className={cls.noMargin}>
             {name}
           </Typography.Title>
-          <Typography.Title level={5} className={styles.noMargin}>
+          <Typography.Title level={5} className={cls.noMargin}>
             {points}
           </Typography.Title>
         </div>
       }
       logo={
-        <div className={styles.leaderAvatar}>
+        <div className={cls.leaderAvatar}>
           <UserAvatar src={avatar} />
         </div>
       }>
-      <table className={styles.players}>
+      <table className={cls.players}>
         {players.map(player => {
           return <LeaderboardPlayer {...player} />
         })}
