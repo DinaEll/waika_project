@@ -1,9 +1,19 @@
 import cls from './NotFoundPage.module.scss'
+import { LogoWithModal } from '@/widgets'
+import { Typography } from 'antd'
+import { getPageUrl } from '@/shared/config/router/routerConfig'
 
-interface NotFoundPageProps {
-  test?: string
-}
-
-export const NotFoundPage = (props: NotFoundPageProps) => {
-  return <div className={cls.NotFoundPage}>NotFoundPage</div>
+export const NotFoundPage = () => {
+  return (
+    <LogoWithModal title={'404'} width={500}>
+      <Typography.Text className={cls.notFoundPageDescription}>
+        Не туда попали
+      </Typography.Text>
+      <Typography.Link
+        className={cls.notFoundPageBackLink}
+        href={getPageUrl('main')}>
+        На главную
+      </Typography.Link>
+    </LogoWithModal>
+  )
 }
