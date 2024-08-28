@@ -12,6 +12,7 @@ const pagesPaths = {
   forum: '/forum',
   'forum-topic': '/forum/:topicId',
   'not-found': '*',
+  'server-error': '/server-error',
 } as const
 
 type PageName = keyof typeof pagesPaths

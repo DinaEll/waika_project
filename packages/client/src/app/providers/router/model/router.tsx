@@ -12,6 +12,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { RegistrationPage } from '@/pages/RegistrationPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { ServerErrorPage } from '@/pages/ServerErrorPage'
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
       {
         path: getPageUrl('not-found'),
         element: <NotFoundPage />,
+      },
+      {
+        path: getPageUrl('server-error'),
+        element: <ServerErrorPage />,
       },
     ],
   },
