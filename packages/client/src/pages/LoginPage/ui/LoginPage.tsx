@@ -1,8 +1,7 @@
 import cls from './LoginPage.module.scss'
-import { ChangeEvent, useState } from 'react'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
 import { Button, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 
 const loginInitialState = {
@@ -16,17 +15,35 @@ interface signInRequest {
 }
 
 export const LoginPage = () => {
-  const [formData, setFormData] = useState(loginInitialState)
+  const navigate = useNavigate()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
   const handleSubmit = (values: signInRequest): void => {
-    //TODO: add User sign in logic
+    const baseUrl = 'https://ya-praktikum.tech/api/v2'
+
+    fetch(baseUrl + '/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+      body: JSON.stringify(values),
+    })
+      .then(res => {
+        if (res.status === 200) {
+          fetch(baseUrl + '/auth/user', {
+            method: 'GET',
+            credentials: 'include',
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.id) {
+                navigate(getPageUrl('main'))
+              }
+            })
+            .catch(error => console.error(error))
+        }
+      })
+      .catch(error => console.error(error))
   }
 
   return (
@@ -42,16 +59,10 @@ export const LoginPage = () => {
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
+        initialValues={loginInitialState}
         onFinish={handleSubmit}>
         <Form.Item className={cls.loginPageItem} name="login" label="Login">
-          <Input
-            id="login"
-            type="text"
-            placeholder="Login"
-            value={formData.login}
-            onChange={handleChange}
-            required
-          />
+          <Input id="login" type="text" placeholder="Login" required />
         </Form.Item>
 
         <Form.Item
@@ -62,8 +73,6 @@ export const LoginPage = () => {
             id="password"
             type="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
             required
           />
         </Form.Item>

@@ -1,9 +1,39 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import classNames from 'classnames'
-import { getPageUrl } from '@/shared/config'
+import { getPageUrl, pagesPaths } from '@/shared/config'
 import cls from './Layout.module.scss'
+import { useEffect } from 'react'
 
 export const Layout = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const baseUrl = 'https://ya-praktikum.tech/api/v2'
+
+  useEffect(() => {
+    fetch(baseUrl + '/auth/user', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.id) {
+          navigate(getPageUrl('login'))
+          return
+        }
+
+        const nonProtectedRoute = (
+          [pagesPaths.login, pagesPaths.registration] as string[]
+        ).includes(location.pathname)
+        if (nonProtectedRoute) {
+          navigate(getPageUrl('main'))
+        }
+      })
+      .catch(error => console.error(error))
+  }, [])
+
   return (
     <div>
       <nav className={classNames(cls.navbar)}>

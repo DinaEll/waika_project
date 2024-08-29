@@ -1,8 +1,7 @@
 import cls from './RegistrationPage.module.scss'
-import { ChangeEvent, useState } from 'react'
 import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
 
 const regInitialState = {
@@ -24,17 +23,36 @@ interface SignUpRequest {
 }
 
 export const RegistrationPage = () => {
-  const [formData, setFormData] = useState(regInitialState)
+  const navigate = useNavigate()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
   const handleSubmit = (values: SignUpRequest): void => {
-    //TODO: add User sign up logic
+    const baseUrl = 'https://ya-praktikum.tech/api/v2'
+
+    fetch(baseUrl + '/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+      body: JSON.stringify(values),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res?.id) {
+          fetch(baseUrl + '/auth/user', {
+            method: 'GET',
+            credentials: 'include',
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res?.id) {
+                navigate(getPageUrl('main'))
+              }
+            })
+            .catch(error => console.error(error))
+        }
+      })
+      .catch(error => console.error(error))
   }
 
   return (
@@ -50,6 +68,7 @@ export const RegistrationPage = () => {
       <Form
         className={cls.registrationPageWrapper}
         layout="vertical"
+        initialValues={regInitialState}
         onFinish={handleSubmit}>
         <Form.Item
           className={cls.registrationPageItem}
@@ -59,8 +78,6 @@ export const RegistrationPage = () => {
             id="first_name"
             type="text"
             placeholder="First Name"
-            value={formData.first_name}
-            onChange={handleChange}
             required
           />
         </Form.Item>
@@ -73,8 +90,6 @@ export const RegistrationPage = () => {
             id="second_name"
             type="text"
             placeholder="Last Name"
-            value={formData.second_name}
-            onChange={handleChange}
             required
           />
         </Form.Item>
@@ -83,42 +98,21 @@ export const RegistrationPage = () => {
           className={cls.registrationPageItem}
           name="login"
           label="Login">
-          <Input
-            id="login"
-            type="text"
-            placeholder="Login"
-            value={formData.login}
-            onChange={handleChange}
-            required
-          />
+          <Input id="login" type="text" placeholder="Login" required />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="email"
           label="Email">
-          <Input
-            id="email"
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <Input id="email" type="email" placeholder="Email" required />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="phone"
           label="Phone">
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="Phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
+          <Input id="phone" type="tel" placeholder="Phone" required />
         </Form.Item>
 
         <Form.Item
@@ -129,8 +123,6 @@ export const RegistrationPage = () => {
             id="password"
             type="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
             required
           />
         </Form.Item>
