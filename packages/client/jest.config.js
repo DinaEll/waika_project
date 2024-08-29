@@ -17,4 +17,5 @@ export default {
   transform: {
     '^.+\\.svg$': 'jest-transform-stub',
   },
+  setupFiles: ["whatwg-fetch"],
 }
