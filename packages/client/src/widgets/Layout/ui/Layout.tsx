@@ -14,6 +14,7 @@ export const Layout = () => {
         <NavLink to={getPageUrl('game-results')}>Game results</NavLink>
         <NavLink to={getPageUrl('leaderboard')}>Leaderboard</NavLink>
         <NavLink to={getPageUrl('not-found')}>Not Found Page</NavLink>
+        <NavLink to={getPageUrl('server-error')}>Server Error Page</NavLink>
       </nav>
 
       <main>
