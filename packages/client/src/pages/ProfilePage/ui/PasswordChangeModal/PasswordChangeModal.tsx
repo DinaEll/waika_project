@@ -1,9 +1,8 @@
 import { Form, Input, Modal, ModalProps } from 'antd'
 import cls from './PasswordChangeModal.module.scss'
-import Title from 'antd/lib/typography/Title'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
-export const PasswordChangeModal = ({ ...props }: ModalProps) => {
+export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
@@ -39,7 +38,7 @@ export const PasswordChangeModal = ({ ...props }: ModalProps) => {
 
   return (
     <Modal
-      title={<Title level={5}>Change Password</Title>}
+      title={'Change Password'}
       width={500}
       classNames={{
         body: cls.passwordChangeModalContent,

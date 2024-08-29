@@ -1,16 +1,17 @@
 import { Modal, ModalProps, Upload, Image } from 'antd'
-import Title from 'antd/lib/typography/Title'
+import type { GetProp, UploadProps } from 'antd'
 import cls from './AvatarChangeModal.module.scss'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-import { RcFile } from 'antd/es/upload/interface'
 
-export const AvatarChangeModal = ({ ...props }: ModalProps) => {
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
+
+export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [file, setFile] = useState<File>()
 
-  const getBase64 = (file: RcFile) =>
+  const getBase64 = (file: FileType) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
@@ -19,9 +20,8 @@ export const AvatarChangeModal = ({ ...props }: ModalProps) => {
     })
 
   const beforeUpload = async (
-    file: RcFile & { url: string; preview: string }
+    file: FileType & { url: string; preview: string }
   ) => {
-    console.log('handlePreview', file)
     setFile(file)
     if (!file.url && !file.preview) {
       file.preview = (await getBase64(file)) as string
@@ -62,7 +62,7 @@ export const AvatarChangeModal = ({ ...props }: ModalProps) => {
 
   return (
     <Modal
-      title={<Title level={5}>Change Avatar</Title>}
+      title={'Change Avatar'}
       width={500}
       classNames={{
         body: cls.avatarChangeModalContent,
@@ -75,7 +75,7 @@ export const AvatarChangeModal = ({ ...props }: ModalProps) => {
         listType="picture-card"
         onPreview={() => setPreviewOpen(true)}
         beforeUpload={file => {
-          beforeUpload(file as RcFile & { url: string; preview: string })
+          beforeUpload(file as FileType & { url: string; preview: string })
           return false
         }}
         onRemove={() => setPreviewImage('')}>

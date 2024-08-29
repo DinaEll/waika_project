@@ -2,8 +2,8 @@ import { Button, Form, Input, Avatar } from 'antd'
 import React, { useState } from 'react'
 import cls from './ProfilePage.module.scss'
 import { UserOutlined } from '@ant-design/icons'
-import { PasswordChangeModal } from '@/pages/ProfilePage/ui/PasswordChangeModal/PasswordChangeModal'
-import { AvatarChangeModal } from '@/pages/ProfilePage/ui/AvatarChangeModal/AvatarChangeModal'
+import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal'
+import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal'
 import { LogoWithModal } from '@/widgets'
 
 export const ProfilePage = () => {
