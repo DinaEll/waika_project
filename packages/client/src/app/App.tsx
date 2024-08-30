@@ -1,10 +1,13 @@
 import { BrowserRouterProvider } from './providers/router'
 import { Layout } from '@/widgets/Layout'
+import { ErrorBoundary } from '@/app/ErrorBoundary/ErrorBoundary'
 
 function App() {
   return (
     <BrowserRouterProvider>
-      <Layout />
+      <ErrorBoundary>
+        <Layout />
+      </ErrorBoundary>
     </BrowserRouterProvider>
   )
 }
