@@ -1,10 +1,10 @@
-import { Button, Form, Input, Avatar } from 'antd'
+import { Button, Form, Input } from 'antd'
 import React, { useState } from 'react'
 import cls from './ProfilePage.module.scss'
-import { UserOutlined } from '@ant-design/icons'
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal'
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal'
 import { LogoWithModal } from '@/widgets'
+import { UserAvatar } from '@/shared/ui'
 
 export const ProfilePage = () => {
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false)
@@ -23,13 +23,7 @@ export const ProfilePage = () => {
       <LogoWithModal
         title={'Your Profile'}
         width={500}
-        logo={
-          <Avatar
-            className={cls.profileAvatar}
-            size={108}
-            icon={<UserOutlined style={{ fontSize: '32px' }} />}
-          />
-        }>
+        logo={<UserAvatar className={cls.profileAvatar} />}>
         <Form layout="vertical" className={cls.profilePageForm}>
           <Form.Item name="first_name" label="First Name" layout="vertical">
             <Input

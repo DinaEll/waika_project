@@ -27,6 +27,7 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
       file.preview = (await getBase64(file)) as string
     }
     setPreviewImage(file.url || file.preview)
+    return false
   }
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,18 +49,6 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
     }
   }
 
-  const UploadButton = () => (
-    <button
-      style={{
-        border: 0,
-        background: 'none',
-      }}
-      type="button">
-      <PlusOutlined />
-      Upload
-    </button>
-  )
-
   return (
     <Modal
       title={'Change Avatar'}
@@ -74,12 +63,16 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
         name="avatar"
         listType="picture-card"
         onPreview={() => setPreviewOpen(true)}
-        beforeUpload={file => {
+        beforeUpload={file =>
           beforeUpload(file as FileType & { url: string; preview: string })
-          return false
-        }}
+        }
         onRemove={() => setPreviewImage('')}>
-        {previewImage.length ? null : <UploadButton />}
+        {previewImage.length ? null : (
+          <button className={cls.avatarChangeModalUploadBtn} type="button">
+            <PlusOutlined />
+            Upload
+          </button>
+        )}
       </Upload>
       {previewImage && (
         <Image

@@ -9,10 +9,10 @@
 }
 
 .profileAvatar {
-    position: absolute;
-    top: -54px;
-    left: calc(50% - 54px);
+    width: 108px;
+    height: 108px;
     background-color: var(--gray-color);
+    font-size: 32px !important;
 }
 
 .profilePageForm {
