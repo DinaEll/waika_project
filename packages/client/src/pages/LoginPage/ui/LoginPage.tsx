@@ -9,7 +9,7 @@ const loginInitialState = {
   password: '',
 }
 
-interface signInRequest {
+interface SignInRequest {
   login: string
   password: string
 }
@@ -17,7 +17,7 @@ interface signInRequest {
 export const LoginPage = () => {
   const navigate = useNavigate()
 
-  const handleSubmit = (values: signInRequest): void => {
+  const handleSubmit = (values: SignInRequest): void => {
     const baseUrl = 'https://ya-praktikum.tech/api/v2'
 
     fetch(baseUrl + '/auth/signin', {
