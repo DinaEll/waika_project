@@ -2,6 +2,7 @@ import { Outlet, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { getPageUrl } from '@/shared/config'
 import cls from './Layout.module.scss'
+import { Header } from '@/widgets/Header'
 
 export const Layout = () => {
   return (
@@ -16,6 +17,8 @@ export const Layout = () => {
         <NavLink to={getPageUrl('not-found')}>Not Found Page</NavLink>
         <NavLink to={getPageUrl('server-error')}>Server Error Page</NavLink>
       </nav>
+
+      <Header></Header>
 
       <main>
         <Outlet />
