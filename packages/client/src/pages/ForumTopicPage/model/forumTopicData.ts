@@ -1,4 +1,5 @@
 export const forumPageDataMock = {
+  id: 1,
   title: 'Doom 666',
   description:
     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
@@ -10,6 +11,7 @@ export const forumPageDataMock = {
   },
   comments: [
     {
+      id: 2,
       author: {
         name: 'Han Solo',
         avatarSrc:
@@ -20,6 +22,7 @@ export const forumPageDataMock = {
       date: new Date(),
     },
     {
+      id: 3,
       author: {
         name: 'Nah Olos',
         avatarSrc: '',

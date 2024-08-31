@@ -73,6 +73,7 @@ export const ForumTopicPage = () => {
       <div className={cls.replies}>
         {forumPageData.comments.map(comment => (
           <Comment
+            key={comment.id}
             author={<a>{comment.author.name}</a>}
             avatar={
               <div className={cls.replyAvatar}>

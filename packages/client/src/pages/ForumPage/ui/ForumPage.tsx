@@ -1,6 +1,4 @@
 import { LogoWithModal } from '@/widgets/LogoWithModal'
-import cls from './ForumPage.module.scss'
-import { Typography } from 'antd'
 import {
   ForumPageStages,
   forumsListMock,
@@ -16,19 +14,43 @@ export const ForumPage = () => {
   const [currentStage, setCurrentStage] = useState(ForumPageStages.forumsList)
 
   useEffect(() => {
-    if (currentStage === ForumPageStages.forumsList) {
-      setPageTitle('Forums')
-    }
-    if (currentStage === ForumPageStages.forumTopicsList) {
-      setPageTitle('Forum name')
-    }
-    if (currentStage === ForumPageStages.createThread) {
-      setPageTitle('Create New Thread')
+    switch (currentStage) {
+      case ForumPageStages.forumsList:
+        setPageTitle('Forums')
+        break
+      case ForumPageStages.forumTopicsList:
+        setPageTitle('Forum name')
+        break
+      case ForumPageStages.createThread:
+        setPageTitle('Create New Thread')
+        break
+      default:
+        break
     }
   }, [currentStage])
 
   const changeStage = (stage: ForumPageStages) => {
     setCurrentStage(stage)
+  }
+
+  const getCurrentStage = () => {
+    switch (currentStage) {
+      case ForumPageStages.forumsList:
+        return (
+          <ForumsList changeStage={changeStage} forumsList={forumsListMock} />
+        )
+      case ForumPageStages.forumTopicsList:
+        return (
+          <ForumTopicsList
+            changeStage={changeStage}
+            forumTopicsList={forumTopicsListMock}
+          />
+        )
+      case ForumPageStages.createThread:
+        return <CreateNewThreadForm changeStage={changeStage} />
+      default:
+        break
+    }
   }
 
   return (
@@ -40,24 +62,8 @@ export const ForumPage = () => {
       width={500}
       mask={false}
       transitionName={''}
-      title={
-        <Typography.Title level={3} className={cls.noMargin}>
-          {pageTitle}
-        </Typography.Title>
-      }>
-      {currentStage === ForumPageStages.forumsList && (
-        <ForumsList changeStage={changeStage} forumsList={forumsListMock} />
-      )}
-      {currentStage === ForumPageStages.forumTopicsList && (
-        <ForumTopicsList
-          changeStage={changeStage}
-          forumTopicsList={forumTopicsListMock}
-        />
-      )}
-
-      {currentStage === ForumPageStages.createThread && (
-        <CreateNewThreadForm changeStage={changeStage} />
-      )}
+      title={pageTitle}>
+      {getCurrentStage()}
     </LogoWithModal>
   )
 }
