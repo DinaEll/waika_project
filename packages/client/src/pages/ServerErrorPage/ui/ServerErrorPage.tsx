@@ -1,16 +1,16 @@
-import cls from './NotFoundPage.module.scss'
 import { LogoWithModal } from '@/widgets'
 import { Typography } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
+import cls from './ServerErrorPage.module.scss'
 
-export const NotFoundPage = () => {
+export const ServerErrorPage = () => {
   return (
-    <LogoWithModal title={'404'} width={500}>
-      <Typography.Text className={cls.notFoundPageDescription}>
-        Не туда попали
+    <LogoWithModal title={'500'} width={500}>
+      <Typography.Text className={cls.serverErrorPageDescription}>
+        Мы уже фиксим
       </Typography.Text>
       <Typography.Link
-        className={cls.notFoundPageBackLink}
+        className={cls.serverErrorPageBackLink}
         href={getPageUrl('main')}>
         На главную
       </Typography.Link>

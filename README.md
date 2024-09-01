@@ -1,3 +1,6 @@
+### Макеты
+https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx1EEb8Hr8Ab-1
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
@@ -74,3 +77,5 @@
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
+
+[Документация](docs/README.md)
