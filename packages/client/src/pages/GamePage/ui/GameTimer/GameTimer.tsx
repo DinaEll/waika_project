@@ -1,18 +1,25 @@
 import { type FC, useState, useRef, useEffect } from 'react'
-import { formatTime } from '@/shared/utils'
+import { formatTime, getDurationTime } from '@/shared/utils'
 
 type Props = {
-  isRunning: boolean
+  startTime?: string
+  finishTime?: string
 }
 
-export const GameTimer: FC<Props> = ({ isRunning }) => {
-  const [time, setTime] = useState(0)
+export const GameTimer: FC<Props> = ({ startTime, finishTime }) => {
+  const [time, setTime] = useState(() => formatTime(0))
   const timerIdRef = useRef<ReturnType<typeof setInterval>>()
 
   useEffect(() => {
-    if (isRunning) {
+    if (startTime) {
       timerIdRef.current = setInterval(() => {
-        setTime(prevTime => prevTime + 1000)
+        const formattedTime = formatTime(
+          getDurationTime(
+            new Date(startTime),
+            finishTime ? new Date(finishTime) : new Date()
+          )
+        )
+        setTime(formattedTime)
       }, 1000)
     } else {
       if (timerIdRef.current) {
@@ -25,9 +32,7 @@ export const GameTimer: FC<Props> = ({ isRunning }) => {
         clearInterval(timerIdRef.current)
       }
     }
-  }, [isRunning])
+  }, [startTime, finishTime])
 
-  const timeFormatted = formatTime(time)
-
-  return <span>{timeFormatted}</span>
+  return <span>{time}</span>
 }

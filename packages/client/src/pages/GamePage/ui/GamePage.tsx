@@ -1,6 +1,6 @@
 import { type FC, useEffect, useRef, useState } from 'react'
 import { Button, Flex } from 'antd'
-import { formatTime } from '@/shared/utils'
+import { formatTime, getDurationTime } from '@/shared/utils'
 import { Mahjong } from '@/entities/mahjong'
 import { GameTimer } from './GameTimer/GameTimer'
 import cls from './GamePage.module.scss'
@@ -8,28 +8,23 @@ import cls from './GamePage.module.scss'
 export const GamePage: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mahjongRef = useRef<Mahjong>()
-  const [isTimerRunning, setIsTimerRunning] = useState(false)
-
-  const getDurationGame = (starTime: Date, finishTime: Date): number => {
-    return starTime.getTime() - finishTime.getTime()
-  }
+  const [startTime, setStartTime] = useState<Date>()
+  const [finishTime, setFinishTime] = useState<Date>()
 
   const onStartCallback = (startTime?: Date) => {
-    setIsTimerRunning(true)
+    setStartTime(startTime)
     console.log(`start game at ${startTime}`)
   }
 
   const onWinCallback = (startTime?: Date, finishTime?: Date) => {
     if (startTime && finishTime) {
-      alert(`You Won! ${formatTime(getDurationGame(startTime, finishTime))}`)
+      alert(`You Won! ${formatTime(getDurationTime(startTime, finishTime))}`)
     }
-
-    setIsTimerRunning(false)
+    setFinishTime(finishTime)
   }
 
   const onLoseCallback = () => {
     alert('You Lose!')
-    setIsTimerRunning(false)
   }
 
   const destroyGame = () => {
@@ -80,7 +75,10 @@ export const GamePage: FC = () => {
       <Flex gap={8} align="center">
         <Button onClick={onShuffleClick}>Shuffle</Button>
         <Button onClick={onRestartClick}>Restart</Button>
-        <GameTimer isRunning={isTimerRunning} />
+        <GameTimer
+          startTime={startTime?.toISOString()}
+          finishTime={finishTime?.toISOString()}
+        />
       </Flex>
       <canvas ref={canvasRef} className={cls.gameField} />
     </div>
