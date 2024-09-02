@@ -3,6 +3,13 @@ import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
+import {
+  SignUpRequest,
+  userSignUp,
+} from '../../../shared/api/endpoints/userSingUp'
+import { POST } from '@/shared/api'
+import { GET } from '@/shared/api/apiBase'
+import { getUser } from '@/shared/api/endpoints/getUser'
 
 const regInitialState = {
   first_name: '',
@@ -13,39 +20,16 @@ const regInitialState = {
   phone: '',
 }
 
-interface SignUpRequest {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  password: string
-  phone: string
-}
-
 export const RegistrationPage = () => {
   const navigate = useNavigate()
 
   const handleSubmit = (values: SignUpRequest): void => {
-    const baseUrl = 'https://ya-praktikum.tech/api/v2'
-
-    fetch(baseUrl + '/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      credentials: 'include',
-      body: JSON.stringify(values),
-    })
-      .then(res => res.json())
+    userSignUp(values)
       .then(res => {
         if (res?.id) {
-          fetch(baseUrl + '/auth/user', {
-            method: 'GET',
-            credentials: 'include',
-          })
-            .then(res => res.json())
+          getUser()
             .then(res => {
-              if (res?.id) {
+              if (res) {
                 navigate(getPageUrl('main'))
               }
             })

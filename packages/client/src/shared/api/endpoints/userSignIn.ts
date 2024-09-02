@@ -1,0 +1,10 @@
+import { POST } from '@/shared/api'
+
+export interface SignInRequest {
+  login: string
+  password: string
+}
+
+export async function userSignIn(userData: SignInRequest) {
+  return await POST('/auth/signin', userData)
+}

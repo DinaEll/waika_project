@@ -1,16 +1,15 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import classNames from 'classnames'
-import { getPageUrl, pagesPaths } from '@/shared/config'
+import { getPageUrl, pagesPaths, appConfig } from '@/shared/config'
 import cls from './Layout.module.scss'
 import { useEffect } from 'react'
 
 export const Layout = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const baseUrl = 'https://ya-praktikum.tech/api/v2'
 
   useEffect(() => {
-    fetch(baseUrl + '/auth/user', {
+    fetch(appConfig.baseUrl + '/auth/user', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
