@@ -13,6 +13,7 @@ export const GamePage: FC = () => {
 
   const onStartCallback = (startTime?: Date) => {
     setStartTime(startTime)
+    setFinishTime(undefined)
     console.log(`start game at ${startTime}`)
   }
 
