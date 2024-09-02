@@ -3,13 +3,7 @@ import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
-import {
-  SignUpRequest,
-  userSignUp,
-} from '../../../shared/api/endpoints/userSingUp'
-import { POST } from '@/shared/api'
-import { GET } from '@/shared/api/apiBase'
-import { getUser } from '@/shared/api/endpoints/getUser'
+import { SignUpRequest, userSignUp, getUser } from '@/shared/api'
 
 const regInitialState = {
   first_name: '',
@@ -24,19 +18,13 @@ export const RegistrationPage = () => {
   const navigate = useNavigate()
 
   const handleSubmit = (values: SignUpRequest): void => {
-    userSignUp(values)
-      .then(res => {
-        if (res?.id) {
-          getUser()
-            .then(res => {
-              if (res) {
-                navigate(getPageUrl('main'))
-              }
-            })
-            .catch(error => console.error(error))
-        }
-      })
-      .catch(error => console.error(error))
+    userSignUp(values).then(res => {
+      if (res?.id) {
+        getUser().then(() => {
+          navigate(getPageUrl('main'))
+        })
+      }
+    })
   }
 
   return (

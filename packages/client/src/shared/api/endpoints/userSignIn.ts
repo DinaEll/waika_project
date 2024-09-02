@@ -5,6 +5,6 @@ export interface SignInRequest {
   password: string
 }
 
-export async function userSignIn(userData: SignInRequest) {
+export const userSignIn = async (userData: SignInRequest) => {
   return await POST('/auth/signin', userData)
 }

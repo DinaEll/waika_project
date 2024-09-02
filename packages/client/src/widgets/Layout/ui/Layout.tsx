@@ -1,36 +1,28 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import classNames from 'classnames'
-import { getPageUrl, pagesPaths, appConfig } from '@/shared/config'
+import { getPageUrl, pagesPaths } from '@/shared/config'
 import cls from './Layout.module.scss'
 import { useEffect } from 'react'
+import { getUser } from '@/shared/api'
 
 export const Layout = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
-    fetch(appConfig.baseUrl + '/auth/user', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      credentials: 'include',
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (!res.id) {
-          navigate(getPageUrl('login'))
-          return
-        }
+    getUser().then(res => {
+      if (!res?.id) {
+        navigate(getPageUrl('login'))
+        return
+      }
 
-        const nonProtectedRoute = (
-          [pagesPaths.login, pagesPaths.registration] as string[]
-        ).includes(location.pathname)
-        if (nonProtectedRoute) {
-          navigate(getPageUrl('main'))
-        }
-      })
-      .catch(error => console.error(error))
+      const nonProtectedRoute = (
+        [pagesPaths.login, pagesPaths.registration] as string[]
+      ).includes(location.pathname)
+      if (nonProtectedRoute) {
+        navigate(getPageUrl('main'))
+      }
+    })
   }, [])
 
   return (

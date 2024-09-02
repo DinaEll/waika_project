@@ -13,6 +13,20 @@ export const POST = async (
     credentials,
     body: JSON.stringify(data),
   })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Error. Please try again')
+      }
+      return res.text()
+    })
+    .then(text => {
+      try {
+        return JSON.parse(text)
+      } catch (err) {
+        return text
+      }
+    })
+    .catch(error => console.error(error))
 }
 
 export const GET = async (
@@ -23,4 +37,11 @@ export const GET = async (
     method: 'GET',
     credentials,
   })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Error. Please try again')
+      }
+      return res.json()
+    })
+    .catch(error => console.error(error))
 }

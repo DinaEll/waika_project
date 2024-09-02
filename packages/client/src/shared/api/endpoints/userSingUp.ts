@@ -9,7 +9,6 @@ export interface SignUpRequest {
   phone: string
 }
 
-export async function userSignUp(userData: SignUpRequest) {
-  const res = await POST('/auth/signup', userData)
-  return await res.json()
+export const userSignUp = async (userData: SignUpRequest) => {
+  return await POST('/auth/signup', userData)
 }

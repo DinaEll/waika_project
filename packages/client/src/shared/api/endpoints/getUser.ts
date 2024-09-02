@@ -1,6 +1,5 @@
 import { GET } from '@/shared/api'
 
-export async function getUser() {
-  const res = await GET('/auth/user')
-  return await res.json()
+export const getUser = async () => {
+  return await GET('/auth/user')
 }
