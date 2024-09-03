@@ -1,10 +1,31 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import classNames from 'classnames'
-import { getPageUrl } from '@/shared/config'
+import { getPageUrl, pagesPaths } from '@/shared/config'
 import cls from './Layout.module.scss'
 import { Header } from '@/widgets/Header'
+import { useEffect } from 'react'
+import { getUser } from '@/shared/api'
 
 export const Layout = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    getUser().then(res => {
+      if (!res?.id) {
+        navigate(getPageUrl('login'))
+        return
+      }
+
+      const nonProtectedRoute = (
+        [pagesPaths.login, pagesPaths.registration] as string[]
+      ).includes(location.pathname)
+      if (nonProtectedRoute) {
+        navigate(getPageUrl('main'))
+      }
+    })
+  }, [])
+
   return (
     <div className={cls.layout}>
       <nav className={classNames(cls.navbar)}>
