@@ -1,1 +1,1 @@
-export { Game } from './model/Game'
+export { Game } from './model/Game';

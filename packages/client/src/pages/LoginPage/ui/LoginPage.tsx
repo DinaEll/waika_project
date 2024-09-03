@@ -1,33 +1,33 @@
-import cls from './LoginPage.module.scss'
-import { ChangeEvent, useState } from 'react'
-import { LogoWithModal } from '@/widgets/LogoWithModal'
-import { Button, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { getPageUrl } from '@/shared/config/router/routerConfig'
+import cls from './LoginPage.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { Button, Form, Input } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
 
 const loginInitialState = {
   login: '',
   password: '',
-}
+};
 
 interface signInRequest {
-  login: string
-  password: string
+  login: string;
+  password: string;
 }
 
 export const LoginPage = () => {
-  const [formData, setFormData] = useState(loginInitialState)
+  const [formData, setFormData] = useState(loginInitialState);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
   const handleSubmit = (values: signInRequest): void => {
     //TODO: add User sign in logic
-  }
+  };
 
   return (
     <LogoWithModal
@@ -38,11 +38,13 @@ export const LoginPage = () => {
       width={344}
       mask={false}
       transitionName={''}
-      title="Sign In">
+      title="Sign In"
+    >
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
-        onFinish={handleSubmit}>
+        onFinish={handleSubmit}
+      >
         <Form.Item className={cls.loginPageItem} name="login" label="Login">
           <Input
             id="login"
@@ -57,7 +59,8 @@ export const LoginPage = () => {
         <Form.Item
           className={cls.loginPageItem}
           name="password"
-          label="Password">
+          label="Password"
+        >
           <Input
             id="password"
             type="password"
@@ -81,5 +84,5 @@ export const LoginPage = () => {
         </Form.Item>
       </Form>
     </LogoWithModal>
-  )
-}
+  );
+};

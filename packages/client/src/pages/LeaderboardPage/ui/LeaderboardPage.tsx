@@ -1,11 +1,11 @@
-import { Empty, Typography } from 'antd'
-import { LogoWithModal } from '@/widgets'
-import { UserAvatar } from '@/shared/ui'
-import { players } from '../model'
-import { LeaderboardPlayer } from './LeaderboardPlayer'
-import cls from './LeaderboardPage.module.scss'
+import { Empty, Typography } from 'antd';
+import { LogoWithModal } from '@/widgets';
+import { UserAvatar } from '@/shared/ui';
+import { players } from '../model';
+import { LeaderboardPlayer } from './LeaderboardPlayer';
+import cls from './LeaderboardPage.module.scss';
 
-const pageTitle = 'Leaderboard'
+const pageTitle = 'Leaderboard';
 
 export const LeaderboardPage = () => {
   if (players.length === 0) {
@@ -13,10 +13,10 @@ export const LeaderboardPage = () => {
       <LogoWithModal title={pageTitle}>
         <Empty />
       </LogoWithModal>
-    )
+    );
   }
 
-  const { avatar, name, points } = players[0]
+  const { avatar, name, points } = players[0];
 
   return (
     <LogoWithModal
@@ -34,12 +34,13 @@ export const LeaderboardPage = () => {
         <div className={cls.leaderAvatar}>
           <UserAvatar src={avatar} />
         </div>
-      }>
+      }
+    >
       <table className={cls.players}>
-        {players.map(player => {
-          return <LeaderboardPlayer {...player} />
+        {players.map((player) => {
+          return <LeaderboardPlayer {...player} />;
         })}
       </table>
     </LogoWithModal>
-  )
-}
+  );
+};

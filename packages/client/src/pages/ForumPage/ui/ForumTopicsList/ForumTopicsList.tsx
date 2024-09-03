@@ -1,20 +1,20 @@
-import { getPageUrl } from '@/shared/config'
-import { Badge, Button, List, Typography } from 'antd'
-import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ForumPageStages, ForumTopicData } from '../../model/forumData'
-import cls from '../ForumPage.module.scss'
+import { getPageUrl } from '@/shared/config';
+import { Badge, Button, List, Typography } from 'antd';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ForumPageStages, ForumTopicData } from '../../model/forumData';
+import cls from '../ForumPage.module.scss';
 
 type Props = {
-  changeStage: (stage: ForumPageStages) => void
-  forumTopicsList: ForumTopicData[]
-}
+  changeStage: (stage: ForumPageStages) => void;
+  forumTopicsList: ForumTopicData[];
+};
 
 export const ForumTopicsList: FC<Props> = ({
   changeStage,
   forumTopicsList,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <List
@@ -22,7 +22,8 @@ export const ForumTopicsList: FC<Props> = ({
       header={
         <div className={cls.header}>
           <Typography.Text
-            className={cls.headerTitle + ' ' + cls.headerTitleFirst}>
+            className={cls.headerTitle + ' ' + cls.headerTitleFirst}
+          >
             Author
           </Typography.Text>
           <Typography.Text className={cls.headerTitle}>Replies</Typography.Text>
@@ -33,18 +34,20 @@ export const ForumTopicsList: FC<Props> = ({
         <div className={cls.footer}>
           <Button
             type="primary"
-            onClick={() => changeStage(ForumPageStages.createThread)}>
+            onClick={() => changeStage(ForumPageStages.createThread)}
+          >
             Create New Thread
           </Button>
         </div>
       }
       dataSource={forumTopicsList}
-      renderItem={forumTopic => (
+      renderItem={(forumTopic) => (
         <List.Item
           onClick={() =>
             navigate(getPageUrl('forum-topic', { topicId: forumTopic.id }))
           }
-          className={cls.listItem}>
+          className={cls.listItem}
+        >
           <Typography.Text className={cls.title}>
             {forumTopic.title}
           </Typography.Text>
@@ -77,5 +80,5 @@ export const ForumTopicsList: FC<Props> = ({
         </List.Item>
       )}
     />
-  )
-}
+  );
+};

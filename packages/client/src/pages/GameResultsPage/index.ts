@@ -1,1 +1,1 @@
-export { GameResultsPage } from './ui/GameResultsPage'
+export { GameResultsPage } from './ui/GameResultsPage';

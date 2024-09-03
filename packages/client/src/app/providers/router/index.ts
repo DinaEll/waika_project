@@ -1,1 +1,1 @@
-export { BrowserRouterProvider } from './ui/BrowserRouter'
+export { BrowserRouterProvider } from './ui/BrowserRouter';

@@ -1,9 +1,9 @@
-import cls from './GameStartupPage.module.scss'
-import { Button } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { LogoWithModal } from '@/widgets/LogoWithModal'
-import { getPageUrl } from '@/shared/config/router/routerConfig'
-import RulesImg from '@/shared/assets/images/rules.png'
+import cls from './GameStartupPage.module.scss';
+import { Button } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
+import RulesImg from '@/shared/assets/images/rules.png';
 
 export const GameStartupPage = () => {
   return (
@@ -15,7 +15,8 @@ export const GameStartupPage = () => {
       width={500}
       mask={false}
       transitionName={''}
-      title="Start game">
+      title="Start game"
+    >
       <div className={cls.wrapper}>
         <div className={cls.rules}>
           <img src={RulesImg} alt="Rules" className={cls.rulesImg} />
@@ -28,5 +29,5 @@ export const GameStartupPage = () => {
         </div>
       </div>
     </LogoWithModal>
-  )
-}
+  );
+};

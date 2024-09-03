@@ -1,38 +1,38 @@
-import { LogoWithModal } from '@/widgets/LogoWithModal'
-import cls from './ForumTopicPage.module.scss'
-import { Button, Form, Input, Tooltip, Typography } from 'antd'
-import { Comment } from '@ant-design/compatible'
-import { useEffect, useState } from 'react'
-import moment from 'moment'
-import { UserAvatar } from '@/shared/ui'
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './ForumTopicPage.module.scss';
+import { Button, Form, Input, Tooltip, Typography } from 'antd';
+import { Comment } from '@ant-design/compatible';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { UserAvatar } from '@/shared/ui';
 import {
   forumPageDataMock,
   initialReplyFormData,
   replyFormData,
-} from '../model/forumTopicData'
+} from '../model/forumTopicData';
 
 // todo добавить функцию загрузки данных топика
 const getTopic = () => {
-  fetch('')
-}
+  fetch('');
+};
 
 export const ForumTopicPage = () => {
-  const [pageTitle, setPageTitle] = useState('')
-  const [forumPageData, setForumPageData] = useState(forumPageDataMock)
+  const [pageTitle, setPageTitle] = useState('');
+  const [forumPageData, setForumPageData] = useState(forumPageDataMock);
 
   useEffect(() => {
     // getTopic().then(data => {
     //     setForumPageData(data)
     // })
-    setPageTitle('Doom 666')
-  }, [])
+    setPageTitle('Doom 666');
+  }, []);
 
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
 
   const handleCreateThread = (values: replyFormData) => {
     // todo загрузить ответ на сервер и добавить к списку
-    console.log('Success:', values)
-  }
+    console.log('Success:', values);
+  };
 
   return (
     <LogoWithModal
@@ -47,7 +47,8 @@ export const ForumTopicPage = () => {
         <Typography.Title level={3} className={cls.noMargin}>
           {pageTitle}
         </Typography.Title>
-      }>
+      }
+    >
       <Comment
         author={<p>{forumPageData.author.name}</p>}
         avatar={
@@ -58,7 +59,8 @@ export const ForumTopicPage = () => {
         content={<p>{forumPageData.description}</p>}
         datetime={
           <Tooltip
-            title={moment(forumPageData.date).format('DD-MM-YYYY HH:mm:ss')}>
+            title={moment(forumPageData.date).format('DD-MM-YYYY HH:mm:ss')}
+          >
             <span>{moment(forumPageData.date).fromNow()}</span>
           </Tooltip>
         }
@@ -71,7 +73,7 @@ export const ForumTopicPage = () => {
       </div>
 
       <div className={cls.replies}>
-        {forumPageData.comments.map(comment => (
+        {forumPageData.comments.map((comment) => (
           <Comment
             key={comment.id}
             author={<a>{comment.author.name}</a>}
@@ -83,7 +85,8 @@ export const ForumTopicPage = () => {
             content={<p>{comment.description}</p>}
             datetime={
               <Tooltip
-                title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}>
+                title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
+              >
                 <span>{moment(comment.date).fromNow()}</span>
               </Tooltip>
             }
@@ -102,7 +105,8 @@ export const ForumTopicPage = () => {
           layout="vertical"
           onFinish={handleCreateThread}
           form={form}
-          initialValues={initialReplyFormData}>
+          initialValues={initialReplyFormData}
+        >
           <Form.Item name={'reply'}>
             <Input.TextArea id="reply" placeholder="Your reply" rows={5} />
           </Form.Item>
@@ -115,5 +119,5 @@ export const ForumTopicPage = () => {
         </Form>
       </div>
     </LogoWithModal>
-  )
-}
+  );
+};

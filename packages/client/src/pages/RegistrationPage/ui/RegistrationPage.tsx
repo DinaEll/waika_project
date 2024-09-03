@@ -1,9 +1,9 @@
-import cls from './RegistrationPage.module.scss'
-import { ChangeEvent, useState } from 'react'
-import { Form, Button, Input } from 'antd'
-import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { NavLink } from 'react-router-dom'
-import { LogoWithModal } from '@/widgets/LogoWithModal'
+import cls from './RegistrationPage.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { Form, Button, Input } from 'antd';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { NavLink } from 'react-router-dom';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
 
 const regInitialState = {
   first_name: '',
@@ -12,30 +12,30 @@ const regInitialState = {
   email: '',
   password: '',
   phone: '',
-}
+};
 
 interface SignUpRequest {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  password: string
-  phone: string
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
 }
 
 export const RegistrationPage = () => {
-  const [formData, setFormData] = useState(regInitialState)
+  const [formData, setFormData] = useState(regInitialState);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
   const handleSubmit = (values: SignUpRequest): void => {
     //TODO: add User sign up logic
-  }
+  };
 
   return (
     <LogoWithModal
@@ -46,15 +46,18 @@ export const RegistrationPage = () => {
       width={344}
       mask={false}
       transitionName={''}
-      title="Sign Up">
+      title="Sign Up"
+    >
       <Form
         className={cls.registrationPageWrapper}
         layout="vertical"
-        onFinish={handleSubmit}>
+        onFinish={handleSubmit}
+      >
         <Form.Item
           className={cls.registrationPageItem}
           name="first_name"
-          label="First Name">
+          label="First Name"
+        >
           <Input
             id="first_name"
             type="text"
@@ -68,7 +71,8 @@ export const RegistrationPage = () => {
         <Form.Item
           className={cls.registrationPageItem}
           name="second_name"
-          label="Last Name">
+          label="Last Name"
+        >
           <Input
             id="second_name"
             type="text"
@@ -82,7 +86,8 @@ export const RegistrationPage = () => {
         <Form.Item
           className={cls.registrationPageItem}
           name="login"
-          label="Login">
+          label="Login"
+        >
           <Input
             id="login"
             type="text"
@@ -96,7 +101,8 @@ export const RegistrationPage = () => {
         <Form.Item
           className={cls.registrationPageItem}
           name="email"
-          label="Email">
+          label="Email"
+        >
           <Input
             id="email"
             type="email"
@@ -110,7 +116,8 @@ export const RegistrationPage = () => {
         <Form.Item
           className={cls.registrationPageItem}
           name="phone"
-          label="Phone">
+          label="Phone"
+        >
           <Input
             id="phone"
             type="tel"
@@ -124,7 +131,8 @@ export const RegistrationPage = () => {
         <Form.Item
           className={cls.registrationPageItem}
           name="password"
-          label="Password">
+          label="Password"
+        >
           <Input
             id="password"
             type="password"
@@ -148,5 +156,5 @@ export const RegistrationPage = () => {
         </Form.Item>
       </Form>
     </LogoWithModal>
-  )
-}
+  );
+};

@@ -1,29 +1,30 @@
-import { Button, Form, Input } from 'antd'
-import React, { useState } from 'react'
-import cls from './ProfilePage.module.scss'
-import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal'
-import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal'
-import { LogoWithModal } from '@/widgets'
-import { UserAvatar } from '@/shared/ui'
+import { Button, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import cls from './ProfilePage.module.scss';
+import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
+import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
+import { LogoWithModal } from '@/widgets';
+import { UserAvatar } from '@/shared/ui';
 
 export const ProfilePage = () => {
-  const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false)
-  const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false)
+  const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
+  const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
 
   const closePasswordChangeModal = () => {
-    setPasswordChangeModalOpen(false)
-  }
+    setPasswordChangeModalOpen(false);
+  };
 
   const closeAvatarChangeModal = () => {
-    setAvatarChangeModalOpen(false)
-  }
+    setAvatarChangeModalOpen(false);
+  };
 
   return (
     <>
       <LogoWithModal
         title={'Your Profile'}
         width={500}
-        logo={<UserAvatar className={cls.profileAvatar} />}>
+        logo={<UserAvatar className={cls.profileAvatar} />}
+      >
         <Form layout="vertical" className={cls.profilePageForm}>
           <Form.Item name="first_name" label="First Name" layout="vertical">
             <Input
@@ -64,7 +65,8 @@ export const ProfilePage = () => {
             <Form.Item className={cls.profileModalButton}>
               <Button
                 type="link"
-                onClick={() => setPasswordChangeModalOpen(true)}>
+                onClick={() => setPasswordChangeModalOpen(true)}
+              >
                 Change Password
               </Button>
             </Form.Item>
@@ -72,7 +74,8 @@ export const ProfilePage = () => {
             <Form.Item className={cls.profileModalButton}>
               <Button
                 type="link"
-                onClick={() => setAvatarChangeModalOpen(true)}>
+                onClick={() => setAvatarChangeModalOpen(true)}
+              >
                 Change Avatar
               </Button>
             </Form.Item>
@@ -90,5 +93,5 @@ export const ProfilePage = () => {
         onCancel={closeAvatarChangeModal}
       />
     </>
-  )
-}
+  );
+};

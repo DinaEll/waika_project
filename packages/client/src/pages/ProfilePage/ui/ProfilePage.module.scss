@@ -1,20 +1,20 @@
 .profileModalActions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profileModalButton {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .profileAvatar {
-    width: 108px;
-    height: 108px;
-    background-color: var(--gray-color);
-    font-size: 32px !important;
+  width: 108px;
+  height: 108px;
+  background-color: var(--gray-color);
+  font-size: 32px !important;
 }
 
 .profilePageForm {
-    padding: 0 87px;
+  padding: 0 87px;
 }

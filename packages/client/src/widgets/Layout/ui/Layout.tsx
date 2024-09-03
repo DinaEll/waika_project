@@ -1,8 +1,8 @@
-import { Outlet, NavLink } from 'react-router-dom'
-import classNames from 'classnames'
-import { getPageUrl } from '@/shared/config'
-import cls from './Layout.module.scss'
-import { Header } from '@/widgets/Header'
+import { Outlet, NavLink } from 'react-router-dom';
+import classNames from 'classnames';
+import { getPageUrl } from '@/shared/config';
+import cls from './Layout.module.scss';
+import { Header } from '@/widgets/Header';
 
 export const Layout = () => {
   return (
@@ -27,5 +27,5 @@ export const Layout = () => {
         <Outlet />
       </main>
     </div>
-  )
-}
+  );
+};

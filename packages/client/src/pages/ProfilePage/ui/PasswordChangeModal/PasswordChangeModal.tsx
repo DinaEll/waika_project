@@ -1,20 +1,20 @@
-import { Form, Input, Modal, ModalProps } from 'antd'
-import cls from './PasswordChangeModal.module.scss'
-import React, { ChangeEvent, FC, useState } from 'react'
+import { Form, Input, Modal, ModalProps } from 'antd';
+import cls from './PasswordChangeModal.module.scss';
+import React, { ChangeEvent, FC, useState } from 'react';
 
 export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
-  })
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const sendNewPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     /*
@@ -28,13 +28,13 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
       },
       body: JSON.stringify(formData),
     })
-      .then(res => res.json())
-      .catch(err => console.error(err))
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
 
     if (props.onCancel) {
-      props.onCancel(e)
+      props.onCancel(e);
     }
-  }
+  };
 
   return (
     <Modal
@@ -45,12 +45,14 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
       }}
       centered
       onOk={sendNewPassword}
-      {...props}>
+      {...props}
+    >
       <Form layout="vertical">
         <Form.Item
           name="oldPassword"
           label="Current Password"
-          layout="vertical">
+          layout="vertical"
+        >
           <Input
             id="oldPassword"
             name="oldPassword"
@@ -74,5 +76,5 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
         </Form.Item>
       </Form>
     </Modal>
-  )
-}
+  );
+};

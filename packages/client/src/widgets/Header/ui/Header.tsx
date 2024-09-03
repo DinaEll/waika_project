@@ -1,14 +1,14 @@
-import cls from './Header.module.scss'
-import { Button } from 'antd'
-import { getPageUrl } from '@/shared/config'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons'
+import cls from './Header.module.scss';
+import { Button } from 'antd';
+import { getPageUrl } from '@/shared/config';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 export const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    const baseUrl = 'https://ya-praktikum.tech/api/v2'
+    const baseUrl = 'https://ya-praktikum.tech/api/v2';
 
     fetch(baseUrl + '/auth/logout', {
       method: 'POST',
@@ -17,13 +17,13 @@ export const Header = () => {
       },
       credentials: 'include',
     })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
-          navigate(getPageUrl('login'))
+          navigate(getPageUrl('login'));
         }
       })
-      .catch(error => console.error(error))
-  }
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className={cls.headerWrapper}>
@@ -32,7 +32,8 @@ export const Header = () => {
           type="text"
           icon={<LeftOutlined />}
           iconPosition="start"
-          onClick={() => navigate(-1)}>
+          onClick={() => navigate(-1)}
+        >
           Back
         </Button>
       </div>
@@ -54,8 +55,9 @@ export const Header = () => {
         <Button
           type="text"
           icon={<PoweroffOutlined />}
-          onClick={handleLogout}></Button>
+          onClick={handleLogout}
+        ></Button>
       </div>
     </div>
-  )
-}
+  );
+};

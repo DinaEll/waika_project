@@ -1,18 +1,18 @@
-import { MainPage } from '@/pages/MainPage'
-import { createBrowserRouter } from 'react-router-dom'
-import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { Layout } from '@/widgets/Layout'
-import { ForumPage } from '@/pages/ForumPage'
-import { ForumTopicPage } from '@/pages/ForumTopicPage'
-import { GamePage } from '@/pages/GamePage'
-import { GameResultsPage } from '@/pages/GameResultsPage'
-import { GameStartupPage } from '@/pages/GameStartupPage'
-import { LeaderboardPage } from '@/pages/LeaderboardPage'
-import { LoginPage } from '@/pages/LoginPage'
-import { ProfilePage } from '@/pages/ProfilePage'
-import { RegistrationPage } from '@/pages/RegistrationPage'
-import { NotFoundPage } from '@/pages/NotFoundPage'
-import { ServerErrorPage } from '@/pages/ServerErrorPage'
+import { MainPage } from '@/pages/MainPage';
+import { createBrowserRouter } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { Layout } from '@/widgets/Layout';
+import { ForumPage } from '@/pages/ForumPage';
+import { ForumTopicPage } from '@/pages/ForumTopicPage';
+import { GamePage } from '@/pages/GamePage';
+import { GameResultsPage } from '@/pages/GameResultsPage';
+import { GameStartupPage } from '@/pages/GameStartupPage';
+import { LeaderboardPage } from '@/pages/LeaderboardPage';
+import { LoginPage } from '@/pages/LoginPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import { RegistrationPage } from '@/pages/RegistrationPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
+import { ServerErrorPage } from '@/pages/ServerErrorPage';
 
 export const router = createBrowserRouter([
   {
@@ -69,4 +69,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
