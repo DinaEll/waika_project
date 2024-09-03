@@ -1,10 +1,10 @@
 import { Button, Form, Input } from 'antd';
-import React, { useState } from 'react';
-import cls from './ProfilePage.module.scss';
-import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
-import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
-import { LogoWithModal } from '@/widgets';
+import { useState } from 'react';
 import { UserAvatar } from '@/shared/ui';
+import { LogoWithModal } from '@/widgets';
+import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
+import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
+import cls from './ProfilePage.module.scss';
 
 export const ProfilePage = () => {
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);

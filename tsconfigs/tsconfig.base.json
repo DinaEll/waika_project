@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "checkJs": true,
     "esModuleInterop": true,
@@ -14,11 +15,9 @@
     "noUncheckedIndexedAccess": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
     "useDefineForClassFields": true
-  },
-  "include": [".eslintrc.cjs"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

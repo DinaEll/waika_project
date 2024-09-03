@@ -1,9 +1,10 @@
-import { type FC, useEffect, useRef, useState } from 'react';
 import { Button, Flex } from 'antd';
-import { formatTime, getDurationTime } from '@/shared/utils';
+import { useRef, useState, type FC } from 'react';
 import { Mahjong } from '@/entities/mahjong';
-import { GameTimer } from './GameTimer/GameTimer';
+import { formatTime, getDurationTime } from '@/shared/utils';
+import { useEffectOnce } from '../../../shared/hooks';
 import cls from './GamePage.module.scss';
+import { GameTimer } from './GameTimer/GameTimer';
 
 export const GamePage: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,13 +12,15 @@ export const GamePage: FC = () => {
   const [startTime, setStartTime] = useState<Date>();
   const [finishTime, setFinishTime] = useState<Date>();
 
-  const onStartCallback = (startTime?: Date) => {
+  const onStartCallback = (startTime?: Date): undefined => {
     setStartTime(startTime);
     setFinishTime(undefined);
-    console.log(`start game at ${startTime}`);
+    if (startTime) {
+      console.log(`start game at ${startTime.toISOString()}`);
+    }
   };
 
-  const onWinCallback = (startTime?: Date, finishTime?: Date) => {
+  const onWinCallback = (startTime?: Date, finishTime?: Date): undefined => {
     if (startTime && finishTime) {
       alert(`You Won! ${formatTime(getDurationTime(startTime, finishTime))}`);
     }
@@ -26,14 +29,6 @@ export const GamePage: FC = () => {
 
   const onLoseCallback = () => {
     alert('You Lose!');
-  };
-
-  const destroyGame = () => {
-    if (mahjongRef.current) {
-      mahjongRef.current.finish();
-      mahjongRef.current.destroy();
-      mahjongRef.current = undefined;
-    }
   };
 
   const createGame = () => {
@@ -54,13 +49,21 @@ export const GamePage: FC = () => {
     mahjongRef.current.start();
   };
 
-  useEffect(() => {
+  const destroyGame = () => {
+    if (mahjongRef.current) {
+      mahjongRef.current.finish();
+      mahjongRef.current.destroy();
+      mahjongRef.current = undefined;
+    }
+  };
+
+  useEffectOnce(() => {
     createGame();
 
     return () => {
       destroyGame();
     };
-  }, []);
+  });
 
   const onRestartClick = () => {
     destroyGame();

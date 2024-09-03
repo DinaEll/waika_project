@@ -1,5 +1,5 @@
-import type { FieldCell } from '../types';
 import { CanvasElement } from '../../canvas/model/CanvasElement';
+import type { FieldCell } from '../types';
 
 interface TileProps {
   number: FieldCell;

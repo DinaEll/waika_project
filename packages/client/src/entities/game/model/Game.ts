@@ -4,11 +4,11 @@ export abstract class Game extends Canvas {
   protected isRunning = false;
   protected startTime: Date | undefined;
   protected finishTime: Date | undefined;
-  public onStartCallback: ((startTime?: Date) => void | undefined) | undefined;
+  public onStartCallback: ((startTime?: Date) => void) | undefined;
   public onWinCallback:
-    | ((startTime?: Date, finishTime?: Date) => void | undefined)
+    | ((startTime?: Date, finishTime?: Date) => void)
     | undefined;
-  public onLoseCallback: (() => void | undefined) | undefined;
+  public onLoseCallback: (() => void) | undefined;
 
   public start() {
     this.isRunning = true;

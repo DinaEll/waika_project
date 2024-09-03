@@ -1,9 +1,9 @@
-import cls from './RegistrationPage.module.scss';
-import { ChangeEvent, useState } from 'react';
 import { Form, Button, Input } from 'antd';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { ChangeEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './RegistrationPage.module.scss';
 
 const regInitialState = {
   first_name: '',
@@ -35,6 +35,7 @@ export const RegistrationPage = () => {
   };
   const handleSubmit = (values: SignUpRequest): void => {
     //TODO: add User sign up logic
+    console.log(values);
   };
 
   return (

@@ -1,9 +1,9 @@
-import cls from './LoginPage.module.scss';
-import { ChangeEvent, useState } from 'react';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
 import { Button, Form, Input } from 'antd';
+import { ChangeEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
   login: '',
@@ -27,6 +27,7 @@ export const LoginPage = () => {
   };
   const handleSubmit = (values: signInRequest): void => {
     //TODO: add User sign in logic
+    console.log(values);
   };
 
   return (

@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import {
   ForumPageStages,
   forumsListMock,
   forumTopicsListMock,
 } from '../model/forumData';
-import { useEffect, useState } from 'react';
 import { CreateNewThreadForm } from './CreateNewThreadForm/CreateNewThreadForm';
-import { ForumTopicsList } from './ForumTopicsList/ForumTopicsList';
 import { ForumsList } from './ForumsList/ForumsList';
+import { ForumTopicsList } from './ForumTopicsList/ForumTopicsList';
 
 export const ForumPage = () => {
   const [pageTitle, setPageTitle] = useState('Forums');
@@ -49,6 +49,8 @@ export const ForumPage = () => {
       case ForumPageStages.createThread:
         return <CreateNewThreadForm changeStage={changeStage} />;
       default:
+        throw new Error('Stage Not Supported');
+
         break;
     }
   };

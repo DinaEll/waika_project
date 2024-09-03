@@ -1,29 +1,21 @@
-import { LogoWithModal } from '@/widgets/LogoWithModal';
-import cls from './ForumTopicPage.module.scss';
-import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import { Comment } from '@ant-design/compatible';
-import { useEffect, useState } from 'react';
+import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
 import { UserAvatar } from '@/shared/ui';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
 import {
   forumPageDataMock,
   initialReplyFormData,
   replyFormData,
 } from '../model/forumTopicData';
-
-// todo добавить функцию загрузки данных топика
-const getTopic = () => {
-  fetch('');
-};
+import cls from './ForumTopicPage.module.scss';
 
 export const ForumTopicPage = () => {
   const [pageTitle, setPageTitle] = useState('');
-  const [forumPageData, setForumPageData] = useState(forumPageDataMock);
+  const [forumPageData] = useState(forumPageDataMock);
 
   useEffect(() => {
-    // getTopic().then(data => {
-    //     setForumPageData(data)
-    // })
     setPageTitle('Doom 666');
   }, []);
 

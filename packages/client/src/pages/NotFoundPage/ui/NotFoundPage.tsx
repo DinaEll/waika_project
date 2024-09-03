@@ -1,7 +1,7 @@
-import cls from './NotFoundPage.module.scss';
-import { LogoWithModal } from '@/widgets';
 import { Typography } from 'antd';
 import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { LogoWithModal } from '@/widgets';
+import cls from './NotFoundPage.module.scss';
 
 export const NotFoundPage = () => {
   return (

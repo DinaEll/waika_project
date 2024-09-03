@@ -1,9 +1,9 @@
-import type { FieldCell } from '../types';
 import { isNull } from '@/shared/utils';
+import { CanvasLayer } from '../../canvas/model/CanvasLayer';
+import { Game } from '../../game/model/Game';
 import { MahjongHelper } from './MahjongHelper';
 import { Tile } from './Tile';
-import { Game } from '../../game/model/Game';
-import { CanvasLayer } from '../../canvas/model/CanvasLayer';
+import type { FieldCell } from '../types';
 
 type Options = {
   tileSize: number;

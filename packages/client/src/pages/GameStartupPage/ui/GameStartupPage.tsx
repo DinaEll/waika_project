@@ -1,9 +1,9 @@
-import cls from './GameStartupPage.module.scss';
 import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
 import RulesImg from '@/shared/assets/images/rules.png';
+import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './GameStartupPage.module.scss';
 
 export const GameStartupPage = () => {
   return (

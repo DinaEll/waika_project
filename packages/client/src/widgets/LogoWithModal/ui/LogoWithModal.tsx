@@ -1,3 +1,4 @@
+import { Modal, Typography } from 'antd';
 import {
   isValidElement,
   type ComponentProps,
@@ -5,7 +6,6 @@ import {
   type PropsWithChildren,
   type ReactElement,
 } from 'react';
-import { Modal, Typography } from 'antd';
 import { Logo } from '@/shared/ui';
 import cls from './LogoWithModal.module.scss';
 

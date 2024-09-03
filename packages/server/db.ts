@@ -16,8 +16,9 @@ export const createClientAndConnect = async (): Promise<Client | null> => {
     await client.connect();
 
     const res = await client.query('SELECT NOW()');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now);
-    client.end();
+    void client.end();
 
     return client;
   } catch (e) {

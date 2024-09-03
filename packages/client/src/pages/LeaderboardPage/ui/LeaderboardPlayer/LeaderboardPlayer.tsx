@@ -1,5 +1,5 @@
-import { type FC } from 'react';
 import { Typography } from 'antd';
+import { type FC } from 'react';
 import { UserAvatar } from '@/shared/ui';
 import { players } from '../../model';
 import cls from './LeaderboardPlayer.module.scss';

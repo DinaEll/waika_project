@@ -1,6 +1,7 @@
-import { isEven, isNull } from '@/shared/utils';
+import { isDefined, isEven, isNull } from '@/shared/utils';
 import type { FieldCell } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class MahjongHelper {
   static createUniqueRandomArray(length: number): number[] {
     const numbers = Array.from({ length }, (_, i) => i + 1);
@@ -8,7 +9,9 @@ export class MahjongHelper {
     while (numbers.length > 0) {
       const randomIndex = Math.floor(Math.random() * numbers.length);
       const randomNumber = numbers.splice(randomIndex, 1)[0];
-      result.push(randomNumber);
+      if (randomNumber) {
+        result.push(randomNumber);
+      }
     }
 
     return result;
@@ -29,12 +32,16 @@ export class MahjongHelper {
   ): { id: number; positionX: number; positionY: number }[] {
     const result: { id: number; positionX: number; positionY: number }[] = [];
     const rows = field.length;
-    const cols = field[0].length;
+    const cols = field[0]?.length;
+
+    if (!cols) {
+      return [];
+    }
 
     for (let x = 0; x < rows; x++) {
       for (let y = 0; y < cols; y++) {
         const current = field[x][y];
-        if (current === null) continue;
+        if (!isDefined(current)) continue;
 
         const hasTopNeighbor = x > 0 && field[x - 1][y] !== null;
         const hasBottomNeighbor = x < rows - 1 && field[x + 1][y] !== null;
@@ -166,6 +173,6 @@ export class MahjongHelper {
   };
 
   static copyField<T>(source: T[][]): T[][] {
-    return JSON.parse(JSON.stringify(source));
+    return JSON.parse(JSON.stringify(source)) as T[][];
   }
 }

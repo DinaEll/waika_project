@@ -1,5 +1,5 @@
-import type { FieldCell } from '../types';
 import { MahjongHelper } from '../model/MahjongHelper';
+import type { FieldCell } from '../types';
 
 describe('MahjongHelper', () => {
   describe('checkAvailablePairs', () => {

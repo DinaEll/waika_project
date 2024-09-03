@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import dotenv from 'dotenv';
 import { URL, fileURLToPath } from 'url';
-dotenv.config();
+import react from '@vitejs/plugin-react';
+import { config } from 'dotenv';
+import { defineConfig } from 'vite';
+
+config();
 
 // https://vitejs.dev/config/
 export default defineConfig({

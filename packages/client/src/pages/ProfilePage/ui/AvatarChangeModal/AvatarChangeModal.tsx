@@ -1,8 +1,14 @@
-import { Modal, ModalProps, Upload, Image } from 'antd';
-import type { GetProp, UploadProps } from 'antd';
-import cls from './AvatarChangeModal.module.scss';
-import React, { FC, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+import {
+  Modal,
+  Upload,
+  Image,
+  type GetProp,
+  type ModalProps,
+  type UploadProps,
+} from 'antd';
+import { type FC, useState } from 'react';
+import cls from './AvatarChangeModal.module.scss';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -11,12 +17,24 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [previewImage, setPreviewImage] = useState('');
   const [file, setFile] = useState<File>();
 
-  const getBase64 = (file: FileType) =>
+  const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          resolve(result);
+        } else {
+          reject(new Error('FileReader result is not a string.'));
+        }
+      };
+      reader.onerror = () => {
+        const message = reader.error
+          ? reader.error.message
+          : 'Unknown error occurred during file reading';
+        reject(new Error(`FileReader error: ${message}`));
+      };
     });
 
   const beforeUpload = async (
@@ -24,7 +42,7 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   ) => {
     setFile(file);
     if (!file.url && !file.preview) {
-      file.preview = (await getBase64(file)) as string;
+      file.preview = await getBase64(file);
     }
     setPreviewImage(file.url || file.preview);
     return false;

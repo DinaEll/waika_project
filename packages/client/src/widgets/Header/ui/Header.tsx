@@ -1,8 +1,8 @@
-import cls from './Header.module.scss';
-import { Button } from 'antd';
-import { getPageUrl } from '@/shared/config';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config';
+import cls from './Header.module.scss';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export const Header = () => {
           type="text"
           icon={<PoweroffOutlined />}
           onClick={handleLogout}
-        ></Button>
+        />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import { getPageUrl } from '@/shared/config';
 import { Badge, Button, List, Typography } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config';
 import { ForumPageStages, ForumTopicData } from '../../model/forumData';
 import cls from '../ForumPage.module.scss';
 

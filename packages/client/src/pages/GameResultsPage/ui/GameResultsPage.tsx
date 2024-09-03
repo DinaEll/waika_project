@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import cls from './GameResultsPage.module.scss';
 import { Button } from 'antd';
+import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
 import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './GameResultsPage.module.scss';
 
 export const GameResultsPage = () => {
   const result = '13:33'; // Заглушка для результата, потом будем передавать результат игры

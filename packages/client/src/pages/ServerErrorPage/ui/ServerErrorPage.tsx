@@ -1,6 +1,6 @@
-import { LogoWithModal } from '@/widgets';
 import { Typography } from 'antd';
 import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { LogoWithModal } from '@/widgets';
 import cls from './ServerErrorPage.module.scss';
 
 export const ServerErrorPage = () => {

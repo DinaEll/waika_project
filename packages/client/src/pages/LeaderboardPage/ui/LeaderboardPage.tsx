@@ -1,9 +1,9 @@
 import { Empty, Typography } from 'antd';
-import { LogoWithModal } from '@/widgets';
 import { UserAvatar } from '@/shared/ui';
+import { LogoWithModal } from '@/widgets';
 import { players } from '../model';
-import { LeaderboardPlayer } from './LeaderboardPlayer';
 import cls from './LeaderboardPage.module.scss';
+import { LeaderboardPlayer } from './LeaderboardPlayer';
 
 const pageTitle = 'Leaderboard';
 
@@ -16,29 +16,33 @@ export const LeaderboardPage = () => {
     );
   }
 
-  const { avatar, name, points } = players[0];
+  const leader = players[0];
+
+  if (!leader) {
+    return <LogoWithModal title={'Leader Not Found'} />;
+  }
 
   return (
     <LogoWithModal
       title={
         <div className={cls.leaderInfo}>
           <Typography.Title level={4} className={cls.noMargin}>
-            {name}
+            {leader.name}
           </Typography.Title>
           <Typography.Title level={5} className={cls.noMargin}>
-            {points}
+            {leader.points}
           </Typography.Title>
         </div>
       }
       logo={
         <div className={cls.leaderAvatar}>
-          <UserAvatar src={avatar} />
+          <UserAvatar src={leader.avatar} />
         </div>
       }
     >
       <table className={cls.players}>
         {players.map((player) => {
-          return <LeaderboardPlayer {...player} />;
+          return <LeaderboardPlayer key={player.name} {...player} />;
         })}
       </table>
     </LogoWithModal>
