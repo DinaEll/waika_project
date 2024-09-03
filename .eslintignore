@@ -3,7 +3,6 @@ dist/
 build/
 coverage/
 lib/
-tmp/
 
 logs/
 *.log
@@ -16,5 +15,3 @@ Thumbs.db
 *.swp
 
 .eslintcache
-.env
-tmp
