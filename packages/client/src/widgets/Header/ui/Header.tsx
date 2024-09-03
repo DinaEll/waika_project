@@ -3,26 +3,13 @@ import { Button } from 'antd'
 import { getPageUrl } from '@/shared/config'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons'
+import { POST } from '@/shared/api'
 
 export const Header = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    const baseUrl = 'https://ya-praktikum.tech/api/v2'
-
-    fetch(baseUrl + '/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      credentials: 'include',
-    })
-      .then(res => {
-        if (res.status === 200) {
-          navigate(getPageUrl('login'))
-        }
-      })
-      .catch(error => console.error(error))
+    POST('/auth/logout').then(() => navigate(getPageUrl('login')))
   }
 
   return (

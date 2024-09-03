@@ -21,7 +21,7 @@ export const RegistrationPage = () => {
     userSignUp(values).then(res => {
       if (res?.id) {
         getUser().then(() => {
-          navigate(getPageUrl('main'))
+          navigate(getPageUrl('game-startup'))
         })
       }
     })

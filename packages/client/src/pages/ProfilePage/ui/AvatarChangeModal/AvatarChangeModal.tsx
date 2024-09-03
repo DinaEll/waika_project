@@ -3,6 +3,8 @@ import type { GetProp, UploadProps } from 'antd'
 import cls from './AvatarChangeModal.module.scss'
 import React, { FC, useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
+import { PUT } from '@/shared/api'
+import { changeAvatar } from '@/shared/api/endpoints/changeAvatar'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
@@ -31,18 +33,9 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   }
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
-    /*
-    TODO: пока заглушка для запроса, так как еще не реализована авторизация и запросы будут падать без токена,
-          во 2 спринте вынесем общую логику отправки запроса
-    */
     const formData = new FormData()
     formData.append('avatar', file as File)
-    fetch('https://ya-praktikum.tech/api/v2/user/profile/avatar', {
-      method: 'PUT',
-      body: formData,
-    })
-      .then(res => res.json())
-      .catch(err => console.error(err))
+    changeAvatar(formData).then()
 
     if (props.onCancel) {
       props.onCancel(e)

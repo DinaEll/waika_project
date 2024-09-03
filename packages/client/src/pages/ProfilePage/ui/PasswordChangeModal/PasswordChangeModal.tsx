@@ -1,6 +1,8 @@
 import { Form, Input, Modal, ModalProps } from 'antd'
 import cls from './PasswordChangeModal.module.scss'
 import React, { ChangeEvent, FC, useState } from 'react'
+import { PUT } from '@/shared/api'
+import { changePassword } from '@/shared/api/endpoints/changePassword'
 
 export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [formData, setFormData] = useState({
@@ -17,19 +19,7 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   }
 
   const sendNewPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
-    /*
-    TODO: пока заглушка для запроса, так как еще не реализована авторизация и запросы будут падать без токена,
-          во 2 спринте вынесем общую логику отправки запроса
-    */
-    fetch('https://ya-praktikum.tech/api/v2/user/password', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(res => res.json())
-      .catch(err => console.error(err))
+    changePassword(formData).then()
 
     if (props.onCancel) {
       props.onCancel(e)
