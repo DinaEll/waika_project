@@ -19,6 +19,10 @@ jobs:
         run: yarn
       - name: Initialize
         run: yarn lerna bootstrap
+      - name: Typecheck
+        run: yarn typecheck
+      - name: Stylelint
+        run: yarn stylelint
       - name: Lint
         run: yarn lint
       - name: Test
