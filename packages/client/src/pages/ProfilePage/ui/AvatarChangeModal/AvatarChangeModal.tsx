@@ -3,8 +3,7 @@ import type { GetProp, UploadProps } from 'antd'
 import cls from './AvatarChangeModal.module.scss'
 import React, { FC, useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-import { PUT } from '@/shared/api'
-import { changeAvatar } from '@/shared/api/endpoints/changeAvatar'
+import { changeAvatar } from '@/shared/api'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 

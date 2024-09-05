@@ -3,13 +3,13 @@ import { Button } from 'antd'
 import { getPageUrl } from '@/shared/config'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons'
-import { POST } from '@/shared/api'
+import { logOut } from '@/shared/api'
 
 export const Header = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    POST('/auth/logout').then(() => navigate(getPageUrl('login')))
+    logOut().then(() => navigate(getPageUrl('login')))
   }
 
   return (

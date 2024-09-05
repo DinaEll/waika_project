@@ -3,7 +3,8 @@ import { Form, Button, Input } from 'antd'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
-import { SignUpRequest, userSignUp, getUser } from '@/shared/api'
+import { userSignUp, getUser } from '@/shared/api'
+import { SignUpRequest } from '@/shared/interfaces'
 
 const regInitialState = {
   first_name: '',

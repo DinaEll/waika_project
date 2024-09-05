@@ -1,19 +1,45 @@
 import { appConfig } from '@/shared/config'
 import axios from 'axios'
 
-export const POST = async (
+type Response<T = unknown> = T
+type Request<T = unknown> = {
+  [k in string]: T
+}
+
+enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
+type Method = typeof METHODS[keyof typeof METHODS]
+
+export type ReqOptions = {
+  method?: Method
+  headers?: Record<string, string>
+  data?: Record<string, unknown>
+}
+
+type HTTPMethod = <T = unknown>(
   url: string,
-  data?: unknown,
-  withCredentials = true
-) => {
-  return await axios(appConfig.baseUrl + url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
+  options: Request
+) => Promise<Response<T>>
+
+export const POST: HTTPMethod = async (url: string, options) => {
+  const { fileUpload = false, data } = options
+  return await baseRequest(
+    url,
+    METHODS.POST,
+    {
+      'Content-Type': fileUpload
+        ? 'multipart/form-data'
+        : 'application/json; charset=UTF-8',
     },
-    withCredentials,
-    data: JSON.stringify(data),
-  })
+    {
+      data: fileUpload ? data : JSON.stringify(data),
+    }
+  )
     .then(res => {
       if (res.status !== 200) {
         throw new Error('Error. Please try again')
@@ -27,44 +53,60 @@ export const POST = async (
         return text
       }
     })
-    .catch(error => console.error(error))
+    .catch(error => {
+      console.error(error)
+      throw error
+    })
 }
 
-export const GET = async (url: string, withCredentials = true) => {
-  return await axios(appConfig.baseUrl + url, {
-    method: 'GET',
-    withCredentials,
-  })
+export const GET: HTTPMethod = async (url: string) => {
+  return await baseRequest(url, METHODS.GET)
     .then(res => {
       if (res.status !== 200) {
         throw new Error('Error. Please try again')
       }
       return res?.data
     })
-    .catch(error => console.error(error))
+    .catch(error => {
+      console.error(error)
+      throw error
+    })
 }
 
-export const PUT = async (
-  url: string,
-  data?: unknown,
-  imageUpload = false,
-  withCredentials = true
-) => {
-  return await axios(appConfig.baseUrl + url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': imageUpload
+export const PUT: HTTPMethod = async (url: string, options: Request) => {
+  const { fileUpload = false, data } = options
+  return await baseRequest(
+    url,
+    METHODS.PUT,
+    {
+      'Content-Type': fileUpload
         ? 'multipart/form-data'
         : 'application/json; charset=UTF-8',
     },
-    withCredentials,
-    data: imageUpload ? data : JSON.stringify(data),
-  })
+    { data: fileUpload ? data : JSON.stringify(data) }
+  )
     .then(res => {
       if (res.status !== 200) {
         throw new Error('Error. Please try again')
       }
       return res?.data
     })
-    .catch(error => console.error(error))
+    .catch(error => {
+      console.error(error)
+      throw error
+    })
+}
+
+const baseRequest = async (
+  url: string,
+  method: ReqOptions['method'],
+  headers?: ReqOptions['headers'],
+  data?: Request
+) => {
+  return axios(appConfig.baseUrl + url, {
+    method,
+    headers,
+    ...data,
+    withCredentials: true,
+  })
 }

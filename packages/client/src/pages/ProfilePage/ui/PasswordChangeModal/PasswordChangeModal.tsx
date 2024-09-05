@@ -1,8 +1,7 @@
 import { Form, Input, Modal, ModalProps } from 'antd'
 import cls from './PasswordChangeModal.module.scss'
 import React, { ChangeEvent, FC, useState } from 'react'
-import { PUT } from '@/shared/api'
-import { changePassword } from '@/shared/api/endpoints/changePassword'
+import { changePassword } from '@/shared/api'
 
 export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [formData, setFormData] = useState({
