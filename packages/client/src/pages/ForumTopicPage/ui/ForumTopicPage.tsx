@@ -28,13 +28,13 @@ export const ForumTopicPage = () => {
 
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={500}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
       title={
         <Typography.Title level={3} className={cls.noMargin}>
           {pageTitle}

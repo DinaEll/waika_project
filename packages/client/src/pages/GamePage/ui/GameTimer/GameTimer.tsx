@@ -1,10 +1,10 @@
 import { type FC, useState, useRef, useEffect } from 'react';
 import { formatTime, getDurationTime } from '@/shared/utils';
 
-type Props = {
+interface Props {
   startTime?: string;
   finishTime?: string;
-};
+}
 
 export const GameTimer: FC<Props> = ({ startTime, finishTime }) => {
   const [time, setTime] = useState(() => formatTime(0));

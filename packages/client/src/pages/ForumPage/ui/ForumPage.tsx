@@ -57,13 +57,13 @@ export const ForumPage = () => {
 
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={500}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
       title={pageTitle}
     >
       {getCurrentStage()}

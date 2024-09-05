@@ -32,13 +32,13 @@ export const LoginPage = () => {
 
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={344}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
       title="Sign In"
     >
       <Form

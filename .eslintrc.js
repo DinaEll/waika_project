@@ -1,26 +1,34 @@
-module.exports = {
+const eslintConfig = {
   root: true,
+  env: {
+    es2021: true,
+    jest: true,
+    node: true,
+  },
+  plugins: ['@typescript-eslint', 'import', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
     'prettier',
   ],
-  env: {
-    es6: true,
-    browser: true,
-    jest: true,
-    node: true,
-  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     projectService: true,
-    tsconfigRootDir: __dirname,
   },
-  plugins: ['@typescript-eslint'],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './packages/*/tsconfig.json',
+      },
+    },
+  },
   rules: {
+    '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'error',
     'import/order': [
       'error',
       {
@@ -61,42 +69,28 @@ module.exports = {
       },
     ],
   },
-  settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.scss'],
-      },
-      typescript: {
-        alwaysTryTypes: true,
-        project: './packages/*/tsconfig.json',
-      },
-    },
-  },
+
   overrides: [
     {
-      files: ['packages/server/**/*.{ts,tsx,js,jsx}'],
-      env: {
-        node: true,
-      },
-      settings: {
-        'import/resolver': {
-          typescript: {
-            alwaysTryTypes: true,
-            project: './packages/server/tsconfig.json',
-          },
-        },
-      },
-    },
-
-    {
-      files: ['packages/client/**/*.{ts,tsx,js,jsx}'],
-      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
-      plugins: ['react', 'react-hooks'],
+      files: ['packages/client/**/*.{ts,tsx}'],
       env: {
         browser: true,
+      },
+      plugins: ['react', 'react-hooks'],
+      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
+      parserOptions: {
+        project: './packages/client/tsconfig.json',
+        tsconfigRootDir: __dirname,
+      },
+      settings: {
+        react: {
+          version: 'detect',
+        },
+        'import/resolver': {
+          typescript: {
+            project: './packages/client/tsconfig.json',
+          },
+        },
       },
       rules: {
         'react/react-in-jsx-scope': 'off',
@@ -107,19 +101,37 @@ module.exports = {
             html: true,
           },
         ],
+        'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
+        'react/jsx-boolean-value': ['error', 'never'],
+        'react/jsx-props-no-spreading': [
+          'error',
+          {
+            html: 'enforce',
+            custom: 'enforce',
+            explicitSpread: 'ignore',
+          },
+        ],
+      },
+    },
+    {
+      files: ['packages/server/**/*.ts'],
+      env: {
+        node: true,
+      },
+      parserOptions: {
+        project: './packages/server/tsconfig.json',
+        tsconfigRootDir: __dirname,
       },
       settings: {
-        react: {
-          version: 'detect',
-        },
         'import/resolver': {
           typescript: {
-            alwaysTryTypes: true,
-            project: './packages/client/tsconfig.json',
+            project: './packages/server/tsconfig.json',
           },
         },
       },
     },
   ],
-  ignorePatterns: ['dist', 'coverage'],
+  ignorePatterns: ['.eslintrc.js'],
 };
+
+module.exports = eslintConfig;

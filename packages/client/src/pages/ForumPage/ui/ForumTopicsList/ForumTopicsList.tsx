@@ -5,10 +5,10 @@ import { getPageUrl } from '@/shared/config';
 import { ForumPageStages, ForumTopicData } from '../../model/forumData';
 import cls from '../ForumPage.module.scss';
 
-type Props = {
+interface Props {
   changeStage: (stage: ForumPageStages) => void;
   forumTopicsList: ForumTopicData[];
-};
+}
 
 export const ForumTopicsList: FC<Props> = ({
   changeStage,

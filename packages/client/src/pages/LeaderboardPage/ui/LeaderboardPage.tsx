@@ -41,8 +41,16 @@ export const LeaderboardPage = () => {
       }
     >
       <table className={cls.players}>
-        {players.map((player) => {
-          return <LeaderboardPlayer key={player.name} {...player} />;
+        {players.map(({ avatar, name, points, positon }) => {
+          return (
+            <LeaderboardPlayer
+              key={name}
+              avatar={avatar}
+              name={name}
+              points={points}
+              positon={positon}
+            />
+          );
         })}
       </table>
     </LogoWithModal>

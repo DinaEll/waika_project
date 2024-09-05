@@ -7,9 +7,9 @@ import {
 } from '../../model/forumData';
 import cls from './CreateNewThreadForm.module.scss';
 
-type Props = {
+interface Props {
   changeStage: (stage: ForumPageStages) => void;
-};
+}
 
 export const CreateNewThreadForm: FC<Props> = ({ changeStage }) => {
   const [form] = Form.useForm();

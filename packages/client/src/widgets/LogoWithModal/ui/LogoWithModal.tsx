@@ -25,12 +25,13 @@ export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
     <Modal
       footer={null}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
-      open={true}
-      centered={true}
+      centered
       className={cls.logoWithModal}
       closable={false}
+      open
     >
       <div className={cls.logoWithModalContainer}>
         <div className={cls.logoWithModalImage}>{logo ?? <Logo />}</div>

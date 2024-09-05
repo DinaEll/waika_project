@@ -1,7 +1,6 @@
 import { isDefined, isEven, isNull } from '@/shared/utils';
 import type { FieldCell } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class MahjongHelper {
   static createUniqueRandomArray(length: number): number[] {
     const numbers = Array.from({ length }, (_, i) => i + 1);
@@ -40,13 +39,13 @@ export class MahjongHelper {
 
     for (let x = 0; x < rows; x++) {
       for (let y = 0; y < cols; y++) {
-        const current = field[x][y];
+        const current = field[x]?.[y];
         if (!isDefined(current)) continue;
 
-        const hasTopNeighbor = x > 0 && field[x - 1][y] !== null;
-        const hasBottomNeighbor = x < rows - 1 && field[x + 1][y] !== null;
-        const hasLeftNeighbor = y > 0 && field[x][y - 1] !== null;
-        const hasRightNeighbor = y < cols - 1 && field[x][y + 1] !== null;
+        const hasTopNeighbor = x > 0 && field[x - 1]?.[y] !== null;
+        const hasBottomNeighbor = x < rows - 1 && field[x + 1]?.[y] !== null;
+        const hasLeftNeighbor = y > 0 && field[x]?.[y - 1] !== null;
+        const hasRightNeighbor = y < cols - 1 && field[x]?.[y + 1] !== null;
 
         if (
           (!hasBottomNeighbor && (!hasLeftNeighbor || !hasRightNeighbor)) ||
@@ -62,7 +61,7 @@ export class MahjongHelper {
 
   static findPairs(arr: NonNullable<FieldCell>[]): [number, number][] {
     const pairs: [number, number][] = [];
-    const seen: Set<number> = new Set();
+    const seen = new Set<number>();
 
     arr.forEach((element) => {
       if (seen.has(element)) {
@@ -91,15 +90,19 @@ export class MahjongHelper {
     for (let i = nonNullIndices.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [nonNullIndices[i], nonNullIndices[j]] = [
-        nonNullIndices[j],
-        nonNullIndices[i],
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        nonNullIndices[j]!,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        nonNullIndices[i]!,
       ];
     }
 
     const nonNullPairs = newPairs.filter((id) => !isNull(id));
 
     nonNullIndices.forEach((idx, i) => {
-      newPairs[idx] = nonNullPairs[i];
+      if (isDefined(nonNullPairs[i])) {
+        newPairs[idx] = nonNullPairs[i];
+      }
     });
 
     return newPairs;
@@ -131,9 +134,10 @@ export class MahjongHelper {
 
     let sourceIndex = 0;
 
-    for (let i = 0; i < newField.length; i++) {
-      for (let j = 0; j < newField[i].length; j++) {
-        newField[i][j] = pairs[sourceIndex];
+    for (const row of newField) {
+      for (let j = 0; j < row.length; j++) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        row[j] = pairs[sourceIndex]!;
         sourceIndex++;
       }
     }
@@ -147,8 +151,8 @@ export class MahjongHelper {
     }
 
     const length = Math.sqrt(size);
-    const field: FieldCell[][] = Array.from({ length }, () =>
-      Array(length).fill(null),
+    const field = Array.from<{ length: number }, FieldCell[]>({ length }, () =>
+      Array<FieldCell>(length).fill(null),
     );
 
     return MahjongHelper.fillFieldWithPairs(field, pairs);
@@ -163,9 +167,11 @@ export class MahjongHelper {
     for (let i = 0; i < depth; i++) {
       field[i] = [];
       for (let j = 0; j < rows; j++) {
-        field[i][j] = [];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        field[i]![j] = [];
         for (let k = 0; k < columns; k++) {
-          field[i][j][k] = null;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          field[i]![j]![k] = null;
         }
       }
     }

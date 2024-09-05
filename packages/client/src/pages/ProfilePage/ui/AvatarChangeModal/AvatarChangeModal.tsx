@@ -54,16 +54,18 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
           во 2 спринте вынесем общую логику отправки запроса
     */
     const formData = new FormData();
-    formData.append('avatar', file as File);
-    fetch('https://ya-praktikum.tech/api/v2/user/profile/avatar', {
-      method: 'PUT',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
+    if (file) {
+      formData.append('avatar', file);
+      fetch('https://ya-praktikum.tech/api/v2/user/profile/avatar', {
+        method: 'PUT',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .catch((err) => console.error(err));
 
-    if (props.onCancel) {
-      props.onCancel(e);
+      if (props.onCancel) {
+        props.onCancel(e);
+      }
     }
   };
 
@@ -76,6 +78,7 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
       }}
       centered
       onOk={sendNewAvatar}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
       <Upload

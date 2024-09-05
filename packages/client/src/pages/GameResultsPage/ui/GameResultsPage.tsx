@@ -13,13 +13,13 @@ export const GameResultsPage = () => {
     <div className={classNames(cls.GameResultsPage)}>
       {/*todo LogoWithModal решили убрать в следующем спринте, пока они необходимы в связи с общей разработкой*/}
       <LogoWithModal
-        open={true}
-        centered={true}
+        open
+        centered
         closable={false}
         footer={null}
         width={500}
         mask={false}
-        transitionName={''}
+        transitionName={undefined}
         title="Congratulation"
       >
         <div className={cls.gameOverPageWrapper}>

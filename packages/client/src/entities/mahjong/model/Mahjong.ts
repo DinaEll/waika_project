@@ -1,4 +1,4 @@
-import { isNull } from '@/shared/utils';
+import { isDefined, isNull } from '@/shared/utils';
 import { CanvasLayer } from '../../canvas/model/CanvasLayer';
 import { Game } from '../../game/model/Game';
 import { MahjongHelper } from './MahjongHelper';
@@ -163,7 +163,7 @@ export class Mahjong extends Game {
         return;
       } else {
         const selectedTile = this.selectedTiles[0];
-        if (selectedTile.sameNumber(tile)) {
+        if (selectedTile?.sameNumber(tile)) {
           this.selectedTiles.push(tile);
           tile.isSelected = true;
 
@@ -171,9 +171,13 @@ export class Mahjong extends Game {
             this.selectedTiles.forEach((selectedTile) => {
               selectedTile.isSelected = false;
               selectedTile.isVisible = false;
-              this.field[selectedTile.props.positionOnField[0]][
-                selectedTile.props.positionOnField[1]
-              ] = null;
+              const [x, y] = selectedTile.props.positionOnField;
+              if (isDefined(x) && isDefined(y)) {
+                if (!this.field[x]) {
+                  this.field[x] = [];
+                }
+                this.field[x][y] = null;
+              }
             });
             this.selectedTiles = [];
             this.remainingTiles -= 2;

@@ -45,6 +45,7 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
       }}
       centered
       onOk={sendNewPassword}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
       <Form layout="vertical">

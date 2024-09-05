@@ -8,13 +8,13 @@ import cls from './GameStartupPage.module.scss';
 export const GameStartupPage = () => {
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={500}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
       title="Start game"
     >
       <div className={cls.wrapper}>

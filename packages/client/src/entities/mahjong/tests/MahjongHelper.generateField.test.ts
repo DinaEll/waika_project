@@ -11,7 +11,7 @@ describe('MahjongHelper', () => {
       const field = MahjongHelper.generateField(size, pairs);
 
       expect(field.length).toBe(4);
-      expect(field[0].length).toBe(4);
+      expect(field[0]?.length).toBe(4);
     });
 
     it('should fill the field with provided pairs', () => {

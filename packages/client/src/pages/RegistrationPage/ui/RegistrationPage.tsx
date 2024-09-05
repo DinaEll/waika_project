@@ -40,13 +40,13 @@ export const RegistrationPage = () => {
 
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={344}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
       title="Sign Up"
     >
       <Form

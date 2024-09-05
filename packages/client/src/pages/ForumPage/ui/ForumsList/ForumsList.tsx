@@ -3,10 +3,10 @@ import { FC } from 'react';
 import { ForumData, ForumPageStages } from '../../model/forumData';
 import cls from '../ForumPage.module.scss';
 
-type Props = {
+interface Props {
   changeStage: (stage: ForumPageStages) => void;
   forumsList: ForumData[];
-};
+}
 
 export const ForumsList: FC<Props> = ({ changeStage, forumsList }) => {
   return (
