@@ -1,4 +1,12 @@
+.layout {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--primary-green);
+}
+
 .navbar {
+    position: relative;
+    z-index: 4000;
     width: 200px;
     padding: 2rem 0;
     display: flex;

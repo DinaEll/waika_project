@@ -17,7 +17,7 @@ export const GameResultsPage = () => {
         centered={true}
         closable={false}
         footer={null}
-        width={344}
+        width={500}
         mask={false}
         transitionName={''}
         title="Congratulation">

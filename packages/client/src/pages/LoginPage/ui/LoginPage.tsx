@@ -1,32 +1,26 @@
 import cls from './LoginPage.module.scss'
-import { ChangeEvent, useState } from 'react'
 import { LogoWithModal } from '@/widgets/LogoWithModal'
 import { Button, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
+import { SignInRequest, userSignIn, getUser } from '@/shared/api'
 
 const loginInitialState = {
   login: '',
   password: '',
 }
 
-interface signInRequest {
-  login: string
-  password: string
-}
-
 export const LoginPage = () => {
-  const [formData, setFormData] = useState(loginInitialState)
+  const navigate = useNavigate()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
-  const handleSubmit = (values: signInRequest): void => {
-    //TODO: add User sign in logic
+  const handleSubmit = (values: SignInRequest): void => {
+    userSignIn(values).then(() => {
+      getUser().then(res => {
+        if (res?.id) {
+          navigate(getPageUrl('main'))
+        }
+      })
+    })
   }
 
   return (
@@ -42,16 +36,10 @@ export const LoginPage = () => {
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
+        initialValues={loginInitialState}
         onFinish={handleSubmit}>
         <Form.Item className={cls.loginPageItem} name="login" label="Login">
-          <Input
-            id="login"
-            type="text"
-            placeholder="Login"
-            value={formData.login}
-            onChange={handleChange}
-            required
-          />
+          <Input id="login" type="text" placeholder="Login" required />
         </Form.Item>
 
         <Form.Item
@@ -62,8 +50,6 @@ export const LoginPage = () => {
             id="password"
             type="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
             required
           />
         </Form.Item>
