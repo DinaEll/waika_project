@@ -16,13 +16,17 @@ export class ErrorBoundary extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
+    this.setState({ hasError: false })
   }
 
-  static getDerivedStateFromError(_: Error): State {
-    return { hasError: true }
+  componentDidUpdate(prevProps: Props, _previousState: State) {
+    if (this.props.children !== prevProps.children && _previousState.hasError) {
+      this.setState({ hasError: false })
+    }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    this.setState({ hasError: true })
     console.error('Uncaught error:', error, errorInfo)
   }
 

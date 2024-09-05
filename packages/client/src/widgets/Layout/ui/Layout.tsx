@@ -5,6 +5,7 @@ import cls from './Layout.module.scss'
 import { Header } from '@/widgets/Header'
 import { useEffect } from 'react'
 import { getUser } from '@/shared/api'
+import { ErrorBoundary } from '@/app/ErrorBoundary/ErrorBoundary'
 
 export const Layout = () => {
   const navigate = useNavigate()
@@ -44,9 +45,11 @@ export const Layout = () => {
 
       <Header></Header>
 
-      <main>
-        <Outlet />
-      </main>
+      <ErrorBoundary>
+        <main>
+          <Outlet />
+        </main>
+      </ErrorBoundary>
     </div>
   )
 }
