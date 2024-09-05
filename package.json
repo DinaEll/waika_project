@@ -12,6 +12,7 @@
     "lint:fix": "lerna run lint:fix",
     "typecheck": "lerna run typecheck --stream",
     "stylelint": "lerna run stylelint",
+    "stylelint:fix": "lerna run stylelint:fix",
     "format": "lerna run format",
     "preview": "lerna run preview"
   },

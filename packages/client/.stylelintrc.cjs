@@ -37,7 +37,7 @@ module.exports = {
           `Expected placeholder "${placeholder}" to be in camelCase`,
       },
     ],
-    'declaration-no-important': true,
+    'declaration-no-important': null,
     'font-family-name-quotes': 'always-unless-keyword',
     'font-weight-notation': 'numeric',
     'color-named': 'never',

@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   padding: 8px;
+  gap: 8px;
 }
 
 .titleWrapper {
@@ -11,8 +11,8 @@
 }
 
 .trophy {
-  font-size: 48px;
   margin-bottom: 2px;
+  font-size: 48px;
 }
 
 .gameOverPageItem {
@@ -27,5 +27,5 @@
 
 .gameOverPageItem .result,
 .gameOverPageItem .bestResult {
-  font-weight: bold;
+  font-weight: 700;
 }
