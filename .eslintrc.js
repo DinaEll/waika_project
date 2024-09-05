@@ -77,7 +77,11 @@ const eslintConfig = {
         browser: true,
       },
       plugins: ['react', 'react-hooks'],
-      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
+      extends: [
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        //'@feature-sliced', TODO fix errors
+      ],
       parserOptions: {
         project: './packages/client/tsconfig.json',
         tsconfigRootDir: __dirname,
