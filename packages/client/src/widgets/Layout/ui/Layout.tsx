@@ -1,10 +1,32 @@
 import classNames from 'classnames';
-import { Outlet, NavLink } from 'react-router-dom';
-import { getPageUrl } from '@/shared/config';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { getUser } from '@/shared/api';
+import { getPageUrl, pagesPaths } from '@/shared/config';
+import { useEffectOnce } from '@/shared/hooks';
 import { Header } from '@/widgets/Header';
 import cls from './Layout.module.scss';
 
 export const Layout = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffectOnce(() => {
+    void getUser().then((res) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (!res?.id) {
+        navigate(getPageUrl('login'));
+        return;
+      }
+
+      const nonProtectedRoute = (
+        [pagesPaths.login, pagesPaths.registration] as string[]
+      ).includes(location.pathname);
+      if (nonProtectedRoute) {
+        navigate(getPageUrl('main'));
+      }
+    });
+  });
+
   return (
     <div className={cls.layout}>
       <nav className={classNames(cls.navbar)}>

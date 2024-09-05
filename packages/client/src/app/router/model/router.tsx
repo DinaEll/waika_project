@@ -11,7 +11,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage';
 import { ServerErrorPage } from '@/pages/ServerErrorPage';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { getPageUrl } from '@/shared/config';
 import { Layout } from '@/widgets/Layout';
 
 export const router = createBrowserRouter([

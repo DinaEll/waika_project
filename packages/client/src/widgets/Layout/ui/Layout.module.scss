@@ -5,6 +5,8 @@
 }
 
 .navbar {
+  position: relative;
+  z-index: 4000;
   display: flex;
   width: 200px;
   padding: 2rem 0;

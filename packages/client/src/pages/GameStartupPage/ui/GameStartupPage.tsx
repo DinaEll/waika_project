@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import RulesImg from '@/shared/assets/images/rules.png';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { getPageUrl } from '@/shared/config';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './GameStartupPage.module.scss';
 

@@ -1,7 +1,7 @@
 import { Form, Button, Input } from 'antd';
-import { ChangeEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { SignUpRequest, userSignUp, getUser } from '@/shared/api';
+import { getPageUrl } from '@/shared/config';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
 
@@ -14,28 +14,18 @@ const regInitialState = {
   phone: '',
 };
 
-interface SignUpRequest {
-  first_name: string;
-  second_name: string;
-  login: string;
-  email: string;
-  password: string;
-  phone: string;
-}
-
 export const RegistrationPage = () => {
-  const [formData, setFormData] = useState(regInitialState);
+  const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
   const handleSubmit = (values: SignUpRequest): void => {
-    //TODO: add User sign up logic
-    console.log(values);
+    void userSignUp(values).then((res) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (res?.id) {
+        void getUser().then(() => {
+          navigate(getPageUrl('main'));
+        });
+      }
+    });
   };
 
   return (
@@ -52,6 +42,7 @@ export const RegistrationPage = () => {
       <Form
         className={cls.registrationPageWrapper}
         layout="vertical"
+        initialValues={regInitialState}
         onFinish={handleSubmit}
       >
         <Form.Item
@@ -63,8 +54,6 @@ export const RegistrationPage = () => {
             id="first_name"
             type="text"
             placeholder="First Name"
-            value={formData.first_name}
-            onChange={handleChange}
             required
           />
         </Form.Item>
@@ -78,8 +67,6 @@ export const RegistrationPage = () => {
             id="second_name"
             type="text"
             placeholder="Last Name"
-            value={formData.second_name}
-            onChange={handleChange}
             required
           />
         </Form.Item>
@@ -89,14 +76,7 @@ export const RegistrationPage = () => {
           name="login"
           label="Login"
         >
-          <Input
-            id="login"
-            type="text"
-            placeholder="Login"
-            value={formData.login}
-            onChange={handleChange}
-            required
-          />
+          <Input id="login" type="text" placeholder="Login" required />
         </Form.Item>
 
         <Form.Item
@@ -104,14 +84,7 @@ export const RegistrationPage = () => {
           name="email"
           label="Email"
         >
-          <Input
-            id="email"
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <Input id="email" type="email" placeholder="Email" required />
         </Form.Item>
 
         <Form.Item
@@ -119,14 +92,7 @@ export const RegistrationPage = () => {
           name="phone"
           label="Phone"
         >
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="Phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
+          <Input id="phone" type="tel" placeholder="Phone" required />
         </Form.Item>
 
         <Form.Item
@@ -138,8 +104,6 @@ export const RegistrationPage = () => {
             id="password"
             type="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
             required
           />
         </Form.Item>

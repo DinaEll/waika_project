@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import { getPageUrl } from '@/shared/config/router/routerConfig';
+import { getPageUrl } from '@/shared/config';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './GameResultsPage.module.scss';
 
