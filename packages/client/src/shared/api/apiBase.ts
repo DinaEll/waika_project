@@ -47,7 +47,7 @@ export const post: HTTPMethod = async (url: string, options) => {
     .then(res => {
       try {
         return JSON.parse(res)
-      } catch (err) {
+      } catch {
         return res
       }
     })
