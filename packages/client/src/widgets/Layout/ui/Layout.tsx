@@ -5,7 +5,7 @@ import cls from './Layout.module.scss'
 import { Header } from '@/widgets/Header'
 import { useEffect } from 'react'
 import { getUser } from '@/shared/api'
-import { ErrorBoundary } from '@/app/ErrorBoundary/ErrorBoundary'
+import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary'
 
 export const Layout = () => {
   const navigate = useNavigate()

@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
-import { NotFoundPage } from '@/pages/NotFoundPage'
+import { ServerErrorPage } from '@/pages/ServerErrorPage'
 
 interface Props {
   children?: ReactNode
@@ -16,11 +16,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.setState({ hasError: false })
   }
 
-  componentDidUpdate(prevProps: Props, _previousState: State) {
-    if (this.props.children !== prevProps.children && _previousState.hasError) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    if (this.props.children !== prevProps.children && prevState.hasError) {
       this.setState({ hasError: false })
     }
   }
@@ -32,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <NotFoundPage />
+      return <ServerErrorPage />
     }
     return this.props.children
   }
