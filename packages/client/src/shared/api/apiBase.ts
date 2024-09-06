@@ -6,14 +6,12 @@ type Request<T = unknown> = {
   [k in string]: T
 }
 
-enum METHODS {
+const enum Method {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
-
-type Method = typeof METHODS[keyof typeof METHODS]
 
 export type ReqOptions = {
   method?: Method
@@ -26,11 +24,11 @@ type HTTPMethod = <T = unknown>(
   options: Request
 ) => Promise<Response<T>>
 
-export const POST: HTTPMethod = async (url: string, options) => {
+export const post: HTTPMethod = async (url: string, options) => {
   const { fileUpload = false, data } = options
   return await baseRequest(
     url,
-    METHODS.POST,
+    Method.POST,
     {
       'Content-Type': fileUpload
         ? 'multipart/form-data'
@@ -46,11 +44,11 @@ export const POST: HTTPMethod = async (url: string, options) => {
       }
       return res?.data
     })
-    .then(text => {
+    .then(res => {
       try {
-        return JSON.parse(text)
+        return JSON.parse(res)
       } catch (err) {
-        return text
+        return res
       }
     })
     .catch(error => {
@@ -59,8 +57,8 @@ export const POST: HTTPMethod = async (url: string, options) => {
     })
 }
 
-export const GET: HTTPMethod = async (url: string) => {
-  return await baseRequest(url, METHODS.GET)
+export const get: HTTPMethod = async (url: string) => {
+  return await baseRequest(url, Method.GET)
     .then(res => {
       if (res.status !== 200) {
         throw new Error('Error. Please try again')
@@ -73,11 +71,11 @@ export const GET: HTTPMethod = async (url: string) => {
     })
 }
 
-export const PUT: HTTPMethod = async (url: string, options: Request) => {
+export const put: HTTPMethod = async (url: string, options: Request) => {
   const { fileUpload = false, data } = options
   return await baseRequest(
     url,
-    METHODS.PUT,
+    Method.PUT,
     {
       'Content-Type': fileUpload
         ? 'multipart/form-data'
