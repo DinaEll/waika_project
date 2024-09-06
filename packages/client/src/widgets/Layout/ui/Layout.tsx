@@ -3,6 +3,7 @@ import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { getUser } from '@/shared/api';
 import { getPageUrl, pagesPaths } from '@/shared/config';
 import { useEffectOnce } from '@/shared/hooks';
+import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary';
 import { Header } from '@/widgets/Header';
 import cls from './Layout.module.scss';
 
@@ -45,9 +46,11 @@ export const Layout = () => {
 
       <Header />
 
-      <main>
-        <Outlet />
-      </main>
+      <ErrorBoundary>
+        <main>
+          <Outlet />
+        </main>
+      </ErrorBoundary>
     </div>
   );
 };
