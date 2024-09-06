@@ -4,14 +4,14 @@ import { appConfig } from '@/shared/config';
 type Response<T = unknown> = T;
 type Request = Record<string, unknown>;
 
-enum Method {
+const enum Method {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
 
-export interface ReqOptions {
+interface ReqOptions {
   method?: Method;
   headers?: Record<string, string>;
   data?: Record<string, unknown>;
