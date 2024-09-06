@@ -1,8 +1,8 @@
 export interface ForumData {
-  id: number
-  name: string
-  themes: number
-  answers: number
+  id: number;
+  name: string;
+  themes: number;
+  answers: number;
 }
 
 export const forumsListMock: ForumData[] = [
@@ -24,14 +24,14 @@ export const forumsListMock: ForumData[] = [
     themes: 1,
     answers: 2,
   },
-]
+];
 
 export interface ForumTopicData {
-  id: string
-  title: string
-  author: string
-  replies: number
-  views: number
+  id: string;
+  title: string;
+  author: string;
+  replies: number;
+  views: number;
 }
 export const forumTopicsListMock: ForumTopicData[] = [
   {
@@ -55,7 +55,7 @@ export const forumTopicsListMock: ForumTopicData[] = [
     replies: 111,
     views: 99,
   },
-]
+];
 
 export const enum ForumPageStages {
   forumsList = 'forumsList',
@@ -66,9 +66,9 @@ export const enum ForumPageStages {
 export const initialNewThreadFormData = {
   title: '',
   descr: '',
-}
+};
 
 export interface newThreadFormData {
-  title: string
-  descr: string
+  title: string;
+  descr: string;
 }

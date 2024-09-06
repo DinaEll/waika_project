@@ -1,44 +1,39 @@
-import { type FC, useEffect, useRef, useState } from 'react'
-import { Button, Flex } from 'antd'
-import { formatTime, getDurationTime } from '@/shared/utils'
-import { Mahjong } from '@/entities/mahjong'
-import { GameTimer } from './GameTimer/GameTimer'
-import cls from './GamePage.module.scss'
+import { Button, Flex } from 'antd';
+import { useRef, useState, type FC } from 'react';
+import { Mahjong } from '@/entities/mahjong';
+import { formatTime, getDurationTime } from '@/shared/utils';
+import { useEffectOnce } from '../../../shared/hooks';
+import cls from './GamePage.module.scss';
+import { GameTimer } from './GameTimer/GameTimer';
 
 export const GamePage: FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mahjongRef = useRef<Mahjong>()
-  const [startTime, setStartTime] = useState<Date>()
-  const [finishTime, setFinishTime] = useState<Date>()
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mahjongRef = useRef<Mahjong>();
+  const [startTime, setStartTime] = useState<Date>();
+  const [finishTime, setFinishTime] = useState<Date>();
 
-  const onStartCallback = (startTime?: Date) => {
-    setStartTime(startTime)
-    setFinishTime(undefined)
-    console.log(`start game at ${startTime}`)
-  }
-
-  const onWinCallback = (startTime?: Date, finishTime?: Date) => {
-    if (startTime && finishTime) {
-      alert(`You Won! ${formatTime(getDurationTime(startTime, finishTime))}`)
+  const onStartCallback = (startTime?: Date): undefined => {
+    setStartTime(startTime);
+    setFinishTime(undefined);
+    if (startTime) {
+      console.log(`start game at ${startTime.toISOString()}`);
     }
-    setFinishTime(finishTime)
-  }
+  };
+
+  const onWinCallback = (startTime?: Date, finishTime?: Date): undefined => {
+    if (startTime && finishTime) {
+      alert(`You Won! ${formatTime(getDurationTime(startTime, finishTime))}`);
+    }
+    setFinishTime(finishTime);
+  };
 
   const onLoseCallback = () => {
-    alert('You Lose!')
-  }
-
-  const destroyGame = () => {
-    if (mahjongRef.current) {
-      mahjongRef.current.finish()
-      mahjongRef.current.destroy()
-      mahjongRef.current = undefined
-    }
-  }
+    alert('You Lose!');
+  };
 
   const createGame = () => {
     if (!canvasRef.current) {
-      throw new Error('Canvas not found')
+      throw new Error('Canvas not found');
     }
 
     const mahjongOptions = {
@@ -49,27 +44,35 @@ export const GamePage: FC = () => {
       onStartCallback,
       onWinCallback,
       onLoseCallback,
-    }
-    mahjongRef.current = new Mahjong(canvasRef.current, mahjongOptions)
-    mahjongRef.current.start()
-  }
+    };
+    mahjongRef.current = new Mahjong(canvasRef.current, mahjongOptions);
+    mahjongRef.current.start();
+  };
 
-  useEffect(() => {
-    createGame()
+  const destroyGame = () => {
+    if (mahjongRef.current) {
+      mahjongRef.current.finish();
+      mahjongRef.current.destroy();
+      mahjongRef.current = undefined;
+    }
+  };
+
+  useEffectOnce(() => {
+    createGame();
 
     return () => {
-      destroyGame()
-    }
-  }, [])
+      destroyGame();
+    };
+  });
 
   const onRestartClick = () => {
-    destroyGame()
-    createGame()
-  }
+    destroyGame();
+    createGame();
+  };
 
   const onShuffleClick = () => {
-    mahjongRef.current?.handleShuffle()
-  }
+    mahjongRef.current?.handleShuffle();
+  };
 
   return (
     <div className={cls.gamePage}>
@@ -83,5 +86,5 @@ export const GamePage: FC = () => {
       </Flex>
       <canvas ref={canvasRef} className={cls.gameField} />
     </div>
-  )
-}
+  );
+};

@@ -1,10 +1,10 @@
-import { type FC } from 'react'
-import { Typography } from 'antd'
-import { UserAvatar } from '@/shared/ui'
-import { players } from '../../model'
-import cls from './LeaderboardPlayer.module.scss'
+import { Typography } from 'antd';
+import { type FC } from 'react';
+import { UserAvatar } from '@/shared/ui';
+import { players } from '../../model';
+import cls from './LeaderboardPlayer.module.scss';
 
-type Props = typeof players[number]
+type Props = (typeof players)[number];
 
 export const LeaderboardPlayer: FC<Props> = ({
   avatar,
@@ -29,5 +29,5 @@ export const LeaderboardPlayer: FC<Props> = ({
         <Typography.Text>{points}</Typography.Text>
       </td>
     </tr>
-  )
-}
+  );
+};

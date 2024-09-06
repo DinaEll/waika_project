@@ -1,1 +1,1 @@
-export { LogoWithModal } from './ui/LogoWithModal'
+export { LogoWithModal } from './ui/LogoWithModal';

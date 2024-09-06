@@ -1,44 +1,46 @@
-import cls from './LoginPage.module.scss'
-import { LogoWithModal } from '@/widgets/LogoWithModal'
-import { Button, Form, Input } from 'antd'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { userSignIn, getUser } from '@/shared/api'
-import { SignInRequest } from '@/shared/interfaces'
+import { Button, Form, Input } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { userSignIn, getUser } from '@/shared/api';
+import { getPageUrl } from '@/shared/config';
+import { SignInRequest } from '@/shared/interfaces';
+import { LogoWithModal } from '@/widgets/LogoWithModal';
+import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
   login: '',
   password: '',
-}
+};
 
 export const LoginPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = (values: SignInRequest): void => {
-    userSignIn(values).then(() => {
-      getUser().then(res => {
-        if (res?.id) {
-          navigate(getPageUrl('game-startup'))
+    void userSignIn(values).then(() => {
+      void getUser().then((res) => {
+        if (res.id) {
+          navigate(getPageUrl('game-startup'));
         }
-      })
-    })
-  }
+      });
+    });
+  };
 
   return (
     <LogoWithModal
-      open={true}
-      centered={true}
+      open
+      centered
       closable={false}
       footer={null}
       width={344}
       mask={false}
-      transitionName={''}
-      title="Sign In">
+      transitionName={undefined}
+      title="Sign In"
+    >
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
         initialValues={loginInitialState}
-        onFinish={handleSubmit}>
+        onFinish={handleSubmit}
+      >
         <Form.Item className={cls.loginPageItem} name="login" label="Login">
           <Input id="login" type="text" placeholder="Login" required />
         </Form.Item>
@@ -46,7 +48,8 @@ export const LoginPage = () => {
         <Form.Item
           className={cls.loginPageItem}
           name="password"
-          label="Password">
+          label="Password"
+        >
           <Input
             id="password"
             type="password"
@@ -68,5 +71,5 @@ export const LoginPage = () => {
         </Form.Item>
       </Form>
     </LogoWithModal>
-  )
-}
+  );
+};

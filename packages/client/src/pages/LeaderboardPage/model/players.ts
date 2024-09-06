@@ -1,8 +1,8 @@
 interface Player {
-  positon: number
-  avatar: string | null | undefined
-  name: string
-  points: number
+  positon: number;
+  avatar: string | null | undefined;
+  name: string;
+  points: number;
 }
 
 export const players: Player[] = [
@@ -12,4 +12,4 @@ export const players: Player[] = [
   { positon: 4, avatar: null, name: 'Cat_banan_new_star_wars', points: 29_777 },
   { positon: 500, avatar: null, name: 'Kola Pepe', points: 9_777 },
   { positon: 9_400, avatar: null, name: 'Kola', points: 7 },
-]
+];

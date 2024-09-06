@@ -1,31 +1,32 @@
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
-import classNames from 'classnames'
-import { getPageUrl, pagesPaths } from '@/shared/config'
-import cls from './Layout.module.scss'
-import { Header } from '@/widgets/Header'
-import { useEffect } from 'react'
-import { getUser } from '@/shared/api'
-import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary'
+import classNames from 'classnames';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { getUser } from '@/shared/api';
+import { getPageUrl, pagesPaths } from '@/shared/config';
+import { useEffectOnce } from '@/shared/hooks';
+import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary';
+import { Header } from '@/widgets/Header';
+import cls from './Layout.module.scss';
 
 export const Layout = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    getUser().then(res => {
+  useEffectOnce(() => {
+    void getUser().then((res) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (!res?.id) {
-        navigate(getPageUrl('login'))
-        return
+        navigate(getPageUrl('login'));
+        return;
       }
 
       const nonProtectedRoute = (
         [pagesPaths.login, pagesPaths.registration] as string[]
-      ).includes(location.pathname)
+      ).includes(location.pathname);
       if (nonProtectedRoute) {
-        navigate(getPageUrl('main'))
+        navigate(getPageUrl('main'));
       }
-    })
-  }, [])
+    });
+  });
 
   return (
     <div className={cls.layout}>
@@ -43,7 +44,7 @@ export const Layout = () => {
         <NavLink to={getPageUrl('profile')}>Profile</NavLink>
       </nav>
 
-      <Header></Header>
+      <Header />
 
       <ErrorBoundary>
         <main>
@@ -51,5 +52,5 @@ export const Layout = () => {
         </main>
       </ErrorBoundary>
     </div>
-  )
-}
+  );
+};

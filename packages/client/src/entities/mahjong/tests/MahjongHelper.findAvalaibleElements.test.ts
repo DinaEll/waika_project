@@ -1,4 +1,4 @@
-import { MahjongHelper } from '../model/MahjongHelper'
+import { MahjongHelper } from '../model/MahjongHelper';
 
 describe('MahjongHelper', () => {
   describe('findAvalaibleElements', () => {
@@ -7,8 +7,8 @@ describe('MahjongHelper', () => {
         [1, 2, 3],
         [1, 2, 6],
         [null, 5, 3],
-      ]
-      const avalaibleElements = MahjongHelper.findAvalaibleElements(matrix)
+      ];
+      const avalaibleElements = MahjongHelper.findAvalaibleElements(matrix);
 
       expect(avalaibleElements).toEqual([
         { id: 1, positionX: 0, positionY: 0 },
@@ -16,7 +16,7 @@ describe('MahjongHelper', () => {
         { id: 1, positionX: 1, positionY: 0 },
         { id: 5, positionX: 2, positionY: 1 },
         { id: 3, positionX: 2, positionY: 2 },
-      ])
-    })
-  })
-})
+      ]);
+    });
+  });
+});

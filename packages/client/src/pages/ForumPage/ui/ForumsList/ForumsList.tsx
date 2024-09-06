@@ -1,11 +1,11 @@
-import { Badge, List, Typography } from 'antd'
-import { FC } from 'react'
-import { ForumData, ForumPageStages } from '../../model/forumData'
-import cls from '../ForumPage.module.scss'
+import { Badge, List, Typography } from 'antd';
+import { FC } from 'react';
+import { ForumData, ForumPageStages } from '../../model/forumData';
+import cls from '../ForumPage.module.scss';
 
-type Props = {
-  changeStage: (stage: ForumPageStages) => void
-  forumsList: ForumData[]
+interface Props {
+  changeStage: (stage: ForumPageStages) => void;
+  forumsList: ForumData[];
 }
 
 export const ForumsList: FC<Props> = ({ changeStage, forumsList }) => {
@@ -19,12 +19,13 @@ export const ForumsList: FC<Props> = ({ changeStage, forumsList }) => {
         </div>
       }
       dataSource={forumsList}
-      renderItem={forum => (
+      renderItem={(forum) => (
         <List.Item
           onClick={() => {
-            changeStage(ForumPageStages.forumTopicsList)
+            changeStage(ForumPageStages.forumTopicsList);
           }}
-          className={cls.listItem}>
+          className={cls.listItem}
+        >
           <Typography.Text className={cls.title}>{forum.name}</Typography.Text>
           <div className={cls.listContent}>
             <div className={cls.badgeWrapper}>
@@ -49,5 +50,5 @@ export const ForumsList: FC<Props> = ({ changeStage, forumsList }) => {
         </List.Item>
       )}
     />
-  )
-}
+  );
+};

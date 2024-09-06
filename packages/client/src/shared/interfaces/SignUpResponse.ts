@@ -1,3 +1,3 @@
 export interface SignUpResponse {
-  id: number
+  id: number;
 }

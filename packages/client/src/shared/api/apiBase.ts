@@ -1,10 +1,8 @@
-import { appConfig } from '@/shared/config'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios';
+import { appConfig } from '@/shared/config';
 
-type Response<T = unknown> = T
-type Request<T = unknown> = {
-  [k in string]: T
-}
+type Response<T = unknown> = T;
+type Request = Record<string, unknown>;
 
 const enum Method {
   GET = 'GET',
@@ -13,20 +11,23 @@ const enum Method {
   DELETE = 'DELETE',
 }
 
-export type ReqOptions = {
-  method?: Method
-  headers?: Record<string, string>
-  data?: Record<string, unknown>
+interface ReqOptions {
+  method?: Method;
+  headers?: Record<string, string>;
+  data?: Record<string, unknown>;
 }
 
 type HTTPMethod = <T = unknown>(
   url: string,
-  options: Request
-) => Promise<Response<T>>
+  options?: Request,
+) => Promise<Response<T>>;
 
-export const post: HTTPMethod = async (url: string, options) => {
-  const { fileUpload = false, data } = options
-  return await baseRequest(
+export const post: HTTPMethod = async <T>(
+  url: string,
+  options: Request = {},
+) => {
+  const { fileUpload = false, data } = options;
+  const response = await baseRequest<T>(
     url,
     Method.POST,
     {
@@ -36,58 +37,46 @@ export const post: HTTPMethod = async (url: string, options) => {
     },
     {
       data: fileUpload ? data : JSON.stringify(data),
-    }
-  )
-    .then(res => {
-      if (res.status !== 200) {
-        throw new Error('Error. Please try again')
-      }
-      return res?.data
-    })
-    .then(res => {
-      try {
-        return JSON.parse(res)
-      } catch {
-        return res
-      }
-    })
-    .catch(error => {
-      console.error(error)
-      throw error
-    })
-}
+    },
+  );
 
-export const get: HTTPMethod = async (url: string) => {
-  return await baseRequest(url, Method.GET)
-    .then(res => {
-      if (res.status !== 200) {
-        throw new Error('Error. Please try again')
-      }
-      return res?.data
-    })
-    .catch(error => {
-      console.error(error)
-      throw error
-    })
-}
+  if (response.status !== 200) {
+    throw new Error('Error. Please try again');
+  }
 
-export const put: HTTPMethod = async (url: string, options: Request) => {
-  const { fileUpload = false, data } = options
-  let formData = null
+  return parseResponse<T>(response.data);
+};
+
+export const get: HTTPMethod = async <T>(url: string) => {
+  const response = await baseRequest<T>(url, Method.GET);
+
+  if (response.status !== 200) {
+    throw new Error('Error. Please try again');
+  }
+
+  return response.data;
+};
+
+export const put: HTTPMethod = async <T>(
+  url: string,
+  options: Request = {},
+) => {
+  const { fileUpload = false, data } = options;
+  let formData: FormData | null = null;
 
   if (fileUpload) {
-    formData = new FormData()
+    formData = new FormData();
     try {
       for (const [key, value] of Object.entries(data as Record<string, File>)) {
-        formData.append(key, value)
+        formData.append(key, value);
       }
     } catch (error) {
-      console.error(error)
-      throw error
+      console.error(error);
+      throw error;
     }
   }
 
-  return await baseRequest(
+  const response = await baseRequest<T>(
     url,
     Method.PUT,
     {
@@ -95,30 +84,37 @@ export const put: HTTPMethod = async (url: string, options: Request) => {
         ? 'multipart/form-data'
         : 'application/json; charset=UTF-8',
     },
-    { data: fileUpload ? formData : JSON.stringify(data) }
-  )
-    .then(res => {
-      if (res.status !== 200) {
-        throw new Error('Error. Please try again')
-      }
-      return res?.data
-    })
-    .catch(error => {
-      console.error(error)
-      throw error
-    })
-}
+    { data: fileUpload ? formData : JSON.stringify(data) },
+  );
 
-const baseRequest = async (
+  if (response.status !== 200) {
+    throw new Error('Error. Please try again');
+  }
+
+  return response.data;
+};
+
+const baseRequest = async <T>(
   url: string,
   method: ReqOptions['method'],
   headers?: ReqOptions['headers'],
-  data?: Request
-) => {
-  return axios(appConfig.baseUrl + url, {
+  data?: Request,
+): Promise<AxiosResponse<T>> => {
+  return axios<T>(appConfig.baseUrl + url, {
     method,
     headers,
     ...data,
     withCredentials: true,
-  })
+  });
+};
+
+function parseResponse<T>(data: unknown): T {
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data) as T;
+    } catch {
+      return data as T;
+    }
+  }
+  return data as T;
 }

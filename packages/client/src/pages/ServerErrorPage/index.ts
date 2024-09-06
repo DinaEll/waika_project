@@ -1,1 +1,1 @@
-export { ServerErrorPage } from './ui/ServerErrorPage'
+export { ServerErrorPage } from './ui/ServerErrorPage';

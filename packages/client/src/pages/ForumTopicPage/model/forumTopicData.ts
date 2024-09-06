@@ -32,12 +32,12 @@ export const forumPageDataMock = {
       date: new Date(),
     },
   ],
-}
+};
 
 export const initialReplyFormData = {
   reply: '',
-}
+};
 
 export interface replyFormData {
-  reply: string
+  reply: string;
 }

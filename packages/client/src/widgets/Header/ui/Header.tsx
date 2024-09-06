@@ -1,16 +1,18 @@
-import cls from './Header.module.scss'
-import { Button } from 'antd'
-import { getPageUrl } from '@/shared/config'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons'
-import { logOut } from '@/shared/api'
+import { LeftOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { logOut } from '@/shared/api';
+import { getPageUrl } from '@/shared/config';
+import cls from './Header.module.scss';
 
 export const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logOut().then(() => navigate(getPageUrl('login')))
-  }
+    void logOut().then(() => {
+      navigate(getPageUrl('login'));
+    });
+  };
 
   return (
     <div className={cls.headerWrapper}>
@@ -19,7 +21,8 @@ export const Header = () => {
           type="text"
           icon={<LeftOutlined />}
           iconPosition="start"
-          onClick={() => navigate(-1)}>
+          onClick={() => navigate(-1)}
+        >
           Back
         </Button>
       </div>
@@ -41,8 +44,9 @@ export const Header = () => {
         <Button
           type="text"
           icon={<PoweroffOutlined />}
-          onClick={handleLogout}></Button>
+          onClick={handleLogout}
+        />
       </div>
     </div>
-  )
-}
+  );
+};

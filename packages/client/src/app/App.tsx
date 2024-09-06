@@ -1,12 +1,6 @@
-import { BrowserRouterProvider } from './providers/router'
-import { Layout } from '@/widgets/Layout'
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
-function App() {
-  return (
-    <BrowserRouterProvider>
-      <Layout />
-    </BrowserRouterProvider>
-  )
+export function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App

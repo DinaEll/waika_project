@@ -1,1 +1,1 @@
-export type FieldCell = number | null
+export type FieldCell = number | null;

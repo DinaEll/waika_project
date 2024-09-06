@@ -1,5 +1,5 @@
-import { put } from '@/shared/api'
-import { UserResponse } from '@/shared/interfaces'
+import { put } from '@/shared/api';
+import { UserResponse } from '@/shared/interfaces';
 
 export const changeAvatar = async (name: string, value: File) => {
   return await put<UserResponse>('/user/profile/avatar', {
@@ -8,5 +8,5 @@ export const changeAvatar = async (name: string, value: File) => {
       value,
     },
     fileUpload: true,
-  })
-}
+  });
+};

@@ -1,43 +1,63 @@
-import { Modal, ModalProps, Upload, Image } from 'antd'
-import type { GetProp, UploadProps } from 'antd'
-import cls from './AvatarChangeModal.module.scss'
-import React, { FC, useState } from 'react'
-import { PlusOutlined } from '@ant-design/icons'
-import { changeAvatar } from '@/shared/api'
+import { PlusOutlined } from '@ant-design/icons';
+import {
+  Modal,
+  type ModalProps,
+  Upload,
+  Image,
+  GetProp,
+  UploadProps,
+} from 'antd';
+import { type FC, useState } from 'react';
+import { changeAvatar } from '@/shared/api';
+import cls from './AvatarChangeModal.module.scss';
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
-export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
-  const [previewOpen, setPreviewOpen] = useState(false)
-  const [previewImage, setPreviewImage] = useState('')
-  const [file, setFile] = useState<File>()
+export const AvatarChangeModal: FC<ModalProps> = (props) => {
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [file, setFile] = useState<File>();
 
-  const getBase64 = (file: FileType) =>
+  const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = error => reject(error)
-    })
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          resolve(result);
+        } else {
+          reject(new Error('FileReader result is not a string.'));
+        }
+      };
+      reader.onerror = () => {
+        const message = reader.error
+          ? reader.error.message
+          : 'Unknown error occurred during file reading';
+        reject(new Error(`FileReader error: ${message}`));
+      };
+    });
 
   const beforeUpload = async (
-    file: FileType & { url: string; preview: string }
+    file: FileType & { url: string; preview: string },
   ) => {
-    setFile(file)
+    setFile(file);
     if (!file.url && !file.preview) {
-      file.preview = (await getBase64(file)) as string
+      file.preview = await getBase64(file);
     }
-    setPreviewImage(file.url || file.preview)
-    return false
-  }
+    setPreviewImage(file.url || file.preview);
+    return false;
+  };
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
-    changeAvatar('avatar', file as File).then()
-
-    if (props.onCancel) {
-      props.onCancel(e)
+    if (file) {
+      void changeAvatar('avatar', file).then(() => {
+        if (props.onCancel) {
+          props.onCancel(e);
+        }
+      });
     }
-  }
+  };
 
   return (
     <Modal
@@ -48,15 +68,18 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
       }}
       centered
       onOk={sendNewAvatar}
-      {...props}>
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    >
       <Upload
         name="avatar"
         listType="picture-card"
         onPreview={() => setPreviewOpen(true)}
-        beforeUpload={file =>
+        beforeUpload={(file) =>
           beforeUpload(file as FileType & { url: string; preview: string })
         }
-        onRemove={() => setPreviewImage('')}>
+        onRemove={() => setPreviewImage('')}
+      >
         {previewImage.length ? null : (
           <button className={cls.avatarChangeModalUploadBtn} type="button">
             <PlusOutlined />
@@ -71,12 +94,12 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
           }}
           preview={{
             visible: previewOpen,
-            onVisibleChange: visible => setPreviewOpen(visible),
-            afterOpenChange: visible => !visible,
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            afterOpenChange: (visible) => !visible,
           }}
           src={previewImage}
         />
       )}
     </Modal>
-  )
-}
+  );
+};

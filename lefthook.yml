@@ -1,10 +1,16 @@
 pre-commit:
   parallel: true
   commands:
+    typecheck:
+      glob: '*.{ts,tsx}'
+      run: yarn typecheck
+    stylelint:
+      glob: '**/*.scss'
+      run: yarn stylelint
     lint:
       glob: '*.{ts,tsx}'
       run: yarn eslint {staged_files}
     prettier:
-      glob: '*.{ts,tsx,css}'
+      glob: '*.{ts,tsx,scss}'
       run: yarn prettier -w {staged_files}
       stage_fixed: true

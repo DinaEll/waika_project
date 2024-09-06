@@ -1,1 +1,1 @@
-export { Mahjong } from './model/Mahjong'
+export { Mahjong } from './model/Mahjong';

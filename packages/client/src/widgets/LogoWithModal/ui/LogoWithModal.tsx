@@ -1,18 +1,18 @@
+import { Modal, Typography } from 'antd';
 import {
   isValidElement,
   type ComponentProps,
   type FC,
   type PropsWithChildren,
   type ReactElement,
-} from 'react'
-import { Modal, Typography } from 'antd'
-import { Logo } from '@/shared/ui'
-import cls from './LogoWithModal.module.scss'
+} from 'react';
+import { Logo } from '@/shared/ui';
+import cls from './LogoWithModal.module.scss';
 
 type Props = {
-  title: string | ReactElement
-  logo?: ReactElement
-} & ComponentProps<typeof Modal>
+  title: string | ReactElement;
+  logo?: ReactElement;
+} & ComponentProps<typeof Modal>;
 
 //TODO rename to ModalWithLogo
 export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
@@ -25,12 +25,14 @@ export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
     <Modal
       footer={null}
       mask={false}
-      transitionName={''}
+      transitionName={undefined}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
-      open={true}
-      centered={true}
+      centered
       className={cls.logoWithModal}
-      closable={false}>
+      closable={false}
+      open
+    >
       <div className={cls.logoWithModalContainer}>
         <div className={cls.logoWithModalImage}>{logo ?? <Logo />}</div>
         <div className={cls.logoWithModalTitle}>
@@ -43,5 +45,5 @@ export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
       </div>
       {children}
     </Modal>
-  )
-}
+  );
+};

@@ -1,29 +1,29 @@
-import { Form, Input, Modal, ModalProps } from 'antd'
-import cls from './PasswordChangeModal.module.scss'
-import React, { ChangeEvent, FC, useState } from 'react'
-import { changePassword } from '@/shared/api'
+import { Form, Input, Modal, ModalProps } from 'antd';
+import { ChangeEvent, FC, useState } from 'react';
+import { changePassword } from '@/shared/api';
+import cls from './PasswordChangeModal.module.scss';
 
 export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
-  })
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const sendNewPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
-    changePassword(formData).then()
+    void changePassword(formData).then();
 
     if (props.onCancel) {
-      props.onCancel(e)
+      props.onCancel(e);
     }
-  }
+  };
 
   return (
     <Modal
@@ -34,12 +34,15 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
       }}
       centered
       onOk={sendNewPassword}
-      {...props}>
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    >
       <Form layout="vertical">
         <Form.Item
           name="oldPassword"
           label="Current Password"
-          layout="vertical">
+          layout="vertical"
+        >
           <Input
             id="oldPassword"
             name="oldPassword"
@@ -63,5 +66,5 @@ export const PasswordChangeModal: FC<ModalProps> = ({ ...props }) => {
         </Form.Item>
       </Form>
     </Modal>
-  )
-}
+  );
+};
