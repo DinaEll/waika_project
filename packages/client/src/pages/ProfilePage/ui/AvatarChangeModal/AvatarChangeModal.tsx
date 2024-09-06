@@ -1,18 +1,19 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Modal,
+  type ModalProps,
   Upload,
   Image,
-  type GetProp,
-  type ModalProps,
-  type UploadProps,
+  GetProp,
+  UploadProps,
 } from 'antd';
 import { type FC, useState } from 'react';
+import { changeAvatar } from '@/shared/api';
 import cls from './AvatarChangeModal.module.scss';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
-export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
+export const AvatarChangeModal: FC<ModalProps> = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [file, setFile] = useState<File>();
@@ -49,23 +50,12 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   };
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
-    /*
-    TODO: пока заглушка для запроса, так как еще не реализована авторизация и запросы будут падать без токена,
-          во 2 спринте вынесем общую логику отправки запроса
-    */
-    const formData = new FormData();
     if (file) {
-      formData.append('avatar', file);
-      fetch('https://ya-praktikum.tech/api/v2/user/profile/avatar', {
-        method: 'PUT',
-        body: formData,
-      })
-        .then((res) => res.json())
-        .catch((err) => console.error(err));
-
-      if (props.onCancel) {
-        props.onCancel(e);
-      }
+      void changeAvatar('avatar', file).then(() => {
+        if (props.onCancel) {
+          props.onCancel(e);
+        }
+      });
     }
   };
 

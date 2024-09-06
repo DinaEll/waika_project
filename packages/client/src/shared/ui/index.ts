@@ -1,2 +1,2 @@
-export { Logo } from './Logo';
-export { UserAvatar } from './UserAvatar';
+export { Logo } from './Logo/Logo';
+export { UserAvatar } from './UserAvatar/UserAvatar';

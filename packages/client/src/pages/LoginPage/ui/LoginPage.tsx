@@ -1,7 +1,8 @@
 import { Button, Form, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { SignInRequest, userSignIn, getUser } from '@/shared/api';
+import { userSignIn, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
+import { SignInRequest } from '@/shared/interfaces';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './LoginPage.module.scss';
 
@@ -16,9 +17,8 @@ export const LoginPage = () => {
   const handleSubmit = (values: SignInRequest): void => {
     void userSignIn(values).then(() => {
       void getUser().then((res) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (res?.id) {
-          navigate(getPageUrl('main'));
+        if (res.id) {
+          navigate(getPageUrl('game-startup'));
         }
       });
     });

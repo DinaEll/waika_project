@@ -1,4 +1,7 @@
-export * from './apiBase';
-export * from './endpoints/getUser';
-export * from './endpoints/userSignIn';
-export * from './endpoints/userSingUp';
+export { get, put, post } from './apiBase';
+export { getUser } from './auth/getUser';
+export { userSignIn } from './auth/userSignIn';
+export { userSignUp } from './auth/userSignUp';
+export { logOut } from './auth/logOut';
+export { changePassword } from './user/changePassword';
+export { changeAvatar } from './user/changeAvatar';

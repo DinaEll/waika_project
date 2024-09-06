@@ -1,7 +1,8 @@
 import { Form, Button, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { SignUpRequest, userSignUp, getUser } from '@/shared/api';
+import { userSignUp, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
+import { SignUpRequest } from '@/shared/interfaces';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
 
@@ -19,10 +20,9 @@ export const RegistrationPage = () => {
 
   const handleSubmit = (values: SignUpRequest): void => {
     void userSignUp(values).then((res) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (res?.id) {
+      if (res.id) {
         void getUser().then(() => {
-          navigate(getPageUrl('main'));
+          navigate(getPageUrl('game-startup'));
         });
       }
     });
