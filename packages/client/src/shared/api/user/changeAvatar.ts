@@ -1,9 +1,12 @@
 import { put } from '@/shared/api'
-import { UserAvatarRequest, UserResponse } from '@/shared/interfaces'
+import { UserResponse } from '@/shared/interfaces'
 
-export const changeAvatar = async (formData: UserAvatarRequest) => {
+export const changeAvatar = async (name: string, value: File) => {
   return await put<UserResponse>('/user/profile/avatar', {
-    data: formData,
+    data: {
+      name,
+      value,
+    },
     fileUpload: true,
   })
 }

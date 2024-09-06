@@ -73,6 +73,20 @@ export const get: HTTPMethod = async (url: string) => {
 
 export const put: HTTPMethod = async (url: string, options: Request) => {
   const { fileUpload = false, data } = options
+  let formData = null
+
+  if (fileUpload) {
+    formData = new FormData()
+    try {
+      for (const [key, value] of Object.entries(data as Record<string, File>)) {
+        formData.append(key, value)
+      }
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+  }
+
   return await baseRequest(
     url,
     Method.PUT,
@@ -81,7 +95,7 @@ export const put: HTTPMethod = async (url: string, options: Request) => {
         ? 'multipart/form-data'
         : 'application/json; charset=UTF-8',
     },
-    { data: fileUpload ? data : JSON.stringify(data) }
+    { data: fileUpload ? formData : JSON.stringify(data) }
   )
     .then(res => {
       if (res.status !== 200) {

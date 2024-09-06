@@ -32,9 +32,7 @@ export const AvatarChangeModal: FC<ModalProps> = ({ ...props }) => {
   }
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const formData = new FormData()
-    formData.append('avatar', file as File)
-    changeAvatar(formData).then()
+    changeAvatar('avatar', file as File).then()
 
     if (props.onCancel) {
       props.onCancel(e)
