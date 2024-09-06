@@ -3,7 +3,8 @@ import { LogoWithModal } from '@/widgets/LogoWithModal'
 import { Button, Form, Input } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { getPageUrl } from '@/shared/config/router/routerConfig'
-import { SignInRequest, userSignIn, getUser } from '@/shared/api'
+import { userSignIn, getUser } from '@/shared/api'
+import { SignInRequest } from '@/shared/interfaces'
 
 const loginInitialState = {
   login: '',
@@ -17,7 +18,7 @@ export const LoginPage = () => {
     userSignIn(values).then(() => {
       getUser().then(res => {
         if (res?.id) {
-          navigate(getPageUrl('main'))
+          navigate(getPageUrl('game-startup'))
         }
       })
     })
