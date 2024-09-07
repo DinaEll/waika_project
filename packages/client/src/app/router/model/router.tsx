@@ -2,8 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ForumPage } from '@/pages/ForumPage';
 import { ForumTopicPage } from '@/pages/ForumTopicPage';
 import { GamePage } from '@/pages/GamePage';
-import { GameResultsPage } from '@/pages/GameResultsPage';
-import { GameStartupPage } from '@/pages/GameStartupPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MainPage } from '@/pages/MainPage';
@@ -34,14 +32,6 @@ export const router = createBrowserRouter([
       {
         path: getPageUrl('game'),
         element: <GamePage />,
-      },
-      {
-        path: getPageUrl('game-results'),
-        element: <GameResultsPage />,
-      },
-      {
-        path: getPageUrl('game-startup'),
-        element: <GameStartupPage />,
       },
       {
         path: getPageUrl('leaderboard'),

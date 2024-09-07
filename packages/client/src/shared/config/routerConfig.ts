@@ -4,8 +4,6 @@ export const pagesPaths = {
   registration: '/registration',
   profile: '/profile',
   game: '/game',
-  'game-startup': '/game/startup',
-  'game-results': '/game/results',
   leaderboard: '/leaderboard',
   forum: '/forum',
   'forum-topic': '/forum/:topicId',
