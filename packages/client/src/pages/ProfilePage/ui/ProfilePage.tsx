@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { UserAvatar } from '@/shared/ui';
-import { validationRules, Fields } from '@/utils/validationRules';
+import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
@@ -40,7 +40,7 @@ export const ProfilePage = () => {
                 message: 'Пожалуйста, введите свое имя.',
               },
               {
-                pattern: validationRules[Fields.FIRST_NAME],
+                pattern: validationRules[Field.FirstName],
                 message:
                   'Имя должно начинаться с заглавной буквы и содержать только буквы и тире.',
               },
@@ -59,7 +59,7 @@ export const ProfilePage = () => {
                 message: 'Пожалуйста, введите свою фамилию.',
               },
               {
-                pattern: validationRules[Fields.SECOND_NAME],
+                pattern: validationRules[Field.SecondName],
                 message:
                   'Фамилия должна начинаться с заглавной буквы и содержать только буквы и тире.\n',
               },
@@ -78,7 +78,7 @@ export const ProfilePage = () => {
                 message: 'Пожалуйста, введите ваш логин.',
               },
               {
-                pattern: validationRules[Fields.LOGIN],
+                pattern: validationRules[Field.Login],
                 message:
                   'Логин должен иметь длину от 3 до 20 символов, состоять из букв и цифр и может включать тире или подчеркивание.',
               },
@@ -97,7 +97,7 @@ export const ProfilePage = () => {
                 message: 'Пожалуйста, введите ваш адрес электронной почты.',
               },
               {
-                pattern: validationRules[Fields.EMAIL],
+                pattern: validationRules[Field.Email],
                 message:
                   'Электронная почта должна быть действительным адресом электронной почты.',
               },
@@ -116,7 +116,7 @@ export const ProfilePage = () => {
                 message: 'Пожалуйста, введите ваш номер телефона.',
               },
               {
-                pattern: validationRules[Fields.PHONE],
+                pattern: validationRules[Field.Phone],
                 message:
                   'Номер телефона должен состоять из 10–15 цифр и может начинаться со знака плюс.',
               },

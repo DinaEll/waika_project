@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
-import { validationRules, Fields } from '@/utils/validationRules';
+import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
 
@@ -57,7 +57,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите ваше имя.',
             },
             {
-              pattern: validationRules[Fields.FIRST_NAME],
+              pattern: validationRules[Field.FirstName],
               message:
                 'Имя должно начинаться с заглавной буквы и содержать только буквы и дефис.',
             },
@@ -77,7 +77,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите вашу фамилию.',
             },
             {
-              pattern: validationRules[Fields.SECOND_NAME],
+              pattern: validationRules[Field.SecondName],
               message:
                 'Фамилия должна начинаться с заглавной буквы и содержать только буквы и дефис.',
             },
@@ -97,7 +97,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите логин.',
             },
             {
-              pattern: validationRules[Fields.LOGIN],
+              pattern: validationRules[Field.Login],
               message:
                 'Логин должен быть от 3 до 20 символов, содержать буквы и цифры, может включать дефисы и подчеркивания.',
             },
@@ -117,7 +117,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите email.',
             },
             {
-              pattern: validationRules[Fields.EMAIL],
+              pattern: validationRules[Field.Email],
               message: 'Email должен быть валидным адресом электронной почты.',
             },
           ]}
@@ -136,7 +136,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите номер телефона.',
             },
             {
-              pattern: validationRules[Fields.PHONE],
+              pattern: validationRules[Field.Phone],
               message:
                 'Номер телефона должен быть от 10 до 15 цифр и может начинаться с плюса.',
             },
@@ -156,7 +156,7 @@ export const RegistrationPage = () => {
               message: 'Пожалуйста, введите пароль.',
             },
             {
-              pattern: validationRules[Fields.PASSWORD],
+              pattern: validationRules[Field.Password],
               message:
                 'Пароль должен быть от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
             },

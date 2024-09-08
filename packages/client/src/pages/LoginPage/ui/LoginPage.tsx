@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
-import { validationRules, Fields } from '@/utils/validationRules';
+import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './LoginPage.module.scss';
 
@@ -53,7 +53,7 @@ export const LoginPage = () => {
               message: 'Пожалуйста, введите ваш логин.',
             },
             {
-              pattern: validationRules[Fields.LOGIN],
+              pattern: validationRules[Field.Login],
               message:
                 'Логин должен быть длиной от 3 до 20 символов и содержать буквы и цифры.',
             },
@@ -73,7 +73,7 @@ export const LoginPage = () => {
               message: 'Пожалуйста, введите ваш пароль.',
             },
             {
-              pattern: validationRules[Fields.PASSWORD],
+              pattern: validationRules[Field.Password],
               message:
                 'Пароль должен иметь длину от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
             },
