@@ -5,7 +5,6 @@ import {
   ResultStatus,
 } from '../model/gamePageData';
 import { Game } from './Game/Game';
-import cls from './GamePage.module.scss';
 import { GameResult } from './GameResult/GameResults';
 import { GameStartup } from './GameStartup/GameStartup';
 
@@ -22,18 +21,18 @@ export const GamePage: FC = () => {
     changeStage(GamePageStages.results);
   };
 
-  const getCurrentStage = () => {
-    switch (currentStage) {
-      case GamePageStages.startup:
-        return <GameStartup changeStage={changeStage} />;
-      case GamePageStages.game:
-        return <Game collectGameResults={collectGameResults} />;
-      case GamePageStages.results:
-        return <GameResult changeStage={changeStage} results={results} />;
-      default:
-        throw new Error('Stage not supported');
-    }
+  const startGame = () => {
+    changeStage(GamePageStages.game);
   };
 
-  return <div className={cls.gamePage}>{getCurrentStage()}</div>;
+  switch (currentStage) {
+    case GamePageStages.startup:
+      return <GameStartup onStartClick={startGame} />;
+    case GamePageStages.game:
+      return <Game collectGameResults={collectGameResults} />;
+    case GamePageStages.results:
+      return <GameResult onPlayAgainClick={startGame} results={results} />;
+    default:
+      throw new Error('Stage not supported');
+  }
 };

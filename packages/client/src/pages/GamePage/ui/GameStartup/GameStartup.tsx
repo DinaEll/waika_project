@@ -2,14 +2,13 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import RulesImg from '@/shared/assets/images/rules.png';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
-import { GamePageStages } from '../../model/gamePageData';
 import cls from './GameStartup.module.scss';
 
 interface Props {
-  changeStage: (stage: GamePageStages) => void;
+  onStartClick: () => void;
 }
 
-export const GameStartup: FC<Props> = ({ changeStage }) => {
+export const GameStartup: FC<Props> = ({ onStartClick }) => {
   return (
     <LogoWithModal
       open
@@ -27,10 +26,7 @@ export const GameStartup: FC<Props> = ({ changeStage }) => {
         </div>
 
         <div className={cls.btnWrapper}>
-          <Button
-            type="primary"
-            onClick={() => changeStage(GamePageStages.game)}
-          >
+          <Button type="primary" onClick={onStartClick}>
             Start
           </Button>
         </div>

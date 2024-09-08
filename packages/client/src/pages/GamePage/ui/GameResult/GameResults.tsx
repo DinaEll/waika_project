@@ -2,19 +2,15 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
-import {
-  GamePageStages,
-  GameResults,
-  ResultStatus,
-} from '../../model/gamePageData';
+import { GameResults, ResultStatus } from '../../model/gamePageData';
 import cls from './GameResults.module.scss';
 
 interface Props {
-  changeStage: (stage: GamePageStages) => void;
+  onPlayAgainClick: () => void;
   results: GameResults | null;
 }
 
-export const GameResult: FC<Props> = ({ changeStage, results }) => {
+export const GameResult: FC<Props> = ({ onPlayAgainClick, results }) => {
   const isWin = results?.status === ResultStatus.win;
   const bestResult = '12:01'; // TODO получать bestResult из лидерборда
 
@@ -46,10 +42,7 @@ export const GameResult: FC<Props> = ({ changeStage, results }) => {
             <div className={cls.icon}>{isWin ? '🏆' : '😢'}</div>
           </div>
           <div className={cls.gameOverPageButton}>
-            <Button
-              type="primary"
-              onClick={() => changeStage(GamePageStages.game)}
-            >
+            <Button type="primary" onClick={onPlayAgainClick}>
               Play again
             </Button>
           </div>
