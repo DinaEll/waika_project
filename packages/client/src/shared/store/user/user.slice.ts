@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserResponse } from '@/shared/interfaces';
-import { IState } from '@/shared/store/types';
+import { StoreState } from '@/shared/store/types';
 
-const initialState: IState<UserResponse> = {
+const initialState: StoreState<UserResponse> = {
   data: {} as UserResponse,
   isLoading: false,
   error: null,
