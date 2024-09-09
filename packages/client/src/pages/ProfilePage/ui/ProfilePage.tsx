@@ -1,5 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
+import { appConfig } from '@/shared/config';
 import { useAppSelector } from '@/shared/store/redux';
 import { UserAvatar } from '@/shared/ui';
 import { LogoWithModal } from '@/widgets';
@@ -33,9 +34,7 @@ export const ProfilePage = () => {
         logo={
           <UserAvatar
             className={cls.profileAvatar}
-            src={
-              `https://ya-praktikum.tech/api/v2/resources${data.avatar}` || ''
-            }
+            src={`${appConfig.baseUrl}/resources${data.avatar}` || ''}
           />
         }
       >
