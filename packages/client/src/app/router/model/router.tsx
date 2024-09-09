@@ -10,6 +10,7 @@ import { ProfilePage } from '@/pages/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage';
 import { ServerErrorPage } from '@/pages/ServerErrorPage';
 import { getPageUrl } from '@/shared/config';
+import { createProtectedRoute } from '@/shared/utils';
 import { Layout } from '@/widgets/Layout';
 
 export const router = createBrowserRouter([
@@ -22,41 +23,23 @@ export const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: getPageUrl('forum'),
-        element: <ForumPage />,
-      },
-      {
-        path: getPageUrl('forum-topic', { topicId: ':topicId' }),
-        element: <ForumTopicPage />,
-      },
-      {
-        path: getPageUrl('game'),
-        element: <GamePage />,
-      },
-      {
-        path: getPageUrl('leaderboard'),
-        element: <LeaderboardPage />,
-      },
-      {
         path: getPageUrl('login'),
         element: <LoginPage />,
-      },
-      {
-        path: getPageUrl('profile'),
-        element: <ProfilePage />,
       },
       {
         path: getPageUrl('registration'),
         element: <RegistrationPage />,
       },
-      {
-        path: getPageUrl('not-found'),
-        element: <NotFoundPage />,
-      },
-      {
-        path: getPageUrl('server-error'),
-        element: <ServerErrorPage />,
-      },
+      createProtectedRoute(GamePage, getPageUrl('game')),
+      createProtectedRoute(ForumPage, getPageUrl('forum')),
+      createProtectedRoute(
+        ForumTopicPage,
+        getPageUrl('forum-topic', { topicId: ':topicId' }),
+      ),
+      createProtectedRoute(LeaderboardPage, getPageUrl('leaderboard')),
+      createProtectedRoute(ProfilePage, getPageUrl('profile')),
+      createProtectedRoute(NotFoundPage, getPageUrl('not-found')),
+      createProtectedRoute(ServerErrorPage, getPageUrl('server-error')),
     ],
   },
 ]);
