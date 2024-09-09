@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
+import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './LoginPage.module.scss';
 
@@ -40,22 +41,46 @@ export const LoginPage = () => {
         layout="vertical"
         initialValues={loginInitialState}
         onFinish={handleSubmit}
+        validateTrigger={['onBlur', 'onSubmit']}
       >
-        <Form.Item className={cls.loginPageItem} name="login" label="Login">
-          <Input id="login" type="text" placeholder="Login" required />
+        <Form.Item
+          className={cls.loginPageItem}
+          name="login"
+          label="Login"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите ваш логин.',
+            },
+            {
+              pattern: validationRules[Field.Login],
+              message:
+                'Логин должен быть длиной от 3 до 20 символов и содержать буквы и цифры.',
+            },
+          ]}
+          validateTrigger="onBlur"
+        >
+          <Input id="login" type="text" placeholder="Login" />
         </Form.Item>
 
         <Form.Item
           className={cls.loginPageItem}
           name="password"
           label="Password"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите ваш пароль.',
+            },
+            {
+              pattern: validationRules[Field.Password],
+              message:
+                'Пароль должен иметь длину от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input
-            id="password"
-            type="password"
-            placeholder="Password"
-            required
-          />
+          <Input id="password" type="password" placeholder="Password" />
         </Form.Item>
 
         <Form.Item className={cls.loginPageButton}>
