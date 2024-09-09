@@ -26,7 +26,7 @@ export const RegistrationPage = () => {
       if (res.id) {
         const data = await dispatch(userAction.getUser());
         if (data) {
-          navigate(getPageUrl('game-startup'));
+          navigate(getPageUrl('game'));
         }
       }
     });

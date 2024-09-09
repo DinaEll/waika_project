@@ -21,7 +21,7 @@ export const LoginPage = () => {
     void userSignIn(values).then(async () => {
       const res = await dispatch(userAction.getUser());
       if (res?.id) {
-        navigate(getPageUrl('game-startup'));
+        navigate(getPageUrl('game'));
       }
     });
   };
