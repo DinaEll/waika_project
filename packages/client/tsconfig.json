@@ -8,5 +8,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"]
+  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
+  "exclude": ["cacheSW.js"]
 }
