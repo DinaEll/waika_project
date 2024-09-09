@@ -30,7 +30,7 @@ export const Header = () => {
         <NavLink to={getPageUrl('leaderboard')}>
           <Button type="link">Leaderboard</Button>
         </NavLink>
-        <NavLink to={getPageUrl('game-startup')}>
+        <NavLink to={getPageUrl('game')}>
           <Button type="primary">Play</Button>
         </NavLink>
         <NavLink to={getPageUrl('forum')}>

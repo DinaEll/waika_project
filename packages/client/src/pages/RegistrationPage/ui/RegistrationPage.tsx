@@ -22,7 +22,7 @@ export const RegistrationPage = () => {
     void userSignUp(values).then((res) => {
       if (res.id) {
         void getUser().then(() => {
-          navigate(getPageUrl('game-startup'));
+          navigate(getPageUrl('game'));
         });
       }
     });

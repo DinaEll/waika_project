@@ -1,11 +1,14 @@
 import { Button } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { FC } from 'react';
 import RulesImg from '@/shared/assets/images/rules.png';
-import { getPageUrl } from '@/shared/config';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
-import cls from './GameStartupPage.module.scss';
+import cls from './GameStartup.module.scss';
 
-export const GameStartupPage = () => {
+interface Props {
+  onStartClick: () => void;
+}
+
+export const GameStartup: FC<Props> = ({ onStartClick }) => {
   return (
     <LogoWithModal
       open
@@ -23,9 +26,9 @@ export const GameStartupPage = () => {
         </div>
 
         <div className={cls.btnWrapper}>
-          <NavLink to={getPageUrl('game')}>
-            <Button type="primary">Start</Button>
-          </NavLink>
+          <Button type="primary" onClick={onStartClick}>
+            Start
+          </Button>
         </div>
       </div>
     </LogoWithModal>

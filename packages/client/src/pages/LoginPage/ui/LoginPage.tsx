@@ -18,7 +18,7 @@ export const LoginPage = () => {
     void userSignIn(values).then(() => {
       void getUser().then((res) => {
         if (res.id) {
-          navigate(getPageUrl('game-startup'));
+          navigate(getPageUrl('game'));
         }
       });
     });
