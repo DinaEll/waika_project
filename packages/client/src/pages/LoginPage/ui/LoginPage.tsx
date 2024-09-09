@@ -1,8 +1,10 @@
 import { Button, Form, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { userSignIn, getUser } from '@/shared/api';
+import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch } from '@/shared/store/redux';
+import { userAction } from '@/shared/store/user/user.action';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './LoginPage.module.scss';
 
@@ -13,14 +15,14 @@ const loginInitialState = {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignInRequest): void => {
-    void userSignIn(values).then(() => {
-      void getUser().then((res) => {
-        if (res.id) {
-          navigate(getPageUrl('game-startup'));
-        }
-      });
+    void userSignIn(values).then(async () => {
+      const res = await dispatch(userAction.getUser());
+      if (res?.id) {
+        navigate(getPageUrl('game-startup'));
+      }
     });
   };
 

@@ -9,6 +9,8 @@ import {
 } from 'antd';
 import { type FC, useState } from 'react';
 import { changeAvatar } from '@/shared/api';
+import { useAppDispatch } from '@/shared/store/redux';
+import { userSlice } from '@/shared/store/user/user.slice';
 import cls from './AvatarChangeModal.module.scss';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -17,6 +19,7 @@ export const AvatarChangeModal: FC<ModalProps> = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [file, setFile] = useState<File>();
+  const dispatch = useAppDispatch();
 
   const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -51,7 +54,8 @@ export const AvatarChangeModal: FC<ModalProps> = (props) => {
 
   const sendNewAvatar = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (file) {
-      void changeAvatar('avatar', file).then(() => {
+      void changeAvatar('avatar', file).then((res) => {
+        dispatch(userSlice.actions.setAvatar(res.avatar));
         if (props.onCancel) {
           props.onCancel(e);
         }

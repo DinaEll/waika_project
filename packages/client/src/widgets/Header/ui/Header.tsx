@@ -3,14 +3,18 @@ import { Button } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logOut } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
+import { useAppDispatch } from '@/shared/store/redux';
+import { userSlice } from '@/shared/store/user/user.slice';
 import cls from './Header.module.scss';
 
 export const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     void logOut().then(() => {
       navigate(getPageUrl('login'));
+      dispatch(userSlice.actions.clearState());
     });
   };
 

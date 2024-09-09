@@ -1,5 +1,6 @@
 import { Button, Form, Input } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/shared/store/redux';
 import { UserAvatar } from '@/shared/ui';
 import { LogoWithModal } from '@/widgets';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
@@ -7,8 +8,10 @@ import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
 
 export const ProfilePage = () => {
+  const [form] = Form.useForm();
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
+  const { data } = useAppSelector((state) => state.user);
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -18,14 +21,25 @@ export const ProfilePage = () => {
     setAvatarChangeModalOpen(false);
   };
 
+  useEffect(() => {
+    form.setFieldsValue(data);
+  }, [data, form]);
+
   return (
     <>
       <LogoWithModal
         title={'Your Profile'}
         width={500}
-        logo={<UserAvatar className={cls.profileAvatar} />}
+        logo={
+          <UserAvatar
+            className={cls.profileAvatar}
+            src={
+              `https://ya-praktikum.tech/api/v2/resources${data.avatar}` || ''
+            }
+          />
+        }
       >
-        <Form layout="vertical" className={cls.profilePageForm}>
+        <Form form={form} layout="vertical" className={cls.profilePageForm}>
           <Form.Item name="first_name" label="First Name" layout="vertical">
             <Input
               id="first_name"

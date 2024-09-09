@@ -1,8 +1,10 @@
 import { Form, Button, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { userSignUp, getUser } from '@/shared/api';
+import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
+import { useAppDispatch } from '@/shared/store/redux';
+import { userAction } from '@/shared/store/user/user.action';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
 
@@ -17,13 +19,15 @@ const regInitialState = {
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignUpRequest): void => {
-    void userSignUp(values).then((res) => {
+    void userSignUp(values).then(async (res) => {
       if (res.id) {
-        void getUser().then(() => {
+        const data = await dispatch(userAction.getUser());
+        if (data) {
           navigate(getPageUrl('game-startup'));
-        });
+        }
       }
     });
   };
