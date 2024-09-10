@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserResponse } from '@/shared/interfaces';
 import { StoreState } from '@/shared/store/types';
+import { fetchUser } from '@/shared/store/user/user.action';
 
 const initialState: StoreState<UserResponse> = {
   data: {} as UserResponse,
@@ -12,24 +13,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    fetching: (state) => {
-      state.isLoading = true;
-    },
-
-    fetchingError: (state, action: PayloadAction<unknown>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
-
-    fetchingSuccess: (state) => {
-      state.error = null;
-      state.isLoading = false;
-    },
-
-    setUser: (state, action: PayloadAction<UserResponse>) => {
-      state.data = action.payload;
-    },
-
     setAvatar: (state, action: PayloadAction<string>) => {
       state.data.avatar = action.payload;
     },
@@ -37,6 +20,21 @@ export const userSlice = createSlice({
     clearState: (state) => {
       state.data = initialState.data;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 

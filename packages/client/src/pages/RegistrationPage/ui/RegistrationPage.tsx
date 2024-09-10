@@ -4,7 +4,7 @@ import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/redux';
-import { userAction } from '@/shared/store/user/user.action';
+import { fetchUser } from '@/shared/store/user/user.action';
 import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
@@ -25,7 +25,7 @@ export const RegistrationPage = () => {
   const handleSubmit = (values: SignUpRequest): void => {
     void userSignUp(values).then(async (res) => {
       if (res.id) {
-        const data = await dispatch(userAction.getUser());
+        const data = await dispatch(fetchUser());
         if (data) {
           navigate(getPageUrl('game'));
         }

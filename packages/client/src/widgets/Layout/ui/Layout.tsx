@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { getPageUrl, pagesPaths } from '@/shared/config';
 import { useEffectOnce } from '@/shared/hooks';
+import { UserResponse } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/redux';
-import { userAction } from '@/shared/store/user/user.action';
+import { fetchUser } from '@/shared/store/user/user.action';
 import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary';
 import { Header } from '@/widgets/Header';
 import cls from './Layout.module.scss';
@@ -14,9 +15,8 @@ export const Layout = () => {
   const dispatch = useAppDispatch();
 
   const getUser = async (): Promise<void> => {
-    const res = await dispatch(userAction.getUser());
-
-    if (!res?.id) {
+    const res = await dispatch(fetchUser());
+    if (!(res.payload as UserResponse).id) {
       navigate(getPageUrl('login'));
       return;
     }
