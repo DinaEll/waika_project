@@ -9,5 +9,5 @@
     }
   },
   "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
-  "exclude": ["cacheSW.js"]
+  "exclude": ["cacheSW.js", "startSW.js"]
 }
