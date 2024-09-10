@@ -35,7 +35,9 @@ export const ProfilePage = () => {
         logo={
           <UserAvatar
             className={cls.profileAvatar}
-            src={`${appConfig.baseUrl}/resources${data.avatar}` || ''}
+            src={
+              data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
+            }
           />
         }
       >

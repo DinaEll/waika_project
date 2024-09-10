@@ -3,10 +3,10 @@ import { UserResponse } from '@/shared/interfaces';
 import { StoreState } from '@/shared/store/types';
 import { fetchUser } from '@/shared/store/user/user.action';
 
-const initialState: StoreState<UserResponse> = {
-  data: {} as UserResponse,
+const initialState: StoreState<UserResponse | undefined> = {
+  data: undefined,
   isLoading: false,
-  error: null,
+  error: undefined,
 };
 
 export const userSlice = createSlice({
@@ -14,7 +14,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setAvatar: (state, action: PayloadAction<string>) => {
-      state.data.avatar = action.payload;
+      (state.data as UserResponse).avatar = action.payload;
     },
 
     clearState: (state) => {
