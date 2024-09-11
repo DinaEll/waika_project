@@ -1,9 +1,10 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { SignInRequest, UserResponse } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/redux';
+import { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
 import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
@@ -19,12 +20,17 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignInRequest): void => {
-    void userSignIn(values).then(async () => {
-      const res = await dispatch(fetchUser());
-      if ((res?.payload as UserResponse)?.id) {
-        navigate(getPageUrl('game'));
-      }
-    });
+    void userSignIn(values)
+      .then(async () => {
+        await dispatch(fetchUser())
+          .then(unwrapResult)
+          .then((res) => {
+            if (res.id) {
+              navigate(getPageUrl('game'));
+            }
+          });
+      })
+      .catch(console.error);
   };
 
   return (

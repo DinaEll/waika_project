@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { appConfig } from '@/shared/config';
-import { useAppSelector } from '@/shared/store/redux';
+import { useAppSelector } from '@/shared/store/hooks';
 import { UserAvatar } from '@/shared/ui';
 import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets';

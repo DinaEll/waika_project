@@ -14,7 +14,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setAvatar: (state, action: PayloadAction<string>) => {
-      (state.data as UserResponse).avatar = action.payload;
+      if (state.data) {
+        state.data.avatar = action.payload;
+      }
     },
 
     clearState: (state) => {

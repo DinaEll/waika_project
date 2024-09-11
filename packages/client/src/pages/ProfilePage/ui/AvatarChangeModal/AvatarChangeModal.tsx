@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { type FC, useState } from 'react';
 import { changeAvatar } from '@/shared/api';
-import { useAppDispatch } from '@/shared/store/redux';
+import { useAppDispatch } from '@/shared/store/hooks';
 import { userSlice } from '@/shared/store/user/user.slice';
 import cls from './AvatarChangeModal.module.scss';
 
