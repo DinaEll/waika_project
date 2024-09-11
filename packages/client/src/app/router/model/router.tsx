@@ -4,42 +4,56 @@ import { ForumTopicPage } from '@/pages/ForumTopicPage';
 import { GamePage } from '@/pages/GamePage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage';
 import { LoginPage } from '@/pages/LoginPage';
-import { MainPage } from '@/pages/MainPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage';
 import { ServerErrorPage } from '@/pages/ServerErrorPage';
 import { getPageUrl } from '@/shared/config';
-import { createProtectedRoute } from '@/shared/utils';
+import { withAuth } from '@/shared/hocs';
 import { Layout } from '@/widgets/Layout';
+
+const ProtectedLayout = withAuth(Layout);
 
 export const router = createBrowserRouter([
   {
-    path: getPageUrl('main'),
-    element: <Layout />,
+    path: getPageUrl('login'),
+    element: <LoginPage />,
+  },
+  {
+    path: getPageUrl('registration'),
+    element: <RegistrationPage />,
+  },
+  {
+    element: <ProtectedLayout />,
     children: [
       {
-        index: true,
-        element: <MainPage />,
+        path: getPageUrl('game'),
+        element: <GamePage />,
       },
       {
-        path: getPageUrl('login'),
-        element: <LoginPage />,
+        path: getPageUrl('forum'),
+        element: <ForumPage />,
       },
       {
-        path: getPageUrl('registration'),
-        element: <RegistrationPage />,
+        path: getPageUrl('forum-topic', { topicId: ':topicId' }),
+        element: <ForumTopicPage />,
       },
-      createProtectedRoute(GamePage, getPageUrl('game')),
-      createProtectedRoute(ForumPage, getPageUrl('forum')),
-      createProtectedRoute(
-        ForumTopicPage,
-        getPageUrl('forum-topic', { topicId: ':topicId' }),
-      ),
-      createProtectedRoute(LeaderboardPage, getPageUrl('leaderboard')),
-      createProtectedRoute(ProfilePage, getPageUrl('profile')),
-      createProtectedRoute(NotFoundPage, getPageUrl('not-found')),
-      createProtectedRoute(ServerErrorPage, getPageUrl('server-error')),
+      {
+        path: getPageUrl('leaderboard'),
+        element: <LeaderboardPage />,
+      },
+      {
+        path: getPageUrl('profile'),
+        element: <ProfilePage />,
+      },
+      {
+        path: getPageUrl('not-found'),
+        element: <NotFoundPage />,
+      },
+      {
+        path: getPageUrl('server-error'),
+        element: <ServerErrorPage />,
+      },
     ],
   },
 ]);
