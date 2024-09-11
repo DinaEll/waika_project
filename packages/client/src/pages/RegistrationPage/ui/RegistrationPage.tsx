@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
+import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
 
@@ -44,68 +45,125 @@ export const RegistrationPage = () => {
         layout="vertical"
         initialValues={regInitialState}
         onFinish={handleSubmit}
+        validateTrigger={['onBlur', 'onSubmit']}
       >
         <Form.Item
           className={cls.registrationPageItem}
           name="first_name"
           label="First Name"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите ваше имя.',
+            },
+            {
+              pattern: validationRules[Field.FirstName],
+              message:
+                'Имя должно начинаться с заглавной буквы и содержать только буквы и дефис.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input
-            id="first_name"
-            type="text"
-            placeholder="First Name"
-            required
-          />
+          <Input id="first_name" type="text" placeholder="First Name" />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="second_name"
           label="Last Name"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите вашу фамилию.',
+            },
+            {
+              pattern: validationRules[Field.SecondName],
+              message:
+                'Фамилия должна начинаться с заглавной буквы и содержать только буквы и дефис.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input
-            id="second_name"
-            type="text"
-            placeholder="Last Name"
-            required
-          />
+          <Input id="second_name" type="text" placeholder="Last Name" />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="login"
           label="Login"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите логин.',
+            },
+            {
+              pattern: validationRules[Field.Login],
+              message:
+                'Логин должен быть от 3 до 20 символов, содержать буквы и цифры, может включать дефисы и подчеркивания.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input id="login" type="text" placeholder="Login" required />
+          <Input id="login" type="text" placeholder="Login" />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="email"
           label="Email"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите email.',
+            },
+            {
+              pattern: validationRules[Field.Email],
+              message: 'Email должен быть валидным адресом электронной почты.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input id="email" type="email" placeholder="Email" required />
+          <Input id="email" type="email" placeholder="Email" />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="phone"
           label="Phone"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите номер телефона.',
+            },
+            {
+              pattern: validationRules[Field.Phone],
+              message:
+                'Номер телефона должен быть от 10 до 15 цифр и может начинаться с плюса.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input id="phone" type="tel" placeholder="Phone" required />
+          <Input id="phone" type="tel" placeholder="Phone" />
         </Form.Item>
 
         <Form.Item
           className={cls.registrationPageItem}
           name="password"
           label="Password"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите пароль.',
+            },
+            {
+              pattern: validationRules[Field.Password],
+              message:
+                'Пароль должен быть от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
+            },
+          ]}
+          validateTrigger="onBlur"
         >
-          <Input
-            id="password"
-            type="password"
-            placeholder="Password"
-            required
-          />
+          <Input id="password" type="password" placeholder="Password" />
         </Form.Item>
 
         <Form.Item className={cls.registrationPageButton}>
