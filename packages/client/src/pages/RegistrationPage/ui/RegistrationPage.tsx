@@ -4,7 +4,7 @@ import { userSignUp, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
 import { validationRules, Field } from '@/utils/validationRules';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import cls from './RegistrationPage.module.scss';
 
 const regInitialState = {
@@ -30,16 +30,7 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <LogoWithModal
-      open
-      centered
-      closable={false}
-      footer={null}
-      width={344}
-      mask={false}
-      transitionName={undefined}
-      title="Sign Up"
-    >
+    <MainContainer title="Sign Up" width={344}>
       <Form
         className={cls.registrationPageWrapper}
         layout="vertical"
@@ -178,6 +169,6 @@ export const RegistrationPage = () => {
           </NavLink>
         </Form.Item>
       </Form>
-    </LogoWithModal>
+    </MainContainer>
   );
 };

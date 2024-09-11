@@ -1,18 +1,18 @@
-.logoWithModal {
+.mainContainer {
   padding: 5rem 0;
 }
 
-.logoWithModalContainer {
+.mainContainerWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.logoWithModalTitle {
+.mainContainerTitle {
   margin: 54px 0 16px;
 }
 
-.logoWithModalImage {
+.mainContainerImage {
   position: absolute;
   bottom: 100%;
   transform: translateY(50%);

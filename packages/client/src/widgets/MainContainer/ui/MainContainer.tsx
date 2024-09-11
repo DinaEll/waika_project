@@ -7,15 +7,14 @@ import {
   type ReactElement,
 } from 'react';
 import { Logo } from '@/shared/ui';
-import cls from './LogoWithModal.module.scss';
+import cls from './MainContainer.module.scss';
 
 type Props = {
   title: string | ReactElement;
   logo?: ReactElement;
 } & ComponentProps<typeof Modal>;
 
-//TODO rename to ModalWithLogo
-export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
+export const MainContainer: FC<PropsWithChildren<Props>> = ({
   children,
   title,
   logo,
@@ -26,16 +25,17 @@ export const LogoWithModal: FC<PropsWithChildren<Props>> = ({
       footer={null}
       mask={false}
       transitionName={undefined}
+      closable={false}
+      className={cls.mainContainer}
+      open
+      centered
+      width={500}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
-      centered
-      className={cls.logoWithModal}
-      closable={false}
-      open
     >
-      <div className={cls.logoWithModalContainer}>
-        <div className={cls.logoWithModalImage}>{logo ?? <Logo />}</div>
-        <div className={cls.logoWithModalTitle}>
+      <div className={cls.mainContainerWrapper}>
+        <div className={cls.mainContainerImage}>{logo ?? <Logo />}</div>
+        <div className={cls.mainContainerTitle}>
           {isValidElement(title) ? (
             title
           ) : (

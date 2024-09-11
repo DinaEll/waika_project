@@ -4,7 +4,7 @@ import { userSignIn, getUser } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
 import { validationRules, Field } from '@/utils/validationRules';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
@@ -26,16 +26,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <LogoWithModal
-      open
-      centered
-      closable={false}
-      footer={null}
-      width={344}
-      mask={false}
-      transitionName={undefined}
-      title="Sign In"
-    >
+    <MainContainer width={344} title="Sign In">
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
@@ -95,6 +86,6 @@ export const LoginPage = () => {
           </NavLink>
         </Form.Item>
       </Form>
-    </LogoWithModal>
+    </MainContainer>
   );
 };
