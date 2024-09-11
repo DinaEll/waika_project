@@ -2,14 +2,14 @@ import { MahjongHelper } from '../model/MahjongHelper';
 import type { FieldCell } from '../types';
 
 describe('MahjongHelper', () => {
-  describe('checkAvailablePairs', () => {
+  describe('checkPairsAvailable', () => {
     it('should return true when there are available pairs', () => {
       const field: FieldCell[][] = [
         [1, 2, 3],
         [null, 1, 4],
         [3, 6, 2],
       ];
-      expect(MahjongHelper.checkAvailablePairs(field)).toBe(true);
+      expect(MahjongHelper.checkPairsAvailable(field)).toBe(true);
     });
 
     it('should return false when there are no available elements', () => {
@@ -18,7 +18,7 @@ describe('MahjongHelper', () => {
         [null, null, null],
         [null, null, null],
       ];
-      expect(MahjongHelper.checkAvailablePairs(field)).toBe(false);
+      expect(MahjongHelper.checkPairsAvailable(field)).toBe(false);
     });
 
     it('should return false when there are available elements but no pairs', () => {
@@ -27,7 +27,7 @@ describe('MahjongHelper', () => {
         [null, 4, 5],
         [6, 7, 8],
       ];
-      expect(MahjongHelper.checkAvailablePairs(field)).toBe(false);
+      expect(MahjongHelper.checkPairsAvailable(field)).toBe(false);
     });
   });
 });

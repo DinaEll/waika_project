@@ -108,7 +108,7 @@ export class MahjongHelper {
     return newPairs;
   }
 
-  static checkAvailablePairs(field: FieldCell[][]): boolean {
+  static checkPairsAvailable(field: FieldCell[][]): boolean {
     const availableTiles = MahjongHelper.findAvalaibleElements(field);
 
     if (availableTiles.length === 0) {

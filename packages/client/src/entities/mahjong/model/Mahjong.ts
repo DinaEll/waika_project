@@ -65,16 +65,17 @@ export class Mahjong extends Game {
       return;
     }
 
-    const arePairsAvailable = MahjongHelper.checkAvailablePairs(this.field);
+    const isPairsAvailable = MahjongHelper.checkPairsAvailable(this.field);
+    const isShufflesAvailable = this.checkShufflesAvailable();
 
-    if (!this.areShufflesAvailable() && !arePairsAvailable) {
+    if (!isPairsAvailable && !isShufflesAvailable) {
       this.onLose();
-    } else if (!arePairsAvailable) {
+    } else if (!isPairsAvailable) {
       alert('No tiles available. Please use shuffle');
     }
   }
 
-  private areShufflesAvailable() {
+  private checkShufflesAvailable() {
     return this.remainingShuffles > 0;
   }
 
@@ -83,7 +84,7 @@ export class Mahjong extends Game {
     while (
       useAttempts &&
       countAttempts > 0 &&
-      !MahjongHelper.checkAvailablePairs(this.field)
+      !MahjongHelper.checkPairsAvailable(this.field)
     ) {
       this.pairs = MahjongHelper.shuffleRandomPairs(this.field.flat());
       this.field = MahjongHelper.generateField(this.countTiles, this.pairs);
@@ -100,7 +101,7 @@ export class Mahjong extends Game {
   }
 
   public handleShuffle = () => {
-    if (!this.areShufflesAvailable()) {
+    if (!this.checkShufflesAvailable()) {
       return;
     }
 
