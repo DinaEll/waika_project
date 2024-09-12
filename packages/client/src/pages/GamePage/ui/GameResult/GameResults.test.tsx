@@ -4,6 +4,8 @@ import { GameResult } from './GameResults';
 
 describe('GameResult', () => {
   const onPlayAgainClickMock = jest.fn();
+  const winIcon = '🏆';
+  const loseIcon = '😢';
 
   beforeEach(() => {
     onPlayAgainClickMock.mockClear();
@@ -23,7 +25,7 @@ describe('GameResult', () => {
     expect(screen.getByText('Your Result')).toBeTruthy();
     expect(screen.getByText('12:45')).toBeTruthy();
     expect(screen.getByText('12:01')).toBeTruthy();
-    expect(screen.getByText('🏆')).toBeTruthy();
+    expect(screen.getByText(winIcon)).toBeTruthy();
   });
 
   it('should render "Sorry, but you lose :(" when player loses', () => {
@@ -39,7 +41,7 @@ describe('GameResult', () => {
     expect(screen.getByText('Sorry, but you lose :(')).toBeTruthy();
     expect(screen.queryByText('Your Result')).toBeNull();
     expect(screen.getByText('12:01')).toBeTruthy();
-    expect(screen.getByText('😢')).toBeTruthy();
+    expect(screen.getByText(loseIcon)).toBeTruthy();
   });
 
   it('should call onPlayAgainClick when "Play again" button is clicked', () => {
