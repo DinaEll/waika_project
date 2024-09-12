@@ -10,6 +10,9 @@ interface Props {
   results: GameResults | null;
 }
 
+const winIcon = '🏆';
+const loseIcon = '😢';
+
 export const GameResult: FC<Props> = ({ onPlayAgainClick, results }) => {
   const isWin = results?.status === ResultStatus.win;
   const bestResult = '12:01'; // TODO получать bestResult из лидерборда
@@ -39,7 +42,7 @@ export const GameResult: FC<Props> = ({ onPlayAgainClick, results }) => {
             <div className={cls.bestResult}>{bestResult}</div>
           </div>
           <div className={cls.titleWrapper}>
-            <div className={cls.icon}>{isWin ? '🏆' : '😢'}</div>
+            <div className={cls.icon}>{isWin ? winIcon : loseIcon}</div>
           </div>
           <div className={cls.gameOverPageButton}>
             <Button type="primary" onClick={onPlayAgainClick}>
