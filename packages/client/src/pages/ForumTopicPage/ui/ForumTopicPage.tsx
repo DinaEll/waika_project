@@ -27,13 +27,7 @@ export const ForumTopicPage = () => {
   };
 
   return (
-    <MainContainer
-      title={
-        <Typography.Title level={3} className={cls.noMargin}>
-          {pageTitle}
-        </Typography.Title>
-      }
-    >
+    <MainContainer title={pageTitle}>
       <Comment
         author={<p>{forumPageData.author.name}</p>}
         avatar={

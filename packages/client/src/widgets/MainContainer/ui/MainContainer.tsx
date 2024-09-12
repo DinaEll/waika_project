@@ -33,16 +33,16 @@ export const MainContainer: FC<PropsWithChildren<Props>> = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
     >
-      <div className={cls.mainContainerWrapper}>
+      <header className={cls.mainContainerHeader}>
         <div className={cls.mainContainerImage}>{logo ?? <Logo />}</div>
-        <div className={cls.mainContainerTitle}>
-          {isValidElement(title) ? (
-            title
-          ) : (
-            <Typography.Title level={3}>{title}</Typography.Title>
-          )}
-        </div>
-      </div>
+        {isValidElement(title) ? (
+          title
+        ) : (
+          <Typography.Title level={3} className={cls.noMargin}>
+            {title}
+          </Typography.Title>
+        )}
+      </header>
       {children}
     </Modal>
   );

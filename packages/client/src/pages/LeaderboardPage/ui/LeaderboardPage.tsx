@@ -41,17 +41,19 @@ export const LeaderboardPage = () => {
       }
     >
       <table className={cls.players}>
-        {players.map(({ avatar, name, points, positon }) => {
-          return (
-            <LeaderboardPlayer
-              key={name}
-              avatar={avatar}
-              name={name}
-              points={points}
-              positon={positon}
-            />
-          );
-        })}
+        <tbody>
+          {players.map(({ avatar, name, points, positon }) => {
+            return (
+              <LeaderboardPlayer
+                key={name}
+                avatar={avatar}
+                name={name}
+                points={points}
+                positon={positon}
+              />
+            );
+          })}
+        </tbody>
       </table>
     </MainContainer>
   );

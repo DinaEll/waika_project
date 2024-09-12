@@ -1,19 +1,21 @@
 .mainContainer {
-  padding: 5rem 0;
+  margin-top: var(--header-height);
 }
 
-.mainContainerWrapper {
+.mainContainerHeader {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.mainContainerTitle {
-  margin: 54px 0 16px;
+  padding-top: 54px;
+  padding-bottom: 24px;
 }
 
 .mainContainerImage {
   position: absolute;
   bottom: 100%;
   transform: translateY(50%);
+}
+
+.noMargin {
+  margin: 0 !important;
 }
