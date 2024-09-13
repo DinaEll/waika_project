@@ -1,8 +1,11 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import { Form, Button, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { userSignUp, getUser } from '@/shared/api';
+import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
+import { useAppDispatch } from '@/shared/store/hooks';
+import { fetchUser } from '@/shared/store/user/user.action';
 import { validationRules, Field } from '@/utils/validationRules';
 import { LogoWithModal } from '@/widgets/LogoWithModal';
 import cls from './RegistrationPage.module.scss';
@@ -18,15 +21,22 @@ const regInitialState = {
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignUpRequest): void => {
-    void userSignUp(values).then((res) => {
-      if (res.id) {
-        void getUser().then(() => {
-          navigate(getPageUrl('game'));
-        });
-      }
-    });
+    void userSignUp(values)
+      .then(async (res) => {
+        if (res.id) {
+          await dispatch(fetchUser())
+            .then(unwrapResult)
+            .then((data) => {
+              if (data) {
+                navigate(getPageUrl('game'));
+              }
+            });
+        }
+      })
+      .catch(console.error);
   };
 
   return (
