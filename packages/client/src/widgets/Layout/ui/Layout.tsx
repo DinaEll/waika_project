@@ -1,4 +1,3 @@
-import { unwrapResult } from '@reduxjs/toolkit';
 import classNames from 'classnames';
 import { Outlet, NavLink } from 'react-router-dom';
 import { getPageUrl } from '@/shared/config';
@@ -14,7 +13,7 @@ export const Layout = () => {
   const user = useAppSelector((state) => state.user.data);
 
   useEffectOnce(() => {
-    dispatch(fetchUser()).then(unwrapResult).catch(console.error);
+    dispatch(fetchUser()).catch(console.error);
   });
 
   return (
