@@ -1,22 +1,27 @@
 import { ComponentType, FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPageUrl } from '@/shared/config';
+import { getPageUrl, pagesPaths } from '@/shared/config';
+import { useAppSelector } from '@/shared/store/hooks';
 
 export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
   const WithAuth: FC<P> = (props) => {
     const navigate = useNavigate();
-    //TODO add redux user state to auth value, it is hardcoded as false only for testing purposes
-    const auth = false;
+    const user = useAppSelector((state) => state.user.data);
 
     useEffect(() => {
-      if (!auth) {
+      if (!user) {
         navigate(getPageUrl('login'));
+        return;
       }
-    }, [navigate, auth]);
 
-    if (!auth) {
-      return null;
-    }
+      const nonProtectedRoute = (
+        [pagesPaths.login, pagesPaths.registration] as string[]
+      ).includes(location.pathname);
+
+      if (nonProtectedRoute && user) {
+        navigate(getPageUrl('game'));
+      }
+    }, [navigate, user]);
 
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <WrappedComponent {...props} />;

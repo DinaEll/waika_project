@@ -16,16 +16,20 @@ const ProtectedLayout = withAuth(Layout);
 
 export const router = createBrowserRouter([
   {
-    path: getPageUrl('login'),
-    element: <LoginPage />,
-  },
-  {
-    path: getPageUrl('registration'),
-    element: <RegistrationPage />,
-  },
-  {
     element: <ProtectedLayout />,
     children: [
+      {
+        path: getPageUrl('login'),
+        element: <LoginPage />,
+      },
+      {
+        path: getPageUrl('registration'),
+        element: <RegistrationPage />,
+      },
+      {
+        index: true,
+        element: <GamePage />,
+      },
       {
         path: getPageUrl('game'),
         element: <GamePage />,
