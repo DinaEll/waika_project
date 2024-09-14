@@ -45,8 +45,8 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
     }
 
     const mahjongOptions = {
-      columns: 4,
-      rows: 4,
+      columns: 12,
+      rows: 12,
       shuffleCount: 3,
       tileSize: 50,
       onStartCallback,

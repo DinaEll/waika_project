@@ -109,18 +109,31 @@ export class Mahjong extends Game {
     this.remainingShuffles -= 1;
   };
 
+  getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   private createTileArray(tileIds: FieldCell[], x: number): void {
     tileIds.forEach((tileId, y) => {
-      this.tiles.push(this.createTile(tileId, x, y));
+      const imgSrc = `/src/shared/assets/game-tiles/MJ-${tileId}.svg`;
+      this.tiles.push(this.createTile(tileId, imgSrc, x, y));
     });
   }
 
-  protected createTile(id: FieldCell, x: number, y: number): Tile {
+  protected createTile(
+    id: FieldCell,
+    imgSrc: string,
+    x: number,
+    y: number,
+  ): Tile {
     return new Tile(this.ctx, x * this.tileSize, y * this.tileSize, {
       number: id,
       width: this.tileSize,
       height: this.tileSize,
       fill: MahjongHelper.getRandomColor(),
+      imgSrc,
       isVisible: !isNull(id),
       isSelected: false,
       positionOnField: [x, y],

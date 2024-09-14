@@ -4,6 +4,7 @@ import type { FieldCell } from '../types';
 interface TileProps {
   number: FieldCell;
   fill: string;
+  imgSrc: string;
   width: number;
   height: number;
   onClick: (tile: Tile) => void;
@@ -30,23 +31,33 @@ export class Tile extends CanvasElement {
     this.props = props;
   }
 
+  getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   public draw() {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    const { number, fill, height, isSelected, width } = props;
+    // const { number, fill, imgSrc, height, isSelected, width } = props;
+    const { fill, imgSrc, height, isSelected, width } = props;
+    const img = new Image();
+    img.src = imgSrc;
+    ctx.drawImage(img, x, y, width, height);
 
     ctx.fillStyle = isSelected ? this.selectedColor : fill;
-    ctx.fillRect(x, y, width, height);
-
-    ctx.strokeStyle = 'white';
-    ctx.strokeRect(x, y, width, height);
-
-    ctx.fillStyle = 'white';
-    ctx.font = '14px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(number), x + width / 2, y + height / 2);
+    // ctx.fillRect(x, y, width, height);
+    //
+    // ctx.strokeStyle = 'white';
+    // ctx.strokeRect(x, y, width, height);
+    //
+    // ctx.fillStyle = 'white';
+    // ctx.font = '14px Arial';
+    // ctx.textAlign = 'center';
+    // ctx.textBaseline = 'middle';
+    // ctx.fillText(String(number), x + width / 2, y + height / 2);
   }
 
   public onClick(pointX: number, pointY: number): boolean {
