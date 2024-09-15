@@ -41,23 +41,12 @@ export class Tile extends CanvasElement {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    // const { number, fill, imgSrc, height, isSelected, width } = props;
     const { fill, imgSrc, height, isSelected, width } = props;
     const img = new Image();
     img.src = imgSrc;
     ctx.drawImage(img, x, y, width, height);
 
     ctx.fillStyle = isSelected ? this.selectedColor : fill;
-    // ctx.fillRect(x, y, width, height);
-    //
-    // ctx.strokeStyle = 'white';
-    // ctx.strokeRect(x, y, width, height);
-    //
-    // ctx.fillStyle = 'white';
-    // ctx.font = '14px Arial';
-    // ctx.textAlign = 'center';
-    // ctx.textBaseline = 'middle';
-    // ctx.fillText(String(number), x + width / 2, y + height / 2);
   }
 
   public onClick(pointX: number, pointY: number): boolean {
