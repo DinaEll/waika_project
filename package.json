@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.7.15",
+    "@testing-library/jest-dom": "^6.5.0",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/parser": "^8.4.0",
     "eslint-config-prettier": "^9.1.0",

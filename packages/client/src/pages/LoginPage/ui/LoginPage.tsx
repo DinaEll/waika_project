@@ -1,10 +1,13 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { userSignIn, getUser } from '@/shared/api';
+import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch } from '@/shared/store/hooks';
+import { fetchUser } from '@/shared/store/user/user.action';
 import { validationRules, Field } from '@/utils/validationRules';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
@@ -14,28 +17,24 @@ const loginInitialState = {
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignInRequest): void => {
-    void userSignIn(values).then(() => {
-      void getUser().then((res) => {
-        if (res.id) {
-          navigate(getPageUrl('game'));
-        }
-      });
-    });
+    void userSignIn(values)
+      .then(async () => {
+        await dispatch(fetchUser())
+          .then(unwrapResult)
+          .then((res) => {
+            if (res.id) {
+              navigate(getPageUrl('game'));
+            }
+          });
+      })
+      .catch(console.error);
   };
 
   return (
-    <LogoWithModal
-      open
-      centered
-      closable={false}
-      footer={null}
-      width={344}
-      mask={false}
-      transitionName={undefined}
-      title="Sign In"
-    >
+    <MainContainer width={344} title="Sign In">
       <Form
         className={cls.loginPageWrapper}
         layout="vertical"
@@ -95,6 +94,6 @@ export const LoginPage = () => {
           </NavLink>
         </Form.Item>
       </Form>
-    </LogoWithModal>
+    </MainContainer>
   );
 };

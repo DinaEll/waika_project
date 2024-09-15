@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import {
   ForumPageStages,
   forumsListMock,
@@ -55,18 +55,5 @@ export const ForumPage = () => {
     }
   };
 
-  return (
-    <LogoWithModal
-      open
-      centered
-      closable={false}
-      footer={null}
-      width={500}
-      mask={false}
-      transitionName={undefined}
-      title={pageTitle}
-    >
-      {getCurrentStage()}
-    </LogoWithModal>
-  );
+  return <MainContainer title={pageTitle}>{getCurrentStage()}</MainContainer>;
 };

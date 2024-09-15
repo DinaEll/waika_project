@@ -1,15 +1,19 @@
 import { Button, Form, Input } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { appConfig } from '@/shared/config';
+import { useAppSelector } from '@/shared/store/hooks';
 import { UserAvatar } from '@/shared/ui';
 import { validationRules, Field } from '@/utils/validationRules';
-import { LogoWithModal } from '@/widgets';
+import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
 
 export const ProfilePage = () => {
+  const [form] = Form.useForm();
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
+  const { data } = useAppSelector((state) => state.user);
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -19,14 +23,25 @@ export const ProfilePage = () => {
     setAvatarChangeModalOpen(false);
   };
 
+  useEffect(() => {
+    form.setFieldsValue(data);
+  }, [data, form]);
+
   return (
     <>
-      <LogoWithModal
+      <MainContainer
         title={'Your Profile'}
-        width={500}
-        logo={<UserAvatar className={cls.profileAvatar} />}
+        logo={
+          <UserAvatar
+            className={cls.profileAvatar}
+            src={
+              data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
+            }
+          />
+        }
       >
         <Form
+          form={form}
           layout="vertical"
           className={cls.profilePageForm}
           validateTrigger={['onBlur', 'onSubmit']}
@@ -152,7 +167,7 @@ export const ProfilePage = () => {
             </Form.Item>
           </div>
         </Form>
-      </LogoWithModal>
+      </MainContainer>
       <PasswordChangeModal
         open={passwordChangeModalOpen}
         okText={'Save New Password'}
