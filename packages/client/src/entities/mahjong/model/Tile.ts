@@ -35,12 +35,11 @@ export class Tile extends CanvasElement {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    const { fill, imgSrc, height, isSelected, width } = props;
+    const { imgSrc, height, isSelected, width } = props;
     const img = new Image();
     img.src = imgSrc;
+    ctx.globalAlpha = isSelected ? 0.4 : 1;
     ctx.drawImage(img, x, y, width, height);
-
-    ctx.fillStyle = isSelected ? this.selectedColor : fill;
   }
 
   public onClick(pointX: number, pointY: number): boolean {
