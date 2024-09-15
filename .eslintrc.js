@@ -69,12 +69,7 @@ const eslintConfig = {
       },
     ],
   },
-  overrides: [
-    {
-      files: ['**/*.js', '**/*.cjs'],
-      extends: ['plugin:@typescript-eslint/disable-type-checked'],
-    },
-  ],
+  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs'],
 };
 
 module.exports = eslintConfig;
