@@ -3,7 +3,7 @@ import { CanvasLayer } from './CanvasLayer';
 export class Canvas {
   private _canvas: HTMLCanvasElement | undefined;
   protected ctx: CanvasRenderingContext2D;
-  private layers: CanvasLayer[] = [];
+  public layers: CanvasLayer[] = [];
   private requestAnimationFrameId:
     | ReturnType<typeof requestAnimationFrame>
     | undefined;
@@ -42,18 +42,13 @@ export class Canvas {
     this.layers.forEach((layer) => layer.draw());
   }
 
-  private onCanvasClick = (event: MouseEvent) => {
+  onCanvasClick = (event: MouseEvent) => {
     const rect = this.canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
     this.layers.forEach((layer) => layer.onClick(x, y));
   };
-
-  private getStyles() {
-    const compStyles = window.getComputedStyle(this.canvas);
-    return compStyles;
-  }
 
   private clear() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

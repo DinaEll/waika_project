@@ -1,8 +1,10 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import classNames from 'classnames';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { getUser } from '@/shared/api';
 import { getPageUrl, pagesPaths } from '@/shared/config';
 import { useEffectOnce } from '@/shared/hooks';
+import { useAppDispatch } from '@/shared/store/hooks';
+import { fetchUser } from '@/shared/store/user/user.action';
 import { ErrorBoundary } from '@/widgets/ErrorBoundary/ErrorBoundary';
 import { Header } from '@/widgets/Header';
 import cls from './Layout.module.scss';
@@ -10,22 +12,25 @@ import cls from './Layout.module.scss';
 export const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   useEffectOnce(() => {
-    void getUser().then((res) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (!res?.id) {
-        navigate(getPageUrl('login'));
-        return;
-      }
+    dispatch(fetchUser())
+      .then(unwrapResult)
+      .then((res) => {
+        if (!res.id) {
+          navigate(getPageUrl('login'));
+          return;
+        }
 
-      const nonProtectedRoute = (
-        [pagesPaths.login, pagesPaths.registration] as string[]
-      ).includes(location.pathname);
-      if (nonProtectedRoute) {
-        navigate(getPageUrl('main'));
-      }
-    });
+        const nonProtectedRoute = (
+          [pagesPaths.login, pagesPaths.registration] as string[]
+        ).includes(location.pathname);
+        if (nonProtectedRoute) {
+          navigate(getPageUrl('main'));
+        }
+      })
+      .catch(console.error);
   });
 
   return (
