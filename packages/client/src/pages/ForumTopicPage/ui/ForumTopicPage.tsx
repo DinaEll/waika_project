@@ -3,7 +3,7 @@ import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { UserAvatar } from '@/shared/ui';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import {
   forumPageDataMock,
   initialReplyFormData,
@@ -27,20 +27,7 @@ export const ForumTopicPage = () => {
   };
 
   return (
-    <LogoWithModal
-      open
-      centered
-      closable={false}
-      footer={null}
-      width={500}
-      mask={false}
-      transitionName={undefined}
-      title={
-        <Typography.Title level={3} className={cls.noMargin}>
-          {pageTitle}
-        </Typography.Title>
-      }
-    >
+    <MainContainer title={pageTitle}>
       <Comment
         author={<p>{forumPageData.author.name}</p>}
         avatar={
@@ -110,6 +97,6 @@ export const ForumTopicPage = () => {
           </Form.Item>
         </Form>
       </div>
-    </LogoWithModal>
+    </MainContainer>
   );
 };

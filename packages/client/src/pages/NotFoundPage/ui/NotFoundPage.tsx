@@ -1,11 +1,11 @@
 import { Typography } from 'antd';
 import { getPageUrl } from '@/shared/config';
-import { LogoWithModal } from '@/widgets';
+import { MainContainer } from '@/widgets/MainContainer';
 import cls from './NotFoundPage.module.scss';
 
 export const NotFoundPage = () => {
   return (
-    <LogoWithModal title={'404'} width={500}>
+    <MainContainer title={'404'}>
       <Typography.Text className={cls.notFoundPageDescription}>
         Не туда попали
       </Typography.Text>
@@ -15,6 +15,6 @@ export const NotFoundPage = () => {
       >
         На главную
       </Typography.Link>
-    </LogoWithModal>
+    </MainContainer>
   );
 };
