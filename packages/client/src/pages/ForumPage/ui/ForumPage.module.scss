@@ -1,0 +1,78 @@
+.list {
+  padding: 0 12px;
+}
+
+.listItem {
+  cursor: pointer;
+}
+
+.title {
+  margin-left: 24px;
+  color: var(--character-title-85);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerTitle {
+  display: inline-block;
+  width: 60px;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.headerTitleFirst {
+  text-align: start;
+}
+
+.listContent {
+  display: flex;
+}
+
+.badgeWrapper {
+  display: flex;
+  width: 60px;
+  justify-content: center;
+}
+
+.badge {
+  width: 31px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.author {
+  display: inline-block;
+  overflow: hidden;
+  width: 60px;
+  font-size: 12px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+:global {
+  /* stylelint-disable-next-line selector-class-pattern */
+  .ant-badge-count {
+    /* stylelint-disable-next-line declaration-no-important */
+    color: var(--character-title-45) !important;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .ant-list-header {
+    padding: 0 !important;
+    border-block-end: none !important;
+  }
+}

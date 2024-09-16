@@ -1,0 +1,15 @@
+.registrationPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 8px;
+  gap: 8px;
+}
+
+.registrationPageItem {
+  width: 100%;
+}
+
+.registrationPageButton {
+  margin-bottom: 0;
+}

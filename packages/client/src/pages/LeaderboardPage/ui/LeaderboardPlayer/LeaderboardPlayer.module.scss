@@ -1,0 +1,32 @@
+.player {
+  td {
+    padding-bottom: 30px;
+  }
+
+  &:first-child {
+    display: none;
+  }
+
+  &:last-child {
+    td {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.positon {
+  text-align: right;
+}
+
+.avatar {
+  width: 88px;
+  height: 88px;
+}
+
+.name {
+  margin-bottom: 0 !important;
+}
+
+.points {
+  text-align: right;
+}

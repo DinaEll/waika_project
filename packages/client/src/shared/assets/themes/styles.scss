@@ -1,0 +1,10 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+  }
+}

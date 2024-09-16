@@ -1,0 +1,17 @@
+.headerWrapper {
+  position: relative;
+  z-index: 4000;
+  display: flex;
+  width: 100%;
+  height: var(--header-height);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px;
+  background: var(--primary-white);
+}
+
+.headerBlock {
+  display: flex;
+  gap: 16px;
+}
