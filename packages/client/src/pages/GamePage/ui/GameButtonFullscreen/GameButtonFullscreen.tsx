@@ -1,6 +1,6 @@
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { useFullscreen } from '@/shared/hooks';
 
 export const GameButtonFullscreen: FC = () => {
