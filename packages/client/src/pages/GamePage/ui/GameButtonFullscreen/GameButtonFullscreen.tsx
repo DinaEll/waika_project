@@ -5,16 +5,20 @@ import { useFullscreen } from '@/shared/hooks';
 
 export const GameButtonFullscreen: FC = () => {
   const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
-  return (
-    <Button
-      onClick={() => {
-        if (isFullscreen) {
-          exitFullscreen();
-        } else {
-          enterFullscreen(document.body);
-        }
-      }}
-      icon={isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-    />
+
+  const onClick = () => {
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      enterFullscreen(document.body);
+    }
+  };
+
+  const icon = isFullscreen ? (
+    <FullscreenExitOutlined />
+  ) : (
+    <FullscreenOutlined />
   );
+
+  return <Button onClick={onClick} icon={icon} />;
 };
