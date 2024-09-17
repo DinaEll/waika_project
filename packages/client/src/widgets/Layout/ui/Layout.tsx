@@ -37,7 +37,7 @@ export const Layout = () => {
       <Header />
 
       <ErrorBoundary>
-        <main>
+        <main className={cls.content}>
           <Outlet />
         </main>
       </ErrorBoundary>
