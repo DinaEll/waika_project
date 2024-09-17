@@ -1,33 +1,31 @@
 import { CanvasElement } from '../../canvas/model/CanvasElement';
-import type { FieldCell } from '../types';
+import type { MahjongFieldCell } from '../types';
 
 interface TileProps {
-  number: FieldCell;
-  fill: string;
+  number: NonNullable<MahjongFieldCell>;
   imgSrc: string;
   width: number;
   height: number;
   onClick: (tile: Tile) => void;
   isVisible: boolean;
   isSelected: boolean;
-  positionOnField: [number, number];
+  positionOnField: { z: number; y: number; x: number };
 }
 
 export class Tile extends CanvasElement {
-  protected x: number;
-  protected y: number;
+  public x: number;
+  public y: number;
   public props: TileProps;
   private selectedColor = 'red';
 
   constructor(
     ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
+    coords: { x: number; y: number },
     props: TileProps,
   ) {
     super(ctx);
-    this.x = x;
-    this.y = y;
+    this.x = coords.x;
+    this.y = coords.y;
     this.props = props;
   }
 
@@ -62,6 +60,15 @@ export class Tile extends CanvasElement {
 
   public sameNumber(tile: Tile) {
     return this.props.number === tile.props.number;
+  }
+
+  public showUnavailability() {
+    setTimeout(() => {
+      this.isSelected = true;
+      setTimeout(() => {
+        this.isSelected = false;
+      }, 400);
+    }, 400);
   }
 
   get isVisible() {

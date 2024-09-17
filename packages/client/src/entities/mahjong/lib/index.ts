@@ -1,0 +1,9 @@
+export { createFieldPattern } from './createFieldPattern';
+export { createUniqueNumbers } from './createUniqueNumbers';
+export { fillField } from './fillField';
+export { findAvailableTiles } from './findAvailableTiles';
+export { findPairs } from './findPairs';
+export { getFlattenField } from './getFlattenField';
+export { getAvailablePairs } from './getAvailablePairs';
+export { shouldFillCell } from './shouldFillCell';
+export { shufflePairs } from './shufflePairs';

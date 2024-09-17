@@ -41,7 +41,6 @@
     "jest-transform-stub": "^2.0.0",
     "lefthook": "^1.7.15",
     "sass": "^1.77.8",
-    "style-loader": "^4.0.0",
     "stylelint": "^16.9.0",
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-standard-scss": "^13.1.0",

@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { LogoWithModal } from '@/widgets/LogoWithModal';
+import { MainContainer } from '@/widgets/MainContainer';
 import { GameResults, ResultStatus } from '../../model/gamePageData';
 import cls from './GameResults.module.scss';
 
@@ -19,14 +19,7 @@ export const GameResult: FC<Props> = ({ onPlayAgainClick, results }) => {
 
   return (
     <div className={classNames(cls.GameResultsPage)}>
-      <LogoWithModal
-        open
-        centered
-        closable={false}
-        footer={null}
-        width={500}
-        mask={false}
-        transitionName={undefined}
+      <MainContainer
         title={isWin ? 'Congratulations' : 'Sorry, but you lose :('}
       >
         <div className={cls.gameOverPageWrapper}>
@@ -50,7 +43,7 @@ export const GameResult: FC<Props> = ({ onPlayAgainClick, results }) => {
             </Button>
           </div>
         </div>
-      </LogoWithModal>
+      </MainContainer>
     </div>
   );
 };
