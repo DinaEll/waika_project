@@ -75,7 +75,6 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
       rows: 7,
       levels: 3,
       shuffleCount: 3,
-      tileSize: 50,
       onStartCallback,
       onWinCallback,
       onLoseCallback,
@@ -113,7 +112,7 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
   };
 
   return (
-    <div className={cls.gamePage}>
+    <div className={cls.game}>
       <Flex gap={8} align="center">
         <GameButtonFullscreen />
         <Button onClick={onShuffleClick}>Shuffle</Button>
@@ -126,7 +125,7 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
         <span>Tiles left {remainingTiles}</span>
         <span>Available Pairs {availablePairs}</span>
       </Flex>
-      <canvas ref={canvasRef} className={cls.gameField} />
+      <canvas ref={canvasRef} className={cls.field} />
     </div>
   );
 };

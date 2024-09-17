@@ -1,14 +1,12 @@
 .layout {
-  width: 100vw;
-  height: 100vh;
+  display: grid;
+  width: 100dvw;
+  height: 100dvh;
   background-color: var(--primary-green);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
 }
 
-.navbar {
-  position: relative;
-  z-index: 4000;
-  display: flex;
-  width: 200px;
-  padding: 2rem 0;
-  gap: 1rem;
+.content {
+  min-height: 100%;
 }

@@ -15,7 +15,6 @@ import { Tile } from './Tile';
 import type { MahjongField, MahjongFieldCell } from '../types';
 
 type Options = {
-  tileSize: number;
   columns: number;
   rows: number;
   levels: number;
@@ -26,6 +25,8 @@ type Options = {
 } & Pick<Game, 'onStartCallback' | 'onWinCallback' | 'onLoseCallback'>;
 
 export class Mahjong extends Game {
+  private static readonly tileWidth = 59.52;
+  private static readonly tileHeight = 72;
   private tiles: Tile[] = [];
   private _remainingTiles = 0;
   private _remainingShuffles = 3;
@@ -33,7 +34,6 @@ export class Mahjong extends Game {
   private selectedTiles: Tile[] = [];
   private field: MahjongField;
   private pairs: NonNullable<MahjongFieldCell>[];
-  private tileSize: number;
 
   private fieldLayer: CanvasLayer;
   private animationLayer: CanvasLayer;
@@ -48,7 +48,6 @@ export class Mahjong extends Game {
       columns,
       rows,
       levels,
-      tileSize,
       shuffleCount,
       onLoseCallback,
       onStartCallback,
@@ -65,7 +64,6 @@ export class Mahjong extends Game {
     this.onRemainingTilesChange = onRemainingTilesChange;
     this.onShuffleChange = onShuffleChange;
 
-    this.tileSize = tileSize;
     this.remainingShuffles = shuffleCount;
 
     const { field, countCells } = createFieldPattern(columns, rows, levels);
@@ -93,7 +91,7 @@ export class Mahjong extends Game {
         }
       })
       .catch((err: Error) => {
-        console.error('Error loading images:', err.message);
+        console.error(err);
       });
   }
 
@@ -173,12 +171,35 @@ export class Mahjong extends Game {
   private createTiles() {
     this.tiles = [];
     this.fieldLayer.clear();
+
+    if (!this.field?.[0]?.[0]) {
+      throw new Error('Field is not initialized');
+    }
+
+    const totalWidth = this.field[0][0].length * Mahjong.tileWidth;
+    const totalHeight = this.field[0].length * Mahjong.tileHeight;
+
+    const offsetX = (this.canvas.clientWidth - totalWidth) / 2;
+    const offsetY = (this.canvas.clientHeight - totalHeight) / 2;
+
+    const levelOffset = 10;
+
     this.field.forEach((levels, z) => {
       levels.forEach((rows, y) => {
         rows.forEach((number, x) => {
           if (isDefined(number)) {
             const imgSrc = this.images[number];
-            const tile = this.createTile(number, imgSrc, { z, y, x });
+            const tileX = x * Mahjong.tileWidth + offsetX + z * levelOffset;
+            const tileY =
+              y * Mahjong.tileHeight + offsetY + z * levelOffset - z * 10;
+
+            const tile = this.createTile(
+              number,
+              imgSrc,
+              { z, y, x },
+              tileX,
+              tileY,
+            );
             this.tiles.push(tile);
             this.fieldLayer.addElement(tile);
             this.onTileAdd(tile);
@@ -192,20 +213,16 @@ export class Mahjong extends Game {
     number: NonNullable<MahjongFieldCell>,
     img: (typeof this.images)[number] | undefined,
     position: { z: number; y: number; x: number },
+    x: number,
+    y: number,
   ): Tile {
-    const width = this.tileSize;
-    const height = this.tileSize;
-
     return new Tile(
       this.ctx,
-      {
-        y: position.y * (position.y + height),
-        x: position.x * (position.x + width),
-      },
+      { x, y },
       {
         number,
-        width,
-        height,
+        width: Mahjong.tileWidth,
+        height: Mahjong.tileHeight,
         img,
         isVisible: isDefined(number),
         isSelected: false,
@@ -263,8 +280,10 @@ export class Mahjong extends Game {
               this.animationLayer.addElement(selectedTile);
               this.onTileRemove(selectedTile);
               const { x, y, z } = selectedTile.props.positionOnField;
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              this.field[z]![y]![x] = null;
+              if (!this.field?.[z]?.[y]?.[x]) {
+                throw new Error('Field is not initialized');
+              }
+              this.field[z][y][x] = null;
             });
             this.selectedTiles = [];
             this.remainingTiles -= 2;
