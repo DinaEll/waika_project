@@ -15,7 +15,6 @@ import { Tile } from './Tile';
 import type { MahjongField, MahjongFieldCell } from '../types';
 
 type Options = {
-  tileSize: number;
   columns: number;
   rows: number;
   levels: number;
@@ -33,7 +32,6 @@ export class Mahjong extends Game {
   private selectedTiles: Tile[] = [];
   private field: MahjongField;
   private pairs: NonNullable<MahjongFieldCell>[];
-  private tileSize: number;
 
   private fieldLayer: CanvasLayer;
   private animationLayer: CanvasLayer;
@@ -48,7 +46,6 @@ export class Mahjong extends Game {
       columns,
       rows,
       levels,
-      tileSize,
       shuffleCount,
       onLoseCallback,
       onStartCallback,
@@ -65,7 +62,6 @@ export class Mahjong extends Game {
     this.onRemainingTilesChange = onRemainingTilesChange;
     this.onShuffleChange = onShuffleChange;
 
-    this.tileSize = tileSize;
     this.remainingShuffles = shuffleCount;
 
     const { field, countCells } = createFieldPattern(columns, rows, levels);
@@ -93,7 +89,7 @@ export class Mahjong extends Game {
         }
       })
       .catch((err: Error) => {
-        console.error('Error loading images:', err.message);
+        console.error(err);
       });
   }
 
@@ -193,14 +189,14 @@ export class Mahjong extends Game {
     img: (typeof this.images)[number] | undefined,
     position: { z: number; y: number; x: number },
   ): Tile {
-    const width = this.tileSize;
-    const height = this.tileSize;
+    const width = 59.52; //124;
+    const height = 72; //150;
 
     return new Tile(
       this.ctx,
       {
-        y: position.y * (position.y + height),
-        x: position.x * (position.x + width),
+        y: position.y * height,
+        x: position.x * width,
       },
       {
         number,

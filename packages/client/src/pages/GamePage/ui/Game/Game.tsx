@@ -75,7 +75,6 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
       rows: 7,
       levels: 3,
       shuffleCount: 3,
-      tileSize: 50,
       onStartCallback,
       onWinCallback,
       onLoseCallback,
