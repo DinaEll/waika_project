@@ -1,5 +1,5 @@
-import { Button, Flex } from 'antd';
-import { useRef, useState, type FC } from 'react';
+import { Button, Flex, Modal } from 'antd';
+import { useEffect, useRef, useState, type FC } from 'react';
 import { Mahjong } from '@/entities/mahjong';
 import { useEffectOnce } from '@/shared/hooks';
 import { formatTime, getDurationTime } from '@/shared/utils';
@@ -17,6 +17,31 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
   const mahjongRef = useRef<Mahjong>();
   const [startTime, setStartTime] = useState<Date>();
   const [finishTime, setFinishTime] = useState<Date>();
+  const [remainingShuffles, setRemainingShuffles] = useState<number>();
+  const [remainingTiles, setRemainingTiles] = useState<number>();
+  const [availablePairs, setAvailablePairs] = useState<number>();
+
+  useEffect(() => {
+    if (remainingShuffles && remainingShuffles > 0 && availablePairs === 0) {
+      Modal.confirm({
+        title: 'No tiles available',
+        content: 'You can use shuffle',
+        cancelButtonProps: { style: { display: 'none' } },
+      });
+    }
+  }, [availablePairs, remainingShuffles]);
+
+  const onShuffleChange = (count: number) => {
+    setRemainingShuffles(count);
+  };
+
+  const onAvailablePairsChange = (count: number) => {
+    setAvailablePairs(count);
+  };
+
+  const onRemainingTilesChange = (count: number) => {
+    setRemainingTiles(count);
+  };
 
   const onStartCallback = (startTime?: Date): undefined => {
     setStartTime(startTime);
@@ -46,13 +71,17 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
     }
 
     const mahjongOptions = {
-      columns: 4,
-      rows: 4,
+      columns: 7,
+      rows: 7,
+      levels: 3,
       shuffleCount: 3,
       tileSize: 50,
       onStartCallback,
       onWinCallback,
       onLoseCallback,
+      onRemainingTilesChange,
+      onAvailablePairsChange,
+      onShuffleChange,
     };
     mahjongRef.current = new Mahjong(canvasRef.current, mahjongOptions);
     mahjongRef.current.start();
@@ -93,6 +122,9 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
           startTime={startTime?.toISOString()}
           finishTime={finishTime?.toISOString()}
         />
+        <span>Shuffles left {remainingShuffles}</span>
+        <span>Tiles left {remainingTiles}</span>
+        <span>Available Pairs {availablePairs}</span>
       </Flex>
       <canvas ref={canvasRef} className={cls.gameField} />
     </div>
