@@ -3,7 +3,7 @@ import type { MahjongFieldCell } from '../types';
 
 interface TileProps {
   number: NonNullable<MahjongFieldCell>;
-  imgSrc: string;
+  img: CanvasImageSource | undefined;
   width: number;
   height: number;
   onClick: (tile: Tile) => void;
@@ -16,7 +16,6 @@ export class Tile extends CanvasElement {
   public x: number;
   public y: number;
   public props: TileProps;
-  private selectedColor = 'red';
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -33,11 +32,18 @@ export class Tile extends CanvasElement {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    const { imgSrc, height, isSelected, width } = props;
-    const img = new Image();
-    img.src = imgSrc;
-    ctx.globalAlpha = isSelected ? 0.4 : 1;
-    ctx.drawImage(img, x, y, width, height);
+    const { img, height, isSelected, width } = props;
+
+    if (img) {
+      ctx.globalAlpha = isSelected ? 0.4 : 1;
+      ctx.drawImage(img, x, y, width, height);
+    } else {
+      ctx.fillStyle = isSelected ? 'red' : 'grey';
+      ctx.fillRect(x, y, width, height);
+
+      ctx.strokeStyle = 'white';
+      ctx.strokeRect(x, y, width, height);
+    }
   }
 
   public onClick(pointX: number, pointY: number): boolean {
