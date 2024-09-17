@@ -5,6 +5,5 @@ export { findAvailableTiles } from './findAvailableTiles';
 export { findPairs } from './findPairs';
 export { getFlattenField } from './getFlattenField';
 export { getAvailablePairs } from './getAvailablePairs';
-export { getRandomColor } from './getRandomColor';
 export { shouldFillCell } from './shouldFillCell';
 export { shufflePairs } from './shufflePairs';

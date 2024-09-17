@@ -9,7 +9,6 @@ import {
   findAvailableTiles,
   getAvailablePairs,
   getFlattenField,
-  getRandomColor,
   shufflePairs,
 } from '../lib';
 import { Tile } from './Tile';
@@ -74,6 +73,7 @@ export class Mahjong extends Game {
     this.remainingTiles = countCells;
 
     const uniqueNumbers = createUniqueNumbers(countCells / 2);
+
     this.pairs = shufflePairs([...uniqueNumbers, ...uniqueNumbers]);
     this.field = fillField(this.field, this.pairs);
 
@@ -83,11 +83,29 @@ export class Mahjong extends Game {
     this.animationLayer = new CanvasLayer(this.ctx);
     this.addLayer(this.animationLayer);
 
-    this.createTiles();
+    //TODO Add indicator loading or add to field on loading
+    this.loadAllImages(uniqueNumbers)
+      .then(() => {
+        this.createTiles();
 
-    if (!this.checkAvailablePairs()) {
-      this.shuffle();
-    }
+        if (!this.checkAvailablePairs()) {
+          this.shuffle();
+        }
+      })
+      .catch((err: Error) => {
+        console.error('Error loading images:', err.message);
+      });
+  }
+
+  loadAllImages(uniqueNumbers: number[]) {
+    const promises = uniqueNumbers.map((number) =>
+      this.loadImage(
+        `/src/shared/assets/game-tiles/MJ1-${number}.svg`,
+        String(number),
+      ),
+    );
+
+    return Promise.all(promises);
   }
 
   private onShuffleSuccess() {
@@ -159,7 +177,8 @@ export class Mahjong extends Game {
       levels.forEach((rows, y) => {
         rows.forEach((number, x) => {
           if (isDefined(number)) {
-            const tile = this.createTile(number, { z, y, x });
+            const imgSrc = this.images[number];
+            const tile = this.createTile(number, imgSrc, { z, y, x });
             this.tiles.push(tile);
             this.fieldLayer.addElement(tile);
             this.onTileAdd(tile);
@@ -171,13 +190,11 @@ export class Mahjong extends Game {
 
   protected createTile(
     number: NonNullable<MahjongFieldCell>,
+    img: (typeof this.images)[number] | undefined,
     position: { z: number; y: number; x: number },
   ): Tile {
     const width = this.tileSize;
     const height = this.tileSize;
-    const fill =
-      this.tiles.find(({ props }) => props.number === number)?.props.fill ??
-      getRandomColor();
 
     return new Tile(
       this.ctx,
@@ -189,7 +206,7 @@ export class Mahjong extends Game {
         number,
         width,
         height,
-        fill,
+        img,
         isVisible: isDefined(number),
         isSelected: false,
         positionOnField: position,

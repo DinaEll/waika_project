@@ -3,7 +3,7 @@ import type { MahjongFieldCell } from '../types';
 
 interface TileProps {
   number: NonNullable<MahjongFieldCell>;
-  fill: string;
+  img: CanvasImageSource | undefined;
   width: number;
   height: number;
   onClick: (tile: Tile) => void;
@@ -16,7 +16,6 @@ export class Tile extends CanvasElement {
   public x: number;
   public y: number;
   public props: TileProps;
-  private selectedColor = 'red';
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -33,26 +32,18 @@ export class Tile extends CanvasElement {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    const { number, fill, height, isSelected, width, positionOnField } = props;
+    const { img, height, isSelected, width } = props;
 
-    ctx.fillStyle = isSelected ? this.selectedColor : fill;
-    ctx.fillRect(x, y, width, height);
-
-    ctx.strokeStyle = 'white';
-    ctx.strokeRect(x, y, width, height);
-
-    if (positionOnField.z === 0) {
-      ctx.fillStyle = 'white';
-    } else if (positionOnField.z === 1) {
-      ctx.fillStyle = 'blue';
+    if (img) {
+      ctx.globalAlpha = isSelected ? 0.4 : 1;
+      ctx.drawImage(img, x, y, width, height);
     } else {
-      ctx.fillStyle = 'black';
-    }
+      ctx.fillStyle = isSelected ? 'red' : 'grey';
+      ctx.fillRect(x, y, width, height);
 
-    ctx.font = '14px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(number), x + width / 2, y + height / 2);
+      ctx.strokeStyle = 'white';
+      ctx.strokeRect(x, y, width, height);
+    }
   }
 
   public onClick(pointX: number, pointY: number): boolean {
