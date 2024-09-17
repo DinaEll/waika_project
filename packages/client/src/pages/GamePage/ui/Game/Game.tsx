@@ -4,6 +4,7 @@ import { Mahjong } from '@/entities/mahjong';
 import { useEffectOnce } from '@/shared/hooks';
 import { formatTime, getDurationTime } from '@/shared/utils';
 import { ResultStatus } from '../../model/gamePageData';
+import { GameButtonFullscreen } from '../GameButtonFullscreen/GameButtonFullscreen';
 import { GameTimer } from '../GameTimer/GameTimer';
 import cls from './Game.module.scss';
 
@@ -114,6 +115,7 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
   return (
     <div className={cls.gamePage}>
       <Flex gap={8} align="center">
+        <GameButtonFullscreen />
         <Button onClick={onShuffleClick}>Shuffle</Button>
         <Button onClick={onRestartClick}>Restart</Button>
         <GameTimer
