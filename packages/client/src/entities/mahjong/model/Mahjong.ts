@@ -177,22 +177,28 @@ export class Mahjong extends Game {
     }
 
     const totalWidth = this.field[0][0].length * Mahjong.tileWidth;
-    const totalHeight = this.field[0].length * Mahjong.tileWidth;
+    const totalHeight = this.field[0].length * Mahjong.tileHeight;
 
     const offsetX = (this.canvas.clientWidth - totalWidth) / 2;
     const offsetY = (this.canvas.clientHeight - totalHeight) / 2;
+
+    const levelOffset = 10;
 
     this.field.forEach((levels, z) => {
       levels.forEach((rows, y) => {
         rows.forEach((number, x) => {
           if (isDefined(number)) {
             const imgSrc = this.images[number];
+            const tileX = x * Mahjong.tileWidth + offsetX + z * levelOffset;
+            const tileY =
+              y * Mahjong.tileHeight + offsetY + z * levelOffset - z * 10;
+
             const tile = this.createTile(
               number,
               imgSrc,
               { z, y, x },
-              offsetX,
-              offsetY,
+              tileX,
+              tileY,
             );
             this.tiles.push(tile);
             this.fieldLayer.addElement(tile);
@@ -207,15 +213,12 @@ export class Mahjong extends Game {
     number: NonNullable<MahjongFieldCell>,
     img: (typeof this.images)[number] | undefined,
     position: { z: number; y: number; x: number },
-    offsetX: number,
-    offsetY: number,
+    x: number,
+    y: number,
   ): Tile {
     return new Tile(
       this.ctx,
-      {
-        x: position.x * Mahjong.tileWidth + offsetX,
-        y: position.y * Mahjong.tileHeight + offsetY,
-      },
+      { x, y },
       {
         number,
         width: Mahjong.tileWidth,
