@@ -1,16 +1,18 @@
 import { ComponentType, FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPageUrl, pagesPaths } from '@/shared/config';
-import { useAppSelector } from '@/shared/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
+import { fetchUser } from '../store/user/user.action';
 
 export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
   const WithAuth: FC<P> = (props) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user.data);
 
     useEffect(() => {
       if (!user) {
-        navigate(getPageUrl('login'));
+        dispatch(fetchUser()).catch(console.error);
         return;
       }
 
@@ -21,7 +23,7 @@ export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
       if (nonProtectedRoute && user) {
         navigate(getPageUrl('game'));
       }
-    }, [navigate, user]);
+    }, [dispatch, navigate, user]);
 
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <WrappedComponent {...props} />;
