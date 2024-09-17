@@ -4,7 +4,7 @@ import { appConfig } from '@/shared/config';
 import { useAppSelector } from '@/shared/store/hooks';
 import { UserAvatar } from '@/shared/ui';
 import { validationRules, Field } from '@/utils/validationRules';
-import { LogoWithModal } from '@/widgets';
+import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
@@ -29,9 +29,8 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <LogoWithModal
+      <MainContainer
         title={'Your Profile'}
-        width={500}
         logo={
           <UserAvatar
             className={cls.profileAvatar}
@@ -168,7 +167,7 @@ export const ProfilePage = () => {
             </Form.Item>
           </div>
         </Form>
-      </LogoWithModal>
+      </MainContainer>
       <PasswordChangeModal
         open={passwordChangeModalOpen}
         okText={'Save New Password'}

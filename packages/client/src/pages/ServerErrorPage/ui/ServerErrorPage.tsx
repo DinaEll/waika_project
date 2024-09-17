@@ -1,11 +1,11 @@
 import { Typography } from 'antd';
 import { getPageUrl } from '@/shared/config';
-import { LogoWithModal } from '@/widgets';
+import { MainContainer } from '@/widgets/MainContainer';
 import cls from './ServerErrorPage.module.scss';
 
 export const ServerErrorPage = () => {
   return (
-    <LogoWithModal title={'500'} width={500}>
+    <MainContainer title={'500'}>
       <Typography.Text className={cls.serverErrorPageDescription}>
         Мы уже фиксим
       </Typography.Text>
@@ -15,6 +15,6 @@ export const ServerErrorPage = () => {
       >
         На главную
       </Typography.Link>
-    </LogoWithModal>
+    </MainContainer>
   );
 };

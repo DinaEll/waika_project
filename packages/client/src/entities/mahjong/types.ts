@@ -1,1 +1,2 @@
-export type FieldCell = number | null;
+export type MahjongFieldCell = number | null;
+export type MahjongField = MahjongFieldCell[][][];
