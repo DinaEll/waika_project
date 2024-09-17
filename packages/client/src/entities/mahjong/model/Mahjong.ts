@@ -25,6 +25,8 @@ type Options = {
 } & Pick<Game, 'onStartCallback' | 'onWinCallback' | 'onLoseCallback'>;
 
 export class Mahjong extends Game {
+  private static readonly tileWidth = 59.52;
+  private static readonly tileHeight = 72;
   private tiles: Tile[] = [];
   private _remainingTiles = 0;
   private _remainingShuffles = 3;
@@ -169,12 +171,29 @@ export class Mahjong extends Game {
   private createTiles() {
     this.tiles = [];
     this.fieldLayer.clear();
+
+    if (!this.field?.[0]?.[0]) {
+      throw new Error('Field is not initialized');
+    }
+
+    const totalWidth = this.field[0][0].length * Mahjong.tileWidth;
+    const totalHeight = this.field[0].length * Mahjong.tileWidth;
+
+    const offsetX = (this.canvas.clientWidth - totalWidth) / 2;
+    const offsetY = (this.canvas.clientHeight - totalHeight) / 2;
+
     this.field.forEach((levels, z) => {
       levels.forEach((rows, y) => {
         rows.forEach((number, x) => {
           if (isDefined(number)) {
             const imgSrc = this.images[number];
-            const tile = this.createTile(number, imgSrc, { z, y, x });
+            const tile = this.createTile(
+              number,
+              imgSrc,
+              { z, y, x },
+              offsetX,
+              offsetY,
+            );
             this.tiles.push(tile);
             this.fieldLayer.addElement(tile);
             this.onTileAdd(tile);
@@ -188,20 +207,19 @@ export class Mahjong extends Game {
     number: NonNullable<MahjongFieldCell>,
     img: (typeof this.images)[number] | undefined,
     position: { z: number; y: number; x: number },
+    offsetX: number,
+    offsetY: number,
   ): Tile {
-    const width = 59.52; //124;
-    const height = 72; //150;
-
     return new Tile(
       this.ctx,
       {
-        y: position.y * height,
-        x: position.x * width,
+        x: position.x * Mahjong.tileWidth + offsetX,
+        y: position.y * Mahjong.tileHeight + offsetY,
       },
       {
         number,
-        width,
-        height,
+        width: Mahjong.tileWidth,
+        height: Mahjong.tileHeight,
         img,
         isVisible: isDefined(number),
         isSelected: false,
@@ -259,8 +277,10 @@ export class Mahjong extends Game {
               this.animationLayer.addElement(selectedTile);
               this.onTileRemove(selectedTile);
               const { x, y, z } = selectedTile.props.positionOnField;
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              this.field[z]![y]![x] = null;
+              if (!this.field?.[z]?.[y]?.[x]) {
+                throw new Error('Field is not initialized');
+              }
+              this.field[z][y][x] = null;
             });
             this.selectedTiles = [];
             this.remainingTiles -= 2;
