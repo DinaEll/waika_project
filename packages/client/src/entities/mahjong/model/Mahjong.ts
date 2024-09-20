@@ -189,9 +189,10 @@ export class Mahjong extends Game {
         rows.forEach((number, x) => {
           if (isDefined(number)) {
             const imgSrc = this.images[number];
-            const tileX = x * Mahjong.tileWidth + offsetX + z * levelOffset;
+            const tileX =
+              x * Mahjong.tileWidth + offsetX + z * levelOffset - z * 16;
             const tileY =
-              y * Mahjong.tileHeight + offsetY + z * levelOffset - z * 10;
+              y * Mahjong.tileHeight + offsetY + z * levelOffset - z * 3;
 
             const tile = this.createTile(
               number,

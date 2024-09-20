@@ -35,7 +35,7 @@ export class Tile extends CanvasElement {
     const { img, height, isSelected, width } = props;
 
     if (img) {
-      ctx.globalAlpha = isSelected ? 0.4 : 1;
+      ctx.globalAlpha = isSelected ? 0.6 : 1;
       ctx.drawImage(img, x, y, width, height);
     } else {
       ctx.fillStyle = isSelected ? 'red' : 'grey';
