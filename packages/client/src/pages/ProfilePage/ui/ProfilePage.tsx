@@ -52,12 +52,12 @@ export const ProfilePage = () => {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите свое имя.',
+                message: 'Please enter your name.',
               },
               {
                 pattern: validationRules[Field.FirstName],
                 message:
-                  'Имя должно начинаться с заглавной буквы и содержать только буквы и тире.',
+                  'The name must begin with a capital letter and contain only letters and dashes.',
               },
             ]}
             validateTrigger="onBlur"
@@ -71,12 +71,12 @@ export const ProfilePage = () => {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите свою фамилию.',
+                message: 'Please enter your last name.',
               },
               {
                 pattern: validationRules[Field.SecondName],
                 message:
-                  'Фамилия должна начинаться с заглавной буквы и содержать только буквы и тире.\n',
+                  'The last name must begin with a capital letter and contain only letters and dashes.',
               },
             ]}
             validateTrigger="onBlur"
@@ -90,12 +90,12 @@ export const ProfilePage = () => {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите ваш логин.',
+                message: 'Please enter your login.',
               },
               {
                 pattern: validationRules[Field.Login],
                 message:
-                  'Логин должен иметь длину от 3 до 20 символов, состоять из букв и цифр и может включать тире или подчеркивание.',
+                  'The login must be between 3 and 20 characters long, consist of letters and numbers, and may include a dash or underscore.',
               },
             ]}
             validateTrigger="onBlur"
@@ -109,12 +109,12 @@ export const ProfilePage = () => {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите ваш адрес электронной почты.',
+                message: 'Please enter your email address.',
               },
               {
                 pattern: validationRules[Field.Email],
                 message:
-                  'Электронная почта должна быть действительным адресом электронной почты.',
+                  'The email must be a valid email address.',
               },
             ]}
             validateTrigger="onBlur"
@@ -128,12 +128,12 @@ export const ProfilePage = () => {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите ваш номер телефона.',
+                message: 'Please enter your phone number.',
               },
               {
                 pattern: validationRules[Field.Phone],
                 message:
-                  'Номер телефона должен состоять из 10–15 цифр и может начинаться со знака плюс.',
+                  'The phone number must be 10–15 digits long and may begin with a plus sign.',
               },
             ]}
             validateTrigger="onBlur"

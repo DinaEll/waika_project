@@ -49,12 +49,12 @@ export const LoginPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите ваш логин.',
+              message: 'Please enter your login.',
             },
             {
               pattern: validationRules[Field.Login],
               message:
-                'Логин должен быть длиной от 3 до 20 символов и содержать буквы и цифры.',
+                'The login must be from 3 to 20 characters long and contain letters and numbers.',
             },
           ]}
           validateTrigger="onBlur"
@@ -69,12 +69,12 @@ export const LoginPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите ваш пароль.',
+              message: 'Please enter your password.',
             },
             {
               pattern: validationRules[Field.Password],
               message:
-                'Пароль должен иметь длину от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
+                'The password must be between 8 and 40 characters long and contain at least one capital letter and a number.',
             },
           ]}
           validateTrigger="onBlur"
