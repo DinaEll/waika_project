@@ -41,6 +41,7 @@ const eslintConfig = {
         explicitSpread: 'ignore',
       },
     ],
+    "@typescript-eslint/strict-boolean-expressions": "warn",
   },
 };
 
