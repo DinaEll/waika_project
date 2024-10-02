@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import fs from 'fs/promises';
 import path from 'path';
 import { config as dotenvConfig } from 'dotenv';
-import express, { static as expressStatic } from 'express';
+import express, {
+  static as expressStatic,
+  Request as ExpressRequest,
+} from 'express';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 
 dotenvConfig();
@@ -34,7 +39,10 @@ async function createServer() {
     const url = req.originalUrl;
 
     try {
-      let render: () => Promise<string>;
+      let render: (
+        req: ExpressRequest,
+      ) => Promise<{ html: string; initialState: unknown }>;
+
       let template: string;
 
       if (vite) {
@@ -49,11 +57,12 @@ async function createServer() {
 
         // Загружаем модуль клиента, который писали выше,
         // он будет рендерить HTML-код
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         render = (
           await vite.ssrLoadModule(
             path.join(clientPath, 'src/entry-server.tsx'),
           )
-        ).render as () => Promise<string>;
+        ).render;
       } else {
         template = await fs.readFile(
           path.join(clientPath, 'dist/client/index.html'),
@@ -67,15 +76,20 @@ async function createServer() {
         );
 
         // Импортируем этот модуль и вызываем с начальным состоянием
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        render = (await import(pathToServer)).render as () => Promise<string>;
+        // TODO ошибки   @typescript-eslint/no-unsafe-assignment @typescript-eslint/no-unsafe-member-access
+        render = (await import(pathToServer)).render;
       }
 
       // Получаем HTML-строку из JSX
-      const appHtml = await render();
+      const { html: appHtml, initialState } = await render(req);
 
       // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`,
+        );
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);

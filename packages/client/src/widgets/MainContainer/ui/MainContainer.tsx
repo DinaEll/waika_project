@@ -30,6 +30,7 @@ export const MainContainer: FC<PropsWithChildren<Props>> = ({
       open
       centered
       width={500}
+      getContainer={'#root main'}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
     >
