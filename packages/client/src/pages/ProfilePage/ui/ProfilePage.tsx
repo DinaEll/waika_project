@@ -190,8 +190,10 @@ export const ProfilePage = () => {
   );
 };
 
-export const initProfilePage: InitPage = async ({ dispatch, state }) => {
+export const initProfilePage: InitPage = async ({ dispatch, state, ctx }) => {
+  console.log('initProfilePage', ctx);
+
   if (!selectUser(state).data) {
-    await dispatch(fetchUser());
+    await dispatch(fetchUser(ctx));
   }
 };

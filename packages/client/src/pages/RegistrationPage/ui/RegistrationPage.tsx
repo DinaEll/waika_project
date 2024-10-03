@@ -27,7 +27,7 @@ export const RegistrationPage = () => {
     void userSignUp(values)
       .then(async (res) => {
         if (res.id) {
-          await dispatch(fetchUser())
+          await dispatch(fetchUser(''))
             .then(unwrapResult)
             .then((data) => {
               if (data) {

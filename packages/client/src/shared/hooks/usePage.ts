@@ -42,6 +42,8 @@ export const usePage = ({ initPage }: PageProps) => {
   const store = useStore();
 
   useEffect(() => {
-    initPage({ dispatch, state: store.getState() }).catch(console.error);
-  }, []);
+    initPage({ dispatch, state: store.getState(), ctx: '' }).catch(
+      console.error,
+    );
+  }, [dispatch, initPage, store]);
 };

@@ -17,6 +17,7 @@
     "@ant-design/compatible": "^5.1.2",
     "@ant-design/icons": "^5.4.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@types/cookie-parser": "^1.4.7",
     "antd": "^5.20.2",
     "axios": "^1.7.7",
     "cookie-parser": "^1.4.6",

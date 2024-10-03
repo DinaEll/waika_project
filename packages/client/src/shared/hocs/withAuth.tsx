@@ -12,7 +12,7 @@ export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
 
     useEffect(() => {
       if (!user) {
-        dispatch(fetchUser()).catch(console.error);
+        dispatch(fetchUser('')).catch(console.error);
         return;
       }
 

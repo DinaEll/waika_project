@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+// import { configureStore } from '@reduxjs/toolkit';
 import {
   Request as ExpressRequest,
   Response as ExpressResponse,
@@ -13,8 +13,7 @@ import {
 } from 'react-router-dom/server';
 import { routes } from './app/router/model/routes';
 import { createFetchRequest, createUrl } from './entry-server.utils';
-import { rootReducer } from './shared/store/rootReducer';
-import { fetchUser } from './shared/store/user/user.action';
+import { store } from './shared/store/store';
 
 export const render = async (req: ExpressRequest, res: ExpressResponse) => {
   // согласно доке роутера
@@ -38,10 +37,6 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
     throw new Error(context.statusText);
   }
 
-  const store = configureStore({
-    reducer: rootReducer,
-  });
-
   const url = createUrl(req);
 
   const foundRoutes = matchRoutes(routes, url);
@@ -50,14 +45,18 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
     throw new Error('Страница не найдена!');
   }
 
-  // из теории
-  // const [
-  //   {
-  //     route: { fetchData },
+  // get('/auth/user', {
+  //   headers: {
+  //     'Cookie': 'authCookie=da611059196b669a25d90e2863fa5e0d99994227%3A1727953423; uuid=8d17c406-d0dc-4ef3-8a0b-c2c7778cf5e1',
+  //     'Access-Control-Allow-Credentials': true,
   //   },
-  // ] = foundRoutes;
-
-  await store.dispatch(fetchUser());
+  // })
+  //   .then((res) => {
+  //     console.log('Успешный успех', req.headers.cookie, res);
+  //   })
+  //   .catch((e) => {
+  //     console.log('Не успех(', req.headers.cookie, e);
+  //   });
 
   await Promise.all(
     foundRoutes.map(async ({ route }) => {
@@ -66,8 +65,10 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
           await route.fetchData({
             dispatch: store.dispatch,
             state: store.getState(),
-            // этот контекст передается в initSomePage функцию, но куда он передается дальше? Как и в каком виде прицепить куки к запросу?
+            // TODO добавить выделение нужных кук
             // ctx: createContext(req),
+            // ctx: req.headers.cookie,
+            ctx: 'authCookie=da611059196b669a25d90e2863fa5e0d99994227%3A1727953423; uuid=8d17c406-d0dc-4ef3-8a0b-c2c7778cf5e1',
           });
           console.log(
             'Инициализация страницы прошла успешно',
@@ -79,15 +80,6 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
       }
     }),
   );
-
-  // try {
-  //   await fetchData({
-  //     dispatch: store.dispatch,
-  //     state: store.getState(),
-  //   });
-  // } catch (e) {
-  //   console.log('Инициализация страницы произошла с ошибкой', e);
-  // }
 
   const router = createStaticRouter(dataRoutes, context);
 

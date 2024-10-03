@@ -18,14 +18,12 @@ import { Layout } from '@/widgets/Layout';
 const ProtectedLayout = withAuth(Layout);
 
 export type InitPage = (args: PageInitArgs) => Promise<void>;
-export interface PageInitContext {
-  clientToken?: string;
-}
+export type PageInitContext = string;
 
 export interface PageInitArgs {
   dispatch: AppDispatch;
   state: RootState;
-  // ctx: PageInitContext
+  ctx: PageInitContext;
 }
 
 export const routes = [

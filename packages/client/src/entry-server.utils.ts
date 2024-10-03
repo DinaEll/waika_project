@@ -5,7 +5,8 @@ import { Request as ExpressRequest } from 'express';
 // import { PageInitContext } from './app/router/model/routes';
 
 // export const createContext = (req: ExpressRequest): PageInitContext => {
-//   console.log('cookies', req.cookies);
+//   console.log('cookies', req.cookies._ga + ' ' + req.cookies._gid);
+//   // const cookies = req.cookies._ga
 
 //   return {
 //     clientToken: req.cookies,
@@ -27,6 +28,7 @@ export const createFetchRequest = (req: ExpressRequest) => {
   const headers = new Headers();
 
   for (const [key, values] of Object.entries(req.headers)) {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (values) {
       if (Array.isArray(values)) {
         for (const value of values) {

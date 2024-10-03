@@ -22,7 +22,7 @@ export const LoginPage = () => {
   const handleSubmit = (values: SignInRequest): void => {
     void userSignIn(values)
       .then(async () => {
-        await dispatch(fetchUser())
+        await dispatch(fetchUser(''))
           .then(unwrapResult)
           .then((res) => {
             if (res.id) {
