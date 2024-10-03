@@ -2,6 +2,15 @@
 // packages/client/src/entry-server.utils.ts
 
 import { Request as ExpressRequest } from 'express';
+// import { PageInitContext } from './app/router/model/routes';
+
+// export const createContext = (req: ExpressRequest): PageInitContext => {
+//   console.log('cookies', req.cookies);
+
+//   return {
+//     clientToken: req.cookies,
+//   };
+// };
 
 export const createUrl = (req: ExpressRequest) => {
   const origin = `${req.protocol}://${req.get('host')}`;
@@ -18,7 +27,6 @@ export const createFetchRequest = (req: ExpressRequest) => {
   const headers = new Headers();
 
   for (const [key, values] of Object.entries(req.headers)) {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (values) {
       if (Array.isArray(values)) {
         for (const value of values) {
@@ -34,7 +42,7 @@ export const createFetchRequest = (req: ExpressRequest) => {
     method: string;
     headers: Headers;
     signal: AbortSignal;
-    body?: any;
+    body?: BodyInit;
   } = {
     method: req.method,
     headers,

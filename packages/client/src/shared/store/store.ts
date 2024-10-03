@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { useStore as useStoreBase } from 'react-redux';
 import { rootReducer } from '@/shared/store/rootReducer';
 
 declare global {
@@ -17,3 +18,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useStore: () => typeof store = useStoreBase;

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import fs from 'fs/promises';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import { config as dotenvConfig } from 'dotenv';
 import express, {
   static as expressStatic,
@@ -17,6 +18,9 @@ const isDev = process.env.NODE_ENV === 'development';
 
 async function createServer() {
   const app = express();
+
+  //eslint-disable-next-line
+  app.use(cookieParser());
 
   let vite: ViteDevServer | undefined;
 
@@ -47,6 +51,7 @@ async function createServer() {
 
       if (vite) {
         // Получаем файл client/index.html который мы правили ранее
+
         template = await fs.readFile(
           path.resolve(clientPath, 'index.html'),
           'utf-8',

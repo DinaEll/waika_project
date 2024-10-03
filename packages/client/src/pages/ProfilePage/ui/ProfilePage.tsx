@@ -1,10 +1,13 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
-import { appConfig } from '@/shared/config';
+import { InitPage } from '@/app/router/model/routes';
+// import { appConfig } from '@/shared/config';
+import { usePage } from '@/shared/hooks/usePage';
 import { useAppSelector } from '@/shared/store/hooks';
-import { UserAvatar } from '@/shared/ui';
+import { fetchUser } from '@/shared/store/user/user.action';
+import { selectUser } from '@/shared/store/user/user.slice';
+// import { UserAvatar } from '@/shared/ui';
 import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
@@ -13,7 +16,9 @@ export const ProfilePage = () => {
   const [form] = Form.useForm();
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
-  const { data } = useAppSelector((state) => state.user);
+  const { data } = useAppSelector(selectUser);
+
+  usePage({ initPage: initProfilePage });
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -29,16 +34,16 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <MainContainer
-        title={'Your Profile'}
-        logo={
-          <UserAvatar
-            className={cls.profileAvatar}
-            src={
-              data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
-            }
-          />
-        }
+      <div
+      // title={'Your Profile'}
+      // logo={
+      //   <UserAvatar
+      //     className={cls.profileAvatar}
+      //     src={
+      //       data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
+      //     }
+      //   />
+      // }
       >
         <Form
           form={form}
@@ -167,7 +172,7 @@ export const ProfilePage = () => {
             </Form.Item>
           </div>
         </Form>
-      </MainContainer>
+      </div>
       <PasswordChangeModal
         open={passwordChangeModalOpen}
         okText={'Save New Password'}
@@ -180,4 +185,10 @@ export const ProfilePage = () => {
       />
     </>
   );
+};
+
+export const initProfilePage: InitPage = async ({ dispatch, state }) => {
+  if (!selectUser(state).data) {
+    await dispatch(fetchUser());
+  }
 };
