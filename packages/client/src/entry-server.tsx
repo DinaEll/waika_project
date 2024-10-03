@@ -1,5 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Request as ExpressRequest } from 'express';
+import {
+  Request as ExpressRequest,
+  Response as ExpressResponse,
+} from 'express';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-dom';
@@ -13,14 +16,24 @@ import { createFetchRequest, createUrl } from './entry-server.utils';
 import { rootReducer } from './shared/store/rootReducer';
 import { fetchUser } from './shared/store/user/user.action';
 
-export const render = async (req: ExpressRequest) => {
+export const render = async (req: ExpressRequest, res: ExpressResponse) => {
   // согласно доке роутера
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { query, dataRoutes } = createStaticHandler(routes);
   const fetchRequest = createFetchRequest(req);
   const context = await query(fetchRequest);
 
-  if (context instanceof Response) {
+  if (
+    context instanceof Response &&
+    [301, 302, 303, 307, 308].includes(context.status)
+  ) {
+    const location = context.headers.get('Location');
+    if (location !== null) {
+      return res.redirect(context.status, location);
+    } else {
+      throw new Error('Missing Location header in redirect response');
+    }
+  } else if (context instanceof Response) {
     // throw context
     throw new Error(context.statusText);
   }

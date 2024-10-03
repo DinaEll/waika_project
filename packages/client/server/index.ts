@@ -7,6 +7,7 @@ import { config as dotenvConfig } from 'dotenv';
 import express, {
   static as expressStatic,
   Request as ExpressRequest,
+  Response as ExpressResponse,
 } from 'express';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 
@@ -45,6 +46,7 @@ async function createServer() {
     try {
       let render: (
         req: ExpressRequest,
+        res: ExpressResponse,
       ) => Promise<{ html: string; initialState: unknown }>;
 
       let template: string;
@@ -86,7 +88,7 @@ async function createServer() {
       }
 
       // Получаем HTML-строку из JSX
-      const { html: appHtml, initialState } = await render(req);
+      const { html: appHtml, initialState } = await render(req, res);
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
