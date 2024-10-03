@@ -1,13 +1,14 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { InitPage } from '@/app/router/model/routes';
-// import { appConfig } from '@/shared/config';
+import { appConfig } from '@/shared/config';
 import { usePage } from '@/shared/hooks/usePage';
 import { useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
 import { selectUser } from '@/shared/store/user/user.slice';
-// import { UserAvatar } from '@/shared/ui';
+import { UserAvatar } from '@/shared/ui';
 import { validationRules, Field } from '@/utils/validationRules';
+import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
@@ -34,16 +35,18 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <div
-      // title={'Your Profile'}
-      // logo={
-      //   <UserAvatar
-      //     className={cls.profileAvatar}
-      //     src={
-      //       data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
-      //     }
-      //   />
-      // }
+      <MainContainer
+        title={'Your Profile'}
+        logo={
+          <UserAvatar
+            className={cls.profileAvatar}
+            src={
+              data?.avatar != null
+                ? `${appConfig.baseUrl}/resources${data.avatar}`
+                : ''
+            }
+          />
+        }
       >
         <Form
           form={form}
@@ -172,7 +175,7 @@ export const ProfilePage = () => {
             </Form.Item>
           </div>
         </Form>
-      </div>
+      </MainContainer>
       <PasswordChangeModal
         open={passwordChangeModalOpen}
         okText={'Save New Password'}
