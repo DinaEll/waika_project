@@ -68,6 +68,13 @@ const eslintConfig = {
         ignoreRestSiblings: true,
       },
     ],
+    '@typescript-eslint/no-floating-promises': [
+      'error',
+      {
+        ignoreVoid: true,
+        ignoreIIFE: true,
+      },
+    ],
   },
   ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs'],
 };
