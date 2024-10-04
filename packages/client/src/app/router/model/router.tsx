@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { ForumPage } from '@/pages/ForumPage';
 import { ForumTopicPage } from '@/pages/ForumTopicPage';
 import { GamePage } from '@/pages/GamePage';
@@ -10,25 +10,20 @@ import { ProfilePage } from '@/pages/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage';
 import { ServerErrorPage } from '@/pages/ServerErrorPage';
 import { getPageUrl } from '@/shared/config';
-import { withAuth } from '@/shared/hocs';
-import { Layout } from '@/widgets/Layout';
+import { withAuth, withOauth } from '@/shared/hocs';
+import { Layout } from '@/widgets';
 
 const ProtectedLayout = withAuth(Layout);
+const MainPageWithOauth = withOauth(withAuth(MainPage));
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <MainPage />,
+    element: <Layout />,
     children: [
       {
-        index: true,
-        loader: () => redirect('/login'),
+        path: '/',
+        element: <MainPageWithOauth />,
       },
-    ],
-  },
-  {
-    element: <ProtectedLayout />,
-    children: [
       {
         path: getPageUrl('login'),
         element: <LoginPage />,
@@ -37,6 +32,19 @@ export const router = createBrowserRouter([
         path: getPageUrl('registration'),
         element: <RegistrationPage />,
       },
+      {
+        path: getPageUrl('not-found'),
+        element: <NotFoundPage />,
+      },
+      {
+        path: getPageUrl('server-error'),
+        element: <ServerErrorPage />,
+      },
+    ],
+  },
+  {
+    element: <ProtectedLayout />,
+    children: [
       {
         path: getPageUrl('game'),
         element: <GamePage />,
@@ -56,14 +64,6 @@ export const router = createBrowserRouter([
       {
         path: getPageUrl('profile'),
         element: <ProfilePage />,
-      },
-      {
-        path: getPageUrl('not-found'),
-        element: <NotFoundPage />,
-      },
-      {
-        path: getPageUrl('server-error'),
-        element: <ServerErrorPage />,
       },
     ],
   },
