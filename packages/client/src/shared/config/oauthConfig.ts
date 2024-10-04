@@ -1,4 +1,4 @@
-import { isDevelopment } from '../utils';
+import { isDevelopment } from '@/shared/utils';
 import { getPageUrl } from './routerConfig';
 
 interface GetYandexUrl {
@@ -11,6 +11,6 @@ export const getYandexUrl = ({ clientId, redirectUrl }: GetYandexUrl): string =>
 
 export const getOauthRedirectUrl = () => {
   return isDevelopment()
-    ? `http://localhost:${process.env.CLIENT_PORT}`
+    ? `http://localhost:${__CLIENT_PORT__}`
     : `${window.location.origin}${getPageUrl('main')}`;
 };
