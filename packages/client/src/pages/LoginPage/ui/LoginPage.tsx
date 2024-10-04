@@ -6,8 +6,8 @@ import { getPageUrl } from '@/shared/config';
 import { SignInRequest } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
-import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
+import { validationRules, Field } from '@/shared/utils';
+import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
@@ -80,6 +80,10 @@ export const LoginPage = () => {
           validateTrigger="onBlur"
         >
           <Input id="password" type="password" placeholder="Password" />
+        </Form.Item>
+
+        <Form.Item className={cls.loginPageButton}>
+          <ButtonOauthYandex />
         </Form.Item>
 
         <Form.Item className={cls.loginPageButton}>
