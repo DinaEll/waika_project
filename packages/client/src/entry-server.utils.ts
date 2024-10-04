@@ -1,17 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// packages/client/src/entry-server.utils.ts
-
 import { Request as ExpressRequest } from 'express';
-// import { PageInitContext } from './app/router/model/routes';
-
-// export const createContext = (req: ExpressRequest): PageInitContext => {
-//   console.log('cookies', req.cookies._ga + ' ' + req.cookies._gid);
-//   // const cookies = req.cookies._ga
-
-//   return {
-//     clientToken: req.cookies,
-//   };
-// };
 
 export const createUrl = (req: ExpressRequest) => {
   const origin = `${req.protocol}://${req.get('host')}`;

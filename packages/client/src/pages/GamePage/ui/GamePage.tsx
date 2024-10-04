@@ -1,4 +1,6 @@
 import { useState, type FC } from 'react';
+import { usePage } from '@/shared/hooks/usePage';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import {
   GamePageStages,
   GameResults,
@@ -11,6 +13,8 @@ import { GameStartup } from './GameStartup/GameStartup';
 export const GamePage: FC = () => {
   const [currentStage, setCurrentStage] = useState(GamePageStages.startup);
   const [results, setResults] = useState<GameResults | null>(null);
+
+  usePage({ initPage: initPageBase });
 
   const changeStage = (stage: GamePageStages) => {
     setCurrentStage(stage);

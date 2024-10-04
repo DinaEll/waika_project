@@ -7,32 +7,16 @@ import { LoginPage } from '@/pages/LoginPage';
 import { MainPage } from '@/pages/MainPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ProfilePage } from '@/pages/ProfilePage';
-import { initProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage';
 import { ServerErrorPage } from '@/pages/ServerErrorPage';
 import { getPageUrl } from '@/shared/config';
-import { withAuth } from '@/shared/hocs';
-import { AppDispatch, RootState } from '@/shared/store/store';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { Layout } from '@/widgets/Layout';
-
-const ProtectedLayout = withAuth(Layout);
-
-export type InitPage = (args: PageInitArgs) => Promise<void>;
-export type PageInitContext = string;
-
-export interface PageInitArgs {
-  dispatch: AppDispatch;
-  state: RootState;
-  ctx: PageInitContext;
-}
 
 export const routes = [
   {
     path: '/',
     Component: MainPage,
-
-    // TODO не работает редирект  https://reactrouter.com/en/main/routers/create-static-handler#createstatichandler
-    // loader: () => redirect('/login'),
     children: [
       {
         index: true,
@@ -41,52 +25,52 @@ export const routes = [
     ],
   },
   {
-    Component: ProtectedLayout,
+    Component: Layout,
     children: [
       {
         path: getPageUrl('login'),
         Component: LoginPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('registration'),
         Component: RegistrationPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('game'),
         Component: GamePage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('forum'),
         Component: ForumPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('forum-topic', { topicId: ':topicId' }),
         Component: ForumTopicPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('leaderboard'),
         Component: LeaderboardPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('profile'),
         Component: ProfilePage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('not-found'),
         Component: NotFoundPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
       {
         path: getPageUrl('server-error'),
         Component: ServerErrorPage,
-        fetchData: initProfilePage,
+        fetchData: initPageBase,
       },
     ],
   },

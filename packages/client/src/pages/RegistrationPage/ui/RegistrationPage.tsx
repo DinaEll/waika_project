@@ -3,9 +3,11 @@ import { Form, Button, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
+import { usePage } from '@/shared/hooks/usePage';
 import { SignUpRequest } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { validationRules, Field } from '@/utils/validationRules';
 import { MainContainer } from '@/widgets/MainContainer';
 import cls from './RegistrationPage.module.scss';
@@ -22,6 +24,7 @@ const regInitialState = {
 export const RegistrationPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  usePage({ initPage: initPageBase });
 
   const handleSubmit = (values: SignUpRequest): void => {
     void userSignUp(values)

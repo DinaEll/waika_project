@@ -1,12 +1,11 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
-import { InitPage } from '@/app/router/model/routes';
 import { appConfig } from '@/shared/config';
 import { usePage } from '@/shared/hooks/usePage';
 import { useAppSelector } from '@/shared/store/hooks';
-import { fetchUser } from '@/shared/store/user/user.action';
 import { selectUser } from '@/shared/store/user/user.slice';
 import { UserAvatar } from '@/shared/ui';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { validationRules, Field } from '@/utils/validationRules';
 import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
@@ -19,7 +18,7 @@ export const ProfilePage = () => {
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
   const { data } = useAppSelector(selectUser);
 
-  usePage({ initPage: initProfilePage });
+  usePage({ initPage: initPageBase });
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -188,12 +187,4 @@ export const ProfilePage = () => {
       />
     </>
   );
-};
-
-export const initProfilePage: InitPage = async ({ dispatch, state, ctx }) => {
-  console.log('initProfilePage', ctx);
-
-  if (!selectUser(state).data) {
-    await dispatch(fetchUser(ctx));
-  }
 };

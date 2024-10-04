@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { usePage } from '@/shared/hooks/usePage';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { MainContainer } from '@/widgets/MainContainer';
 import {
   ForumPageStages,
@@ -12,6 +14,8 @@ import { ForumTopicsList } from './ForumTopicsList/ForumTopicsList';
 export const ForumPage = () => {
   const [pageTitle, setPageTitle] = useState('Forums');
   const [currentStage, setCurrentStage] = useState(ForumPageStages.forumsList);
+
+  usePage({ initPage: initPageBase });
 
   useEffect(() => {
     switch (currentStage) {

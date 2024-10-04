@@ -1,4 +1,3 @@
-// import { configureStore } from '@reduxjs/toolkit';
 import {
   Request as ExpressRequest,
   Response as ExpressResponse,
@@ -13,6 +12,8 @@ import {
 } from 'react-router-dom/server';
 import { routes } from './app/router/model/routes';
 import { createFetchRequest, createUrl } from './entry-server.utils';
+import { getPageUrl } from './shared/config';
+import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssr.slice';
 import { store } from './shared/store/store';
 
 export const render = async (req: ExpressRequest, res: ExpressResponse) => {
@@ -33,7 +34,6 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
       throw new Error('Missing Location header in redirect response');
     }
   } else if (context instanceof Response) {
-    // throw context
     throw new Error(context.statusText);
   }
 
@@ -45,35 +45,48 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
     throw new Error('Страница не найдена!');
   }
 
-  // get('/auth/user', {
-  //   headers: {
-  //     'Cookie': 'authCookie=da611059196b669a25d90e2863fa5e0d99994227%3A1727953423; uuid=8d17c406-d0dc-4ef3-8a0b-c2c7778cf5e1',
-  //     'Access-Control-Allow-Credentials': true,
-  //   },
-  // })
-  //   .then((res) => {
-  //     console.log('Успешный успех', req.headers.cookie, res);
-  //   })
-  //   .catch((e) => {
-  //     console.log('Не успех(', req.headers.cookie, e);
-  //   });
+  store.dispatch(setPageHasBeenInitializedOnServer(true));
 
   await Promise.all(
     foundRoutes.map(async ({ route }) => {
       if ('fetchData' in route && typeof route.fetchData === 'function') {
         try {
+          const state = store.getState();
           await route.fetchData({
             dispatch: store.dispatch,
-            state: store.getState(),
-            // TODO добавить выделение нужных кук
-            // ctx: createContext(req),
+            state: state,
             // ctx: req.headers.cookie,
-            ctx: 'authCookie=da611059196b669a25d90e2863fa5e0d99994227%3A1727953423; uuid=8d17c406-d0dc-4ef3-8a0b-c2c7778cf5e1',
+            ctx: 'authCookie=0eaacd236adebe2fe67147678832bf8e66d6f235%3A1728033984; uuid=b6411a88-430f-48e5-92b8-5c24d587b9d2;',
+            // ctx: '',
           });
-          console.log(
-            'Инициализация страницы прошла успешно',
-            store.getState(),
+
+          // Коллегам:
+          // Чтобы посмотреть внутренние страницы без постоянного логина, нужно залогиниться, достать куки захардкодить их в ctx
+          // Для каждого логина и логаута куки будут разные, так что если нужно посмотреть страницы логина, лучше не делать разлогин, а в ctx передавать пустую строку
+          // Если форма логина возвращает 400 ошибку, нужно сделать логаут (добавил кнопку в форму)
+
+          // route protection
+          const hasUser = state?.user.data;
+          const nonProtectedRoutes = [
+            getPageUrl('login'),
+            getPageUrl('registration'),
+          ] as string[];
+          const nonProtectedRoute = nonProtectedRoutes.includes(
+            route.path ?? '',
           );
+
+          if (
+            !hasUser &&
+            !nonProtectedRoute &&
+            route.path !== getPageUrl('not-found') &&
+            route.path !== getPageUrl('server-error')
+          ) {
+            res.redirect('/login');
+          }
+
+          if (hasUser && nonProtectedRoute) {
+            res.redirect('/game');
+          }
         } catch (e) {
           console.log('Инициализация страницы произошла с ошибкой', e);
         }
