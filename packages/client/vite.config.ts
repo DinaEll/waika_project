@@ -12,6 +12,7 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
+    __CLIENT_PORT__: process.env.CLIENT_PORT,
   },
   plugins: [react()],
   resolve: {
