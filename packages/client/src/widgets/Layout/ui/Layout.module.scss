@@ -4,6 +4,10 @@
   height: 100dvh;
   background-color: var(--primary-green);
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.layoutAuth {
   grid-template-rows: auto 1fr;
 }
 
