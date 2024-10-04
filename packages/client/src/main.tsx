@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
     hydrateRoot(
       rootNode,
       <StrictMode>
-        <App />,
+        <App />
       </StrictMode>,
     );
   } else {

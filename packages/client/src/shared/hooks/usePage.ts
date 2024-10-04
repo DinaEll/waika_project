@@ -14,8 +14,6 @@ interface PageProps {
 }
 
 export const usePage = ({ initPage }: PageProps) => {
-  console.log('usePage');
-
   const dispatch = useAppDispatch();
   const pageHasBeenInitializedOnServer = useAppSelector(
     selectPageHasBeenInitializedOnServer,

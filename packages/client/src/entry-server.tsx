@@ -56,8 +56,8 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
             dispatch: store.dispatch,
             state: state,
             // ctx: req.headers.cookie,
-            ctx: 'authCookie=0eaacd236adebe2fe67147678832bf8e66d6f235%3A1728033984; uuid=b6411a88-430f-48e5-92b8-5c24d587b9d2;',
-            // ctx: '',
+            // ctx: 'authCookie=0eaacd236adebe2fe67147678832bf8e66d6f235%3A1728033984; uuid=b6411a88-430f-48e5-92b8-5c24d587b9d2;',
+            ctx: '',
           });
 
           // Коллегам:
