@@ -8,6 +8,5 @@ export { isError } from './isError';
 export { isEven } from './isEven';
 export { isNull } from './isNull';
 export { logError } from './logError';
-export { noop } from './noop';
 export { showErrorMessage } from './showErrorMessage';
 export { showMessage } from './showMessage';
