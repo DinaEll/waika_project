@@ -4,7 +4,11 @@ import { getServiceIdOauthYandex } from '@/shared/api';
 import { getOauthRedirectUrl, getYandexUrl } from '@/shared/config';
 import { isDefined, showMessage, showErrorMessage } from '@/shared/utils';
 
-export const ButtonOauthYandex: FC = () => {
+interface Props {
+  title: string;
+}
+
+export const ButtonOauthYandex: FC<Props> = ({ title }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
@@ -40,7 +44,7 @@ export const ButtonOauthYandex: FC = () => {
       }}
       loading={isLoading}
     >
-      Sign In with Yandex
+      {title}
     </Button>
   );
 };

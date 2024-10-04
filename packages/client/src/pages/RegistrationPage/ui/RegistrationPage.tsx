@@ -6,7 +6,12 @@ import { getPageUrl } from '@/shared/config';
 import { SignUpRequest } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
-import { validationRules, Field } from '@/shared/utils';
+import {
+  validationRules,
+  Field,
+  getReasonMessage,
+  showErrorMessage,
+} from '@/shared/utils';
 import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './RegistrationPage.module.scss';
 
@@ -24,7 +29,7 @@ export const RegistrationPage = () => {
   const dispatch = useAppDispatch();
 
   const handleSubmit = (values: SignUpRequest): void => {
-    void userSignUp(values)
+    userSignUp(values)
       .then(async (res) => {
         if (res.id) {
           await dispatch(fetchUser())
@@ -36,7 +41,13 @@ export const RegistrationPage = () => {
             });
         }
       })
-      .catch(console.error);
+      .catch((error) => {
+        if (getReasonMessage(error) === 'User already in system') {
+          navigate(getPageUrl('game'));
+        } else {
+          showErrorMessage(error);
+        }
+      });
   };
 
   return (
@@ -168,13 +179,13 @@ export const RegistrationPage = () => {
         </Form.Item>
 
         <Form.Item className={cls.registrationPageButton}>
-          <ButtonOauthYandex />
-        </Form.Item>
-
-        <Form.Item className={cls.registrationPageButton}>
           <Button type="primary" htmlType="submit">
             Sign Up
           </Button>
+        </Form.Item>
+
+        <Form.Item className={cls.registrationPageButton}>
+          <ButtonOauthYandex title="Sign Up with Yandex" />
         </Form.Item>
 
         <Form.Item className={cls.registrationPageButton}>
