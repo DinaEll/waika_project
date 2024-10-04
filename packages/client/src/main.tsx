@@ -1,4 +1,4 @@
-// import { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { App } from './app/App';
 import '@/shared/assets/themes/vars-colors.scss';
@@ -10,9 +10,9 @@ if (typeof window !== 'undefined') {
   if (rootNode) {
     hydrateRoot(
       rootNode,
-      //<StrictMode>
-      <App />,
-      //</StrictMode>,
+      <StrictMode>
+        <App />,
+      </StrictMode>,
     );
   } else {
     throw new Error('Root Node Not Found');
