@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { appConfig } from '@/shared/config';
 import { useAppSelector } from '@/shared/store/hooks';
 import { UserAvatar } from '@/shared/ui';
-import { validationRules, Field } from '@/utils/validationRules';
+import { validationRules, Field } from '@/shared/utils';
 import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
@@ -113,8 +113,7 @@ export const ProfilePage = () => {
               },
               {
                 pattern: validationRules[Field.Email],
-                message:
-                  'The email must be a valid email address.',
+                message: 'The email must be a valid email address.',
               },
             ]}
             validateTrigger="onBlur"
