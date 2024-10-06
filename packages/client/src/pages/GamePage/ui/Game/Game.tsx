@@ -1,6 +1,7 @@
 import { Button, Flex, Modal } from 'antd';
 import { useEffect, useRef, useState, type FC } from 'react';
 import { Mahjong } from '@/entities/mahjong';
+import MainLogo from '@/shared/assets/svg/main-logo.svg';
 import { useEffectOnce } from '@/shared/hooks';
 import { formatTime, getDurationTime } from '@/shared/utils';
 import { ResultStatus } from '../../model/gamePageData';
@@ -11,6 +12,13 @@ import cls from './Game.module.scss';
 interface Props {
   collectGameResults: (status: ResultStatus, time?: string) => void;
 }
+
+const initialMahjongOptions = {
+  columns: 7,
+  rows: 7,
+  levels: 3,
+  shuffleCount: 3,
+};
 
 export const Game: FC<Props> = ({ collectGameResults }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,10 +37,28 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
         cancelButtonProps: { style: { display: 'none' } },
       });
     }
+
+    if (!('Notification' in window)) {
+      console.log('Browser does not support the notifications');
+    } else {
+      void Notification.requestPermission();
+    }
   }, [availablePairs, remainingShuffles]);
+
+  const sendNotification = (count: number) => {
+    if (Notification.permission === 'granted') {
+      new Notification('Waika Mahjong', {
+        body: `${count} shuffles left`,
+        icon: MainLogo,
+      });
+    }
+  };
 
   const onShuffleChange = (count: number) => {
     setRemainingShuffles(count);
+    if (count !== initialMahjongOptions.shuffleCount) {
+      sendNotification(count);
+    }
   };
 
   const onAvailablePairsChange = (count: number) => {
@@ -71,10 +97,7 @@ export const Game: FC<Props> = ({ collectGameResults }) => {
     }
 
     const mahjongOptions = {
-      columns: 7,
-      rows: 7,
-      levels: 3,
-      shuffleCount: 3,
+      ...initialMahjongOptions,
       onStartCallback,
       onWinCallback,
       onLoseCallback,
