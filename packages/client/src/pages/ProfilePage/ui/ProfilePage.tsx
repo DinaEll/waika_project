@@ -1,8 +1,11 @@
 import { Button, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { appConfig } from '@/shared/config';
+import { usePage } from '@/shared/hooks/usePage';
 import { useAppSelector } from '@/shared/store/hooks';
+import { selectUser } from '@/shared/store/user/user.slice';
 import { UserAvatar } from '@/shared/ui';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { validationRules, Field } from '@/utils/validationRules';
 import { MainContainer } from '@/widgets/MainContainer';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
@@ -13,7 +16,9 @@ export const ProfilePage = () => {
   const [form] = Form.useForm();
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
-  const { data } = useAppSelector((state) => state.user);
+  const { data } = useAppSelector(selectUser);
+
+  usePage({ initPage: initPageBase });
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -35,7 +40,9 @@ export const ProfilePage = () => {
           <UserAvatar
             className={cls.profileAvatar}
             src={
-              data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
+              data?.avatar !== null && data?.avatar !== undefined
+                ? `${appConfig.baseUrl}/resources${data.avatar}`
+                : ''
             }
           />
         }
@@ -113,8 +120,7 @@ export const ProfilePage = () => {
               },
               {
                 pattern: validationRules[Field.Email],
-                message:
-                  'The email must be a valid email address.',
+                message: 'The email must be a valid email address.',
               },
             ]}
             validateTrigger="onBlur"

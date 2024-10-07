@@ -2,7 +2,9 @@ import { Comment } from '@ant-design/compatible';
 import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
+import { usePage } from '@/shared/hooks/usePage';
 import { UserAvatar } from '@/shared/ui';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { MainContainer } from '@/widgets/MainContainer';
 import {
   forumPageDataMock,
@@ -15,6 +17,7 @@ export const ForumTopicPage = () => {
   const [pageTitle, setPageTitle] = useState('');
   const [forumPageData] = useState(forumPageDataMock);
 
+  usePage({ initPage: initPageBase });
   useEffect(() => {
     setPageTitle('Doom 666');
   }, []);

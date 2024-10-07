@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserResponse } from '@/shared/interfaces';
 import { StoreState } from '@/shared/store/types';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { RootState } from '../store';
 
 const initialState: StoreState<UserResponse | undefined> = {
   data: undefined,
@@ -39,5 +40,7 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export const selectUser = (state: RootState) => state.user;
 
 export const userReducer = userSlice.reducer;

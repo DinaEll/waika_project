@@ -1,11 +1,14 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { userSignIn } from '@/shared/api';
+import { logOut, userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
+import { usePage } from '@/shared/hooks/usePage';
 import { SignInRequest } from '@/shared/interfaces';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { userSlice } from '@/shared/store/user/user.slice';
+import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
 import { validationRules, Field } from '@/utils/validationRules';
 import { MainContainer } from '@/widgets/MainContainer';
 import cls from './LoginPage.module.scss';
@@ -19,10 +22,12 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  usePage({ initPage: initPageBase });
+
   const handleSubmit = (values: SignInRequest): void => {
     void userSignIn(values)
       .then(async () => {
-        await dispatch(fetchUser())
+        await dispatch(fetchUser(''))
           .then(unwrapResult)
           .then((res) => {
             if (res.id) {
@@ -31,6 +36,15 @@ export const LoginPage = () => {
           });
       })
       .catch(console.error);
+  };
+
+  const handleLogout = () => {
+    void logOut().then(() => {
+      console.log('log out');
+
+      navigate(getPageUrl('login'));
+      dispatch(userSlice.actions.clearState());
+    });
   };
 
   return (
@@ -92,6 +106,11 @@ export const LoginPage = () => {
           <NavLink to={getPageUrl('registration')}>
             <Button type="link">Sign Up</Button>
           </NavLink>
+        </Form.Item>
+        <Form.Item className={cls.loginPageButton}>
+          <Button type="text" onClick={handleLogout}>
+            Log out
+          </Button>
         </Form.Item>
       </Form>
     </MainContainer>

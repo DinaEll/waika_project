@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import axios, { AxiosResponse } from 'axios';
 import { appConfig } from '@/shared/config';
 
@@ -47,8 +48,11 @@ export const post: HTTPMethod = async <T>(
   return parseResponse<T>(response.data);
 };
 
-export const get: HTTPMethod = async <T>(url: string) => {
-  const response = await baseRequest<T>(url, Method.GET);
+export const get: HTTPMethod = async <T>(
+  url: string,
+  options: ReqOptions = {},
+) => {
+  const response = await baseRequest<T>(url, Method.GET, options.headers);
 
   if (response.status !== 200) {
     throw new Error('Error. Please try again');

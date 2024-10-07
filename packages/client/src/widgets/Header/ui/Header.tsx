@@ -13,6 +13,8 @@ export const Header = () => {
 
   const handleLogout = () => {
     void logOut().then(() => {
+      console.log('log out');
+
       navigate(getPageUrl('login'));
       dispatch(userSlice.actions.clearState());
     });

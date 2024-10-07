@@ -13,18 +13,18 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 ### Как добавить зависимости?
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
 
-Чтобы добавить зависимость для клиента 
-```yarn lerna add {your_dep} --scope client```
+Чтобы добавить зависимость для клиента
+```yarn lerna add {your_dep} --scope @waika_project/client```
 
 Для сервера
-```yarn lerna add {your_dep} --scope server```
+```yarn lerna add {your_dep} --scope @waika_project/server```
 
 И для клиента и для сервера
 ```yarn lerna add {your_dep}```
 
 
 Если вы хотите добавить dev зависимость, проделайте то же самое, но с флагом `dev`
-```yarn lerna add {your_dep} --dev --scope server```
+```yarn lerna add {your_dep} --dev --scope @waika_project/client```
 
 
 ### Тесты
