@@ -104,8 +104,6 @@ const baseRequest = async <T>(
   headers?: ReqOptions['headers'],
   data?: Request,
 ): Promise<AxiosResponse<T>> => {
-  // console.log('baseRequest', url, method, headers, data);
-
   return axios<T>(appConfig.baseUrl + url, {
     method,
     headers,

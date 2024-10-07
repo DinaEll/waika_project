@@ -1,5 +1,3 @@
-// packages/client/src/slices/ssrSlice.ts
-
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import type { PayloadAction } from '@reduxjs/toolkit';

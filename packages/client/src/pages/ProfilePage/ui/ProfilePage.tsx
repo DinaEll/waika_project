@@ -40,7 +40,7 @@ export const ProfilePage = () => {
           <UserAvatar
             className={cls.profileAvatar}
             src={
-              data?.avatar != null
+              data?.avatar !== null && data?.avatar !== undefined
                 ? `${appConfig.baseUrl}/resources${data.avatar}`
                 : ''
             }
