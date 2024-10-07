@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import { App } from './app/App';
 import '@/shared/assets/themes/vars-colors.scss';
 import '@/shared/assets/themes/vars-common.scss';
@@ -7,7 +7,8 @@ import '@/shared/assets/themes/styles.scss';
 
 const rootNode = document.getElementById('root');
 if (rootNode) {
-  createRoot(rootNode).render(
+  hydrateRoot(
+    rootNode,
     <StrictMode>
       <App />
     </StrictMode>,
