@@ -1,16 +1,20 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { type FC } from 'react';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { SignInRequest } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { usePage } from '@/shared/hooks';
+import type { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
 import {
   validationRules,
   Field,
   showErrorMessage,
   getReasonMessage,
+  initPageBase,
 } from '@/shared/utils';
 import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './LoginPage.module.scss';
@@ -20,24 +24,34 @@ const loginInitialState = {
   password: '',
 };
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  usePage({ initPage: initPageBase });
+
+  const isUserAuth = useAppSelector(isUserAuthSelector);
+
+  if (isUserAuth) {
+    return <Navigate to={getPageUrl('main')} replace />;
+  }
 
   const handleSubmit = (values: SignInRequest): void => {
     userSignIn(values)
-      .then(async () => {
-        await dispatch(fetchUser())
+      .then(() => {
+        dispatch(fetchUser())
           .then(unwrapResult)
           .then((res) => {
             if (res.id) {
-              navigate(getPageUrl('game'));
+              navigate(getPageUrl('main'));
             }
+          })
+          .catch((error) => {
+            showErrorMessage(error);
           });
       })
       .catch((error) => {
         if (getReasonMessage(error) === 'User already in system') {
-          navigate(getPageUrl('game'));
+          navigate(getPageUrl('main'));
         } else {
           showErrorMessage(error);
         }

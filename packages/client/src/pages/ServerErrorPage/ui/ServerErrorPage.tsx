@@ -1,9 +1,13 @@
 import { Typography } from 'antd';
+import { type FC } from 'react';
 import { getPageUrl } from '@/shared/config';
-import { MainContainer } from '@/widgets/MainContainer';
+import { usePage } from '@/shared/hooks';
+import { initPageBase } from '@/shared/utils';
+import { MainContainer } from '@/widgets';
 import cls from './ServerErrorPage.module.scss';
 
-export const ServerErrorPage = () => {
+export const ServerErrorPage: FC = () => {
+  usePage({ initPage: initPageBase });
   return (
     <MainContainer title={'500'}>
       <Typography.Text className={cls.serverErrorPageDescription}>

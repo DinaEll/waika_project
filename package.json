@@ -4,7 +4,7 @@
   "scripts": {
     "bootstrap": "yarn && node init.js && lerna clean && yarn",
     "build": "lerna run build",
-    "dev:client": "lerna run dev  --scope=@waika_project/client",
+    "dev:client": "lerna run dev --scope=@waika_project/client",
     "dev:server": "lerna run dev --scope=@waika_project/server",
     "dev": "lerna run dev",
     "test": "lerna run test --stream",

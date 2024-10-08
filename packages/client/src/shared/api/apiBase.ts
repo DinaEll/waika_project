@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { appConfig } from '@/shared/config';
 
 type Response<T = unknown> = T;
@@ -11,7 +11,11 @@ const enum Method {
   DELETE = 'DELETE',
 }
 
-type HTTPRequest = Request & { signal?: AbortSignal };
+type HTTPRequest = Request & {
+  signal?: AbortSignal;
+  headers?: Record<string, string>;
+  fileUpload?: boolean;
+};
 
 type HTTPMethod = <T = unknown>(
   url: string,
@@ -46,10 +50,10 @@ export const post: HTTPMethod = async <T>(
 
 export const get: HTTPMethod = async <T>(
   url: string,
-  options: { signal?: AbortSignal } = {},
+  options: HTTPRequest = {},
 ) => {
-  const { signal } = options;
-  const response = await baseRequest<T>(url, Method.GET, undefined, { signal });
+  const { signal, headers } = options;
+  const response = await baseRequest<T>(url, Method.GET, headers, { signal });
 
   if (response.status !== 200) {
     throw new Error('Error. Please try again');

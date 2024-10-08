@@ -1,16 +1,21 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Form, Button, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { type FC } from 'react';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { SignUpRequest } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { usePage } from '@/shared/hooks/';
+import type { SignUpRequest } from '@/shared/interfaces';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
 import {
   validationRules,
   Field,
   getReasonMessage,
   showErrorMessage,
+  logError,
+  initPageBase,
 } from '@/shared/utils';
 import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './RegistrationPage.module.scss';
@@ -24,20 +29,29 @@ const regInitialState = {
   phone: '',
 };
 
-export const RegistrationPage = () => {
+export const RegistrationPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  usePage({ initPage: initPageBase });
+
+  const isUserAuth = useAppSelector(isUserAuthSelector);
+
+  if (isUserAuth) {
+    return <Navigate to={getPageUrl('main')} replace />;
+  }
 
   const handleSubmit = (values: SignUpRequest): void => {
     userSignUp(values)
-      .then(async (res) => {
+      .then((res) => {
         if (res.id) {
-          await dispatch(fetchUser())
+          dispatch(fetchUser())
             .then(unwrapResult)
-            .then((data) => {
-              if (data) {
-                navigate(getPageUrl('game'));
-              }
+            .then(() => {
+              navigate(getPageUrl('main'), { replace: true });
+            })
+            .catch((error) => {
+              logError(error);
+              navigate(getPageUrl('login'));
             });
         }
       })
