@@ -5,6 +5,7 @@ import { logOut } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { userSlice } from '@/shared/store/user/user.slice';
+import { showErrorMessage } from '@/shared/utils';
 import cls from './Header.module.scss';
 
 export const Header = () => {
@@ -12,12 +13,13 @@ export const Header = () => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    void logOut().then(() => {
-      console.log('log out');
-
-      navigate(getPageUrl('login'));
-      dispatch(userSlice.actions.clearState());
-    });
+    logOut()
+      .then(() => {
+        dispatch(userSlice.actions.clearState());
+      })
+      .catch((error) => {
+        showErrorMessage(error);
+      });
   };
 
   return (

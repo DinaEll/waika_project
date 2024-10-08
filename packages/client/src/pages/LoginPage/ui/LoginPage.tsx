@@ -1,16 +1,22 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { logOut, userSignIn } from '@/shared/api';
+import { type FC } from 'react';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { usePage } from '@/shared/hooks/usePage';
-import { SignInRequest } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { usePage } from '@/shared/hooks';
+import type { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
-import { userSlice } from '@/shared/store/user/user.slice';
-import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
-import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
+import {
+  validationRules,
+  Field,
+  showErrorMessage,
+  getReasonMessage,
+  initPageBase,
+} from '@/shared/utils';
+import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
@@ -18,33 +24,38 @@ const loginInitialState = {
   password: '',
 };
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   usePage({ initPage: initPageBase });
 
+  const isUserAuth = useAppSelector(isUserAuthSelector);
+
+  if (isUserAuth) {
+    return <Navigate to={getPageUrl('main')} replace />;
+  }
+
   const handleSubmit = (values: SignInRequest): void => {
-    void userSignIn(values)
-      .then(async () => {
-        await dispatch(fetchUser(''))
+    userSignIn(values)
+      .then(() => {
+        dispatch(fetchUser())
           .then(unwrapResult)
           .then((res) => {
             if (res.id) {
-              navigate(getPageUrl('game'));
+              navigate(getPageUrl('main'));
             }
+          })
+          .catch((error) => {
+            showErrorMessage(error);
           });
       })
-      .catch(console.error);
-  };
-
-  const handleLogout = () => {
-    void logOut().then(() => {
-      console.log('log out');
-
-      navigate(getPageUrl('login'));
-      dispatch(userSlice.actions.clearState());
-    });
+      .catch((error) => {
+        if (getReasonMessage(error) === 'User already in system') {
+          navigate(getPageUrl('main'));
+        } else {
+          showErrorMessage(error);
+        }
+      });
   };
 
   return (
@@ -103,14 +114,13 @@ export const LoginPage = () => {
         </Form.Item>
 
         <Form.Item className={cls.loginPageButton}>
+          <ButtonOauthYandex title="Sign In with Yandex" />
+        </Form.Item>
+
+        <Form.Item className={cls.loginPageButton}>
           <NavLink to={getPageUrl('registration')}>
             <Button type="link">Sign Up</Button>
           </NavLink>
-        </Form.Item>
-        <Form.Item className={cls.loginPageButton}>
-          <Button type="text" onClick={handleLogout}>
-            Log out
-          </Button>
         </Form.Item>
       </Form>
     </MainContainer>

@@ -1,32 +1,38 @@
-import { redirect } from 'react-router-dom';
-import { ForumPage } from '@/pages/ForumPage';
-import { ForumTopicPage } from '@/pages/ForumTopicPage';
-import { GamePage } from '@/pages/GamePage';
-import { LeaderboardPage } from '@/pages/LeaderboardPage';
-import { LoginPage } from '@/pages/LoginPage';
-import { MainPage } from '@/pages/MainPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
-import { ProfilePage } from '@/pages/ProfilePage';
-import { RegistrationPage } from '@/pages/RegistrationPage';
-import { ServerErrorPage } from '@/pages/ServerErrorPage';
+import { RouteObject } from 'react-router-dom';
+import {
+  ForumTopicPage,
+  GamePage,
+  LeaderboardPage,
+  LoginPage,
+  MainPage,
+  NotFoundPage,
+  ProfilePage,
+  RegistrationPage,
+  ServerErrorPage,
+  ForumPage,
+} from '@/pages';
 import { getPageUrl } from '@/shared/config';
-import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
-import { Layout } from '@/widgets/Layout';
+import { withAuth, withOauth } from '@/shared/hocs';
+import { initPageBase } from '@/shared/utils';
+import { Layout } from '@/widgets';
 
-export const routes = [
-  {
-    path: '/',
-    Component: MainPage,
-    children: [
-      {
-        index: true,
-        loader: () => redirect('/login'),
-      },
-    ],
-  },
+const ProtectedLayout = withAuth(Layout);
+const MainPageWithOauth = withOauth(withAuth(MainPage));
+
+type RouteObjectWithFetch = RouteObject & {
+  fetchData?: typeof initPageBase;
+  children?: RouteObjectWithFetch[];
+};
+
+export const routes: RouteObjectWithFetch[] = [
   {
     Component: Layout,
     children: [
+      {
+        path: '/',
+        Component: MainPageWithOauth,
+        fetchData: initPageBase,
+      },
       {
         path: getPageUrl('login'),
         Component: LoginPage,
@@ -37,6 +43,22 @@ export const routes = [
         Component: RegistrationPage,
         fetchData: initPageBase,
       },
+      {
+        path: getPageUrl('not-found'),
+        Component: NotFoundPage,
+        fetchData: initPageBase,
+      },
+      {
+        path: getPageUrl('server-error'),
+        Component: ServerErrorPage,
+        fetchData: initPageBase,
+      },
+    ],
+  },
+
+  {
+    Component: ProtectedLayout,
+    children: [
       {
         path: getPageUrl('game'),
         Component: GamePage,
@@ -60,16 +82,6 @@ export const routes = [
       {
         path: getPageUrl('profile'),
         Component: ProfilePage,
-        fetchData: initPageBase,
-      },
-      {
-        path: getPageUrl('not-found'),
-        Component: NotFoundPage,
-        fetchData: initPageBase,
-      },
-      {
-        path: getPageUrl('server-error'),
-        Component: ServerErrorPage,
         fetchData: initPageBase,
       },
     ],

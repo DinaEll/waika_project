@@ -43,7 +43,7 @@ async function createServer() {
   }
 
   app.get('*', (req, res, next) => {
-    void (async () => {
+    (async () => {
       const url = req.originalUrl;
 
       try {

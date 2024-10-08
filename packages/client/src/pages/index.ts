@@ -1,0 +1,10 @@
+export { ForumPage } from './ForumPage';
+export { ForumTopicPage } from './ForumTopicPage';
+export { GamePage } from './GamePage';
+export { LeaderboardPage } from './LeaderboardPage';
+export { LoginPage } from './LoginPage';
+export { MainPage } from './MainPage';
+export { NotFoundPage } from './NotFoundPage';
+export { ProfilePage } from './ProfilePage';
+export { RegistrationPage } from './RegistrationPage';
+export { ServerErrorPage } from './ServerErrorPage';

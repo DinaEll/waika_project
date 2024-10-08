@@ -1,11 +1,11 @@
 import { Comment } from '@ant-design/compatible';
 import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { usePage } from '@/shared/hooks/usePage';
+import { type FC, useEffect, useState } from 'react';
+import { usePage } from '@/shared/hooks';
 import { UserAvatar } from '@/shared/ui';
-import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
-import { MainContainer } from '@/widgets/MainContainer';
+import { initPageBase } from '@/shared/utils';
+import { MainContainer } from '@/widgets';
 import {
   forumPageDataMock,
   initialReplyFormData,
@@ -13,7 +13,7 @@ import {
 } from '../model/forumTopicData';
 import cls from './ForumTopicPage.module.scss';
 
-export const ForumTopicPage = () => {
+export const ForumTopicPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('');
   const [forumPageData] = useState(forumPageDataMock);
 

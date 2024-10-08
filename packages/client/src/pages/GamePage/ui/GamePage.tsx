@@ -1,6 +1,6 @@
 import { useState, type FC } from 'react';
-import { usePage } from '@/shared/hooks/usePage';
-import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
+import { usePage } from '@/shared/hooks';
+import { initPageBase } from '@/shared/utils';
 import {
   GamePageStages,
   GameResults,

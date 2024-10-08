@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { usePage } from '@/shared/hooks/usePage';
-import { initPageBase } from '@/utils/initPageFunctions/initPageBase';
-import { MainContainer } from '@/widgets/MainContainer';
+import { FC, useEffect, useState } from 'react';
+import { usePage } from '@/shared/hooks';
+import { initPageBase } from '@/shared/utils';
+import { MainContainer } from '@/widgets';
 import {
   ForumPageStages,
   forumsListMock,
@@ -11,7 +11,7 @@ import { CreateNewThreadForm } from './CreateNewThreadForm/CreateNewThreadForm';
 import { ForumsList } from './ForumsList/ForumsList';
 import { ForumTopicsList } from './ForumTopicsList/ForumTopicsList';
 
-export const ForumPage = () => {
+export const ForumPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('Forums');
   const [currentStage, setCurrentStage] = useState(ForumPageStages.forumsList);
 

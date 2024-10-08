@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { MainContainer } from '@/widgets/MainContainer';
+import { MainContainer } from '@/widgets';
 import { GameResults, ResultStatus } from '../../model/gamePageData';
 import cls from './GameResults.module.scss';
 

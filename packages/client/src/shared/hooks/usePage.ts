@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import {
   selectPageHasBeenInitializedOnServer,
   setPageHasBeenInitializedOnServer,
-} from '../store/ssr/ssr.slice';
-import { useStore } from '../store/store';
-import { PageInitArgs } from '../types/initPageTypes';
+} from '@/shared/store/ssr/ssr.slice';
+import { useStore } from '@/shared/store/store';
+import { PageInitArgs } from '@/shared/types';
+import { logError } from '@/shared/utils';
+import { useEffectOnce } from './useEffectOnce';
 
 interface PageProps {
   initPage: (data: PageInitArgs) => Promise<unknown>;
@@ -18,13 +19,13 @@ export const usePage = ({ initPage }: PageProps) => {
   );
   const store = useStore();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (pageHasBeenInitializedOnServer) {
       dispatch(setPageHasBeenInitializedOnServer(false));
       return;
     }
     initPage({ dispatch, state: store.getState(), ctx: document.cookie }).catch(
-      console.error,
+      logError,
     );
-  }, []);
+  });
 };
