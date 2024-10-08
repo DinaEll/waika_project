@@ -1,0 +1,23 @@
+{
+  "name": "@waika_project/utils",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc -p ./tsconfig.json",
+    "format": "prettier --write .",
+    "test": "jest ."
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/pg": "^8.11.10",
+    "envalid": "^8.0.0"
+  },
+  "license": "MIT"
+}
