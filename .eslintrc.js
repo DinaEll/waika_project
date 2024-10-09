@@ -75,8 +75,9 @@ const eslintConfig = {
         ignoreIIFE: true,
       },
     ],
+    //'no-console': 'error',
   },
-  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs'],
+  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs', 'dist'],
 };
 
 module.exports = eslintConfig;

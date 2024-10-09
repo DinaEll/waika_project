@@ -1,0 +1,9 @@
+ARG NODE_VERSION=20.12.2
+ARG SERVER_PORT=3001
+
+FROM node:$NODE_VERSION-alpine as builder
+WORKDIR /app
+VOLUME /app/server
+
+EXPOSE $SERVER_PORT
+CMD ["node", "server/server.js"]
