@@ -6,7 +6,6 @@ import express, {
   static as expressStatic,
   Request as ExpressRequest,
   Response as ExpressResponse,
-  RequestHandler,
 } from 'express';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 
@@ -24,7 +23,7 @@ const isDev = process.env.NODE_ENV === 'development';
 async function createServer() {
   const app = express();
 
-  app.use(cookieParser() as RequestHandler);
+  app.use(cookieParser());
 
   let vite: ViteDevServer | undefined;
 
