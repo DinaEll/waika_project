@@ -5,7 +5,7 @@
     "docker": "docker-compose --env-file .env -f docker-compose.yml up --build",
     "docker-build": "docker build --no-cache -f ./docker/Dockerfile.builder -t builder-image:latest --compress .",
     "docker-down": "docker-compose --env-file .env -f docker-compose.yml down",
-    "bootstrap": "yarn && node init.js && lerna clean && yarn",
+    "bootstrap": "yarn && lerna clean && yarn",
     "build": "lerna run build",
     "dev:client": "lerna run dev --scope=@waika_project/client",
     "dev:server": "lerna run dev --scope=@waika_project/server",
