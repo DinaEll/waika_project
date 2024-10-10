@@ -1,13 +1,22 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { type FC } from 'react';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { SignInRequest } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { usePage } from '@/shared/hooks';
+import type { SignInRequest } from '@/shared/interfaces';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
-import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
+import {
+  validationRules,
+  Field,
+  showErrorMessage,
+  getReasonMessage,
+  initPageBase,
+} from '@/shared/utils';
+import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './LoginPage.module.scss';
 
 const loginInitialState = {
@@ -15,22 +24,38 @@ const loginInitialState = {
   password: '',
 };
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  usePage({ initPage: initPageBase });
+
+  const isUserAuth = useAppSelector(isUserAuthSelector);
+
+  if (isUserAuth) {
+    return <Navigate to={getPageUrl('main')} replace />;
+  }
 
   const handleSubmit = (values: SignInRequest): void => {
-    void userSignIn(values)
-      .then(async () => {
-        await dispatch(fetchUser())
+    userSignIn(values)
+      .then(() => {
+        dispatch(fetchUser())
           .then(unwrapResult)
           .then((res) => {
             if (res.id) {
-              navigate(getPageUrl('game'));
+              navigate(getPageUrl('main'));
             }
+          })
+          .catch((error) => {
+            showErrorMessage(error);
           });
       })
-      .catch(console.error);
+      .catch((error) => {
+        if (getReasonMessage(error) === 'User already in system') {
+          navigate(getPageUrl('main'));
+        } else {
+          showErrorMessage(error);
+        }
+      });
   };
 
   return (
@@ -49,12 +74,12 @@ export const LoginPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите ваш логин.',
+              message: 'Please enter your login.',
             },
             {
               pattern: validationRules[Field.Login],
               message:
-                'Логин должен быть длиной от 3 до 20 символов и содержать буквы и цифры.',
+                'The login must be from 3 to 20 characters long and contain letters and numbers.',
             },
           ]}
           validateTrigger="onBlur"
@@ -69,12 +94,12 @@ export const LoginPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите ваш пароль.',
+              message: 'Please enter your password.',
             },
             {
               pattern: validationRules[Field.Password],
               message:
-                'Пароль должен иметь длину от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
+                'The password must be between 8 and 40 characters long and contain at least one capital letter and a number.',
             },
           ]}
           validateTrigger="onBlur"
@@ -86,6 +111,10 @@ export const LoginPage = () => {
           <Button type="primary" htmlType="submit">
             Sign In
           </Button>
+        </Form.Item>
+
+        <Form.Item className={cls.loginPageButton}>
+          <ButtonOauthYandex title="Sign In with Yandex" />
         </Form.Item>
 
         <Form.Item className={cls.loginPageButton}>

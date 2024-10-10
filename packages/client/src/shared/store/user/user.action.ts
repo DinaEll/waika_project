@@ -1,13 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import { getUser } from '@/shared/api';
-import { UserResponse } from '@/shared/interfaces';
+import type { UserResponse } from '@/shared/interfaces';
 
-export const fetchUser = createAsyncThunk<UserResponse, void>(
+type FetchUser = Parameters<typeof getUser>[0];
+
+export const fetchUser = createAsyncThunk<UserResponse, FetchUser>(
   'user/fetchUser',
-  async (_, { rejectWithValue }) => {
+  async ({ signal, ctx } = {}, { rejectWithValue }) => {
     try {
-      return await getUser();
-    } catch (e) {
+      return await getUser({ signal, ctx });
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        return rejectWithValue(e.response?.data);
+      }
       return rejectWithValue(e);
     }
   },

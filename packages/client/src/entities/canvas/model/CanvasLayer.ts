@@ -18,7 +18,21 @@ export class CanvasLayer {
     this._elements.push(element);
   }
 
+  public removeElement(element: (typeof this._elements)[number]) {
+    const newElements = [...this._elements];
+    const index = newElements.indexOf(element);
+    if (index !== -1) {
+      newElements.splice(index, 1);
+    }
+
+    this._elements = newElements;
+  }
+
   public setElements(elements: typeof this._elements) {
     this._elements = elements;
+  }
+
+  public clear() {
+    this._elements = [];
   }
 }

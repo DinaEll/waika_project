@@ -1,32 +1,30 @@
 import { CanvasElement } from '../../canvas/model/CanvasElement';
-import type { FieldCell } from '../types';
+import type { MahjongFieldCell } from '../types';
 
 interface TileProps {
-  number: FieldCell;
-  fill: string;
+  number: NonNullable<MahjongFieldCell>;
+  img: CanvasImageSource | undefined;
   width: number;
   height: number;
   onClick: (tile: Tile) => void;
   isVisible: boolean;
   isSelected: boolean;
-  positionOnField: [number, number];
+  positionOnField: { z: number; y: number; x: number };
 }
 
 export class Tile extends CanvasElement {
-  protected x: number;
-  protected y: number;
+  public x: number;
+  public y: number;
   public props: TileProps;
-  private selectedColor = 'red';
 
   constructor(
     ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
+    coords: { x: number; y: number },
     props: TileProps,
   ) {
     super(ctx);
-    this.x = x;
-    this.y = y;
+    this.x = coords.x;
+    this.y = coords.y;
     this.props = props;
   }
 
@@ -34,19 +32,18 @@ export class Tile extends CanvasElement {
     if (!this.isVisible) return;
 
     const { ctx, props, x, y } = this;
-    const { number, fill, height, isSelected, width } = props;
+    const { img, height, isSelected, width } = props;
 
-    ctx.fillStyle = isSelected ? this.selectedColor : fill;
-    ctx.fillRect(x, y, width, height);
+    if (img) {
+      ctx.globalAlpha = isSelected ? 0.6 : 1;
+      ctx.drawImage(img, x, y, width, height);
+    } else {
+      ctx.fillStyle = isSelected ? 'red' : 'grey';
+      ctx.fillRect(x, y, width, height);
 
-    ctx.strokeStyle = 'white';
-    ctx.strokeRect(x, y, width, height);
-
-    ctx.fillStyle = 'white';
-    ctx.font = '14px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(number), x + width / 2, y + height / 2);
+      ctx.strokeStyle = 'white';
+      ctx.strokeRect(x, y, width, height);
+    }
   }
 
   public onClick(pointX: number, pointY: number): boolean {
@@ -69,6 +66,15 @@ export class Tile extends CanvasElement {
 
   public sameNumber(tile: Tile) {
     return this.props.number === tile.props.number;
+  }
+
+  public showUnavailability() {
+    setTimeout(() => {
+      this.isSelected = true;
+      setTimeout(() => {
+        this.isSelected = false;
+      }, 400);
+    }, 400);
   }
 
   get isVisible() {

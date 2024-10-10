@@ -8,5 +8,9 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"]
+  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
+  "exclude": ["server/index.ts", "dist"],
+  "references": [
+    { "path": "./tsconfig.server.json" }
+  ]
 }

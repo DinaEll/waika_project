@@ -1,6 +1,16 @@
 import { get } from '@/shared/api';
-import { UserResponse } from '@/shared/interfaces';
+import type { UserResponse } from '@/shared/interfaces';
+import type { PageInitContext } from '@/shared/types';
+import { isDefined } from '../../utils';
 
-export const getUser = async () => {
-  return await get<UserResponse>('/auth/user', {});
+interface Options {
+  ctx?: PageInitContext;
+  signal?: AbortSignal;
+}
+
+export const getUser = async (options?: Options) => {
+  return await get<UserResponse>('/auth/user', {
+    ...(isDefined(options?.ctx) ? { headers: { Cookie: options?.ctx } } : {}),
+    signal: options?.signal,
+  });
 };

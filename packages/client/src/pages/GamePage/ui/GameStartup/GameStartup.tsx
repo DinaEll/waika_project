@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { FC } from 'react';
 import RulesImg from '@/shared/assets/images/rules.png';
-import { MainContainer } from '@/widgets/MainContainer';
+import { MainContainer } from '@/widgets';
 import cls from './GameStartup.module.scss';
 
 interface Props {

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { appConfig } from '@/shared/config';
 
 type Response<T = unknown> = T;
@@ -11,22 +11,22 @@ const enum Method {
   DELETE = 'DELETE',
 }
 
-interface ReqOptions {
-  method?: Method;
+type HTTPRequest = Request & {
+  signal?: AbortSignal;
   headers?: Record<string, string>;
-  data?: Record<string, unknown>;
-}
+  fileUpload?: boolean;
+};
 
 type HTTPMethod = <T = unknown>(
   url: string,
-  options?: Request,
+  options?: HTTPRequest,
 ) => Promise<Response<T>>;
 
 export const post: HTTPMethod = async <T>(
   url: string,
-  options: Request = {},
+  options: HTTPRequest = {},
 ) => {
-  const { fileUpload = false, data } = options;
+  const { fileUpload = false, data, signal } = options;
   const response = await baseRequest<T>(
     url,
     Method.POST,
@@ -37,6 +37,7 @@ export const post: HTTPMethod = async <T>(
     },
     {
       data: fileUpload ? data : JSON.stringify(data),
+      signal,
     },
   );
 
@@ -47,8 +48,12 @@ export const post: HTTPMethod = async <T>(
   return parseResponse<T>(response.data);
 };
 
-export const get: HTTPMethod = async <T>(url: string) => {
-  const response = await baseRequest<T>(url, Method.GET);
+export const get: HTTPMethod = async <T>(
+  url: string,
+  options: HTTPRequest = {},
+) => {
+  const { signal, headers } = options;
+  const response = await baseRequest<T>(url, Method.GET, headers, { signal });
 
   if (response.status !== 200) {
     throw new Error('Error. Please try again');
@@ -59,9 +64,9 @@ export const get: HTTPMethod = async <T>(url: string) => {
 
 export const put: HTTPMethod = async <T>(
   url: string,
-  options: Request = {},
+  options: HTTPRequest = {},
 ) => {
-  const { fileUpload = false, data } = options;
+  const { fileUpload = false, data, signal } = options;
   let formData: FormData | null = null;
 
   if (fileUpload) {
@@ -84,7 +89,7 @@ export const put: HTTPMethod = async <T>(
         ? 'multipart/form-data'
         : 'application/json; charset=UTF-8',
     },
-    { data: fileUpload ? formData : JSON.stringify(data) },
+    { data: fileUpload ? formData : JSON.stringify(data), signal },
   );
 
   if (response.status !== 200) {
@@ -96,9 +101,9 @@ export const put: HTTPMethod = async <T>(
 
 const baseRequest = async <T>(
   url: string,
-  method: ReqOptions['method'],
-  headers?: ReqOptions['headers'],
-  data?: Request,
+  method: Method,
+  headers?: Record<string, string>,
+  data?: HTTPRequest,
 ): Promise<AxiosResponse<T>> => {
   return axios<T>(appConfig.baseUrl + url, {
     method,

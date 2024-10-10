@@ -1,13 +1,23 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Form, Button, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { type FC } from 'react';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
-import { SignUpRequest } from '@/shared/interfaces';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { usePage } from '@/shared/hooks/';
+import type { SignUpRequest } from '@/shared/interfaces';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
-import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
+import {
+  validationRules,
+  Field,
+  getReasonMessage,
+  showErrorMessage,
+  logError,
+  initPageBase,
+} from '@/shared/utils';
+import { ButtonOauthYandex, MainContainer } from '@/widgets';
 import cls from './RegistrationPage.module.scss';
 
 const regInitialState = {
@@ -19,24 +29,39 @@ const regInitialState = {
   phone: '',
 };
 
-export const RegistrationPage = () => {
+export const RegistrationPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  usePage({ initPage: initPageBase });
+
+  const isUserAuth = useAppSelector(isUserAuthSelector);
+
+  if (isUserAuth) {
+    return <Navigate to={getPageUrl('main')} replace />;
+  }
 
   const handleSubmit = (values: SignUpRequest): void => {
-    void userSignUp(values)
-      .then(async (res) => {
+    userSignUp(values)
+      .then((res) => {
         if (res.id) {
-          await dispatch(fetchUser())
+          dispatch(fetchUser())
             .then(unwrapResult)
-            .then((data) => {
-              if (data) {
-                navigate(getPageUrl('game'));
-              }
+            .then(() => {
+              navigate(getPageUrl('main'), { replace: true });
+            })
+            .catch((error) => {
+              logError(error);
+              navigate(getPageUrl('login'));
             });
         }
       })
-      .catch(console.error);
+      .catch((error) => {
+        if (getReasonMessage(error) === 'User already in system') {
+          navigate(getPageUrl('game'));
+        } else {
+          showErrorMessage(error);
+        }
+      });
   };
 
   return (
@@ -55,12 +80,12 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите ваше имя.',
+              message: 'Please enter your name.',
             },
             {
               pattern: validationRules[Field.FirstName],
               message:
-                'Имя должно начинаться с заглавной буквы и содержать только буквы и дефис.',
+                'The name must begin with a capital letter and contain only letters and a hyphen.',
             },
           ]}
           validateTrigger="onBlur"
@@ -75,12 +100,12 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите вашу фамилию.',
+              message: 'Please enter your last name.',
             },
             {
               pattern: validationRules[Field.SecondName],
               message:
-                'Фамилия должна начинаться с заглавной буквы и содержать только буквы и дефис.',
+                'The last name must begin with a capital letter and contain only letters and a hyphen.',
             },
           ]}
           validateTrigger="onBlur"
@@ -95,12 +120,12 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите логин.',
+              message: 'Please enter your login.',
             },
             {
               pattern: validationRules[Field.Login],
               message:
-                'Логин должен быть от 3 до 20 символов, содержать буквы и цифры, может включать дефисы и подчеркивания.',
+                'The login must be from 3 to 20 characters, contain letters and numbers, and may include hyphens and underscores.',
             },
           ]}
           validateTrigger="onBlur"
@@ -115,11 +140,11 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите email.',
+              message: 'Please enter your email.',
             },
             {
               pattern: validationRules[Field.Email],
-              message: 'Email должен быть валидным адресом электронной почты.',
+              message: 'Email must be a valid email address.',
             },
           ]}
           validateTrigger="onBlur"
@@ -134,12 +159,12 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите номер телефона.',
+              message: 'Please enter your phone number.',
             },
             {
               pattern: validationRules[Field.Phone],
               message:
-                'Номер телефона должен быть от 10 до 15 цифр и может начинаться с плюса.',
+                'The phone number must be between 10 and 15 digits and may begin with a plus.',
             },
           ]}
           validateTrigger="onBlur"
@@ -154,12 +179,12 @@ export const RegistrationPage = () => {
           rules={[
             {
               required: true,
-              message: 'Пожалуйста, введите пароль.',
+              message: 'Please enter your password.',
             },
             {
               pattern: validationRules[Field.Password],
               message:
-                'Пароль должен быть от 8 до 40 символов, содержать хотя бы одну заглавную букву и цифру.',
+                'The password must be from 8 to 40 characters and contain at least one capital letter and a number.',
             },
           ]}
           validateTrigger="onBlur"
@@ -171,6 +196,10 @@ export const RegistrationPage = () => {
           <Button type="primary" htmlType="submit">
             Sign Up
           </Button>
+        </Form.Item>
+
+        <Form.Item className={cls.registrationPageButton}>
+          <ButtonOauthYandex title="Sign Up with Yandex" />
         </Form.Item>
 
         <Form.Item className={cls.registrationPageButton}>

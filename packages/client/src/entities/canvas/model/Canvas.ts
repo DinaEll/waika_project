@@ -4,6 +4,7 @@ export class Canvas {
   private _canvas: HTMLCanvasElement | undefined;
   protected ctx: CanvasRenderingContext2D;
   public layers: CanvasLayer[] = [];
+  protected images: Record<string, CanvasImageSource> = {};
   private requestAnimationFrameId:
     | ReturnType<typeof requestAnimationFrame>
     | undefined;
@@ -61,6 +62,22 @@ export class Canvas {
     }
     this.canvas.removeEventListener('click', this.onCanvasClick);
     this.canvas = undefined;
+  }
+
+  loadImage(src: string, id: string) {
+    return new Promise<void>((resolve, reject) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        this.images[id] = img;
+        resolve();
+      };
+
+      img.onerror = () => {
+        reject(new Error(`Error load image: ${src}`));
+      };
+    });
   }
 
   get canvas(): Exclude<typeof this._canvas, undefined> {
