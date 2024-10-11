@@ -9,7 +9,7 @@ services:
     restart: always
     shm_size: 128mb
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - ./docker/pg_data:/var/lib/postgresql/data
       - type: tmpfs
         target: /dev/shm
         tmpfs:
@@ -17,7 +17,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     env_file:
-      .env
+      - ./.env
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'postgres']
       interval: 5s
@@ -35,4 +35,49 @@ services:
     ports:
       - 8080:8080
     networks:
-      localenv:
+      - localenv
+
+  server:
+    container_name: waika_project_server
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.server
+      args:
+        SERVER_PORT: ${SERVER_PORT}
+    depends_on: 
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_HOST=postgres
+    volumes:
+      - ./packages/server/src/:/app/packages/server/src/:ro
+      - ./packages/database/src/:/app/packages/database/src/:ro
+    networks:
+      - localenv
+  
+  client:
+    container_name: waika_project_client
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.client
+      args:
+        CLIENT_PORT: ${CLIENT_PORT}
+    depends_on: 
+      - server
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+      - 80:80
+    env_file:
+      - ./.env
+    volumes:
+      - ./packages/client/index.html:/app/packages/client/index.html:ro
+      - ./packages/client/startSW.js:/app/packages/client/startSW.js:ro
+      - ./packages/client/cacheSW.js:/app/packages/client/cacheSW.js:ro
+    networks:
+      - localenv
