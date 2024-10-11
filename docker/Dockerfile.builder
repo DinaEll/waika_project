@@ -5,7 +5,7 @@ FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app/
 
-COPY package.json yarn.lock lerna.json ./
+COPY package.json yarn.lock lerna.json .nvmrc ./
 COPY packages packages
 COPY tsconfigs tsconfigs
 

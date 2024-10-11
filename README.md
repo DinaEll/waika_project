@@ -4,10 +4,8 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
-2. Выполните команду `yarn bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `yarn dev`
-3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
-4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
+2. Выполните команду `npm run bootstrap` - это обязательный шаг, без него ничего работать не будет :)
+3. Выполните команду `npm run dev`
 
 
 ### Как добавить зависимости?
@@ -48,8 +46,8 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 И чтобы посмотреть что получилось
 
 
-`yarn preview --scope client`
-`yarn preview --scope server`
+`yarn preview --scope @waika_projectclient`
+`yarn preview --scope @waika_projectserver`
 
 ## Хуки
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
@@ -67,8 +65,6 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 Все ваши PR будут автоматически деплоиться на vercel. URL вам предоставит деплоящий бот
 
 ## Production окружение в докере
-Перед первым запуском выполните `node init.js`
-
 
 `docker compose up` - запустит три сервиса
 1. nginx, раздающий клиентскую статику (client)
