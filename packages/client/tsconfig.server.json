@@ -4,7 +4,9 @@
     "lib": ["ESNext", "DOM"],
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "target": "ES2021"
+    "target": "ES2021",
+    "outDir": "dist",
+    "noEmit": false
   },
   "include": ["server/index.ts"]
 }
