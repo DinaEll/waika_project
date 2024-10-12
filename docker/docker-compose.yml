@@ -44,19 +44,6 @@ services:
     environment:
       - POSTGRES_HOST=postgres
     volumes:
-      - ../packages/server/dist/:/app/server/:ro
+      - ../packages/server/dist/:/app/:ro
     networks:
       - localenv
-
-  nginx:
-    container_name: waika_project_nginx
-    restart: always
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.nginx
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
-      - ./nginx/includes/:/etc/nginx/includes/:ro

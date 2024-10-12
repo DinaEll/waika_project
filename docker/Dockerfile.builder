@@ -3,7 +3,7 @@ ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-alpine
 
-WORKDIR /app/
+WORKDIR /app
 
 COPY package.json yarn.lock lerna.json .nvmrc ./
 COPY packages packages
