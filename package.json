@@ -10,7 +10,7 @@
     "docker-build": "docker build -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
     "docker-rebuild": "docker build --no-cache -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
     "docker-down": "export NODE_VERSION=$(cat .nvmrc) && docker-compose --env-file .env -f ./docker/docker-compose.yml down",
-    "docker-up": "export NODE_VERSION=$(cat .nvmrc) && docker-compose --env-file .env -f ./docker/docker-compose.yml up --build",
+    "docker-up": "set NODE_VERSION=$(cat .nvmrc) && docker-compose --env-file .env -f ./docker/docker-compose.yml up --build",
     "docker-adminer-up": "docker-compose -f ./docker/docker-compose.adminer.yml up --build",
     "docker-adminer-down": "docker-compose -f ./docker/docker-compose.adminer.yml down",
     "format": "lerna run format",
