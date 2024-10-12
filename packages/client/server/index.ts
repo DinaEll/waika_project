@@ -1,15 +1,13 @@
+import 'dotenv/config';
 import fs from 'fs/promises';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import { config as dotenvConfig } from 'dotenv';
 import express, {
   static as expressStatic,
   Request as ExpressRequest,
   Response as ExpressResponse,
 } from 'express';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-
-dotenvConfig();
 
 type RenderFunc = (
   req: ExpressRequest,
