@@ -1,33 +1,28 @@
 import path from 'path';
-import { URL, fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
-import { config } from 'dotenv';
 import { defineConfig } from 'vite';
+import { CLIENT_PORT, isDev } from './env';
 
-config();
+const srcPath = path.join(__dirname, 'src');
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: Number(process.env.CLIENT_PORT) || 3000,
+    port: CLIENT_PORT,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
-    __CLIENT_PORT__: process.env.CLIENT_PORT,
+    __CLIENT_PORT__: CLIENT_PORT,
+    __isDev__: isDev,
   },
   plugins: [react()],
   resolve: {
     alias: [
       {
         find: '@',
-        replacement: fileURLToPath(new URL('./src', import.meta.url)),
+        replacement: path.resolve(srcPath),
       },
     ],
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),
-  },
-  ssr: {
-    format: 'cjs',
   },
 });

@@ -2,19 +2,27 @@
   "name": "waika_project",
   "private": true,
   "scripts": {
-    "bootstrap": "yarn && node init.js && lerna clean && yarn",
+    "bootstrap": "yarn && lerna clean --yes && yarn",
     "build": "lerna run build",
+    "build:client": "lerna run build --scope=@waika_project/client",
+    "build:server": "lerna run build --scope=@waika_project/server",
+    "dev": "lerna run dev",
     "dev:client": "lerna run dev --scope=@waika_project/client",
     "dev:server": "lerna run dev --scope=@waika_project/server",
-    "dev": "lerna run dev",
-    "test": "lerna run test --stream",
+    "preview": "lerna run preview",
+    "docker-up": "docker-compose --env-file .env -f ./docker/docker-compose.yml up --build",
+    "docker-down": "docker-compose --env-file .env -f ./docker/docker-compose.yml down",
+    "docker-adminer-down": "docker-compose -f ./docker/docker-compose.adminer.yml down",
+    "docker-adminer-up": "docker-compose -f ./docker/docker-compose.adminer.yml up --build",
+    "docker-build": "docker build -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
+    "docker-rebuild": "docker build --no-cache -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
+    "format": "lerna run format",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "typecheck": "lerna run typecheck --stream",
     "stylelint": "lerna run stylelint",
     "stylelint:fix": "lerna run stylelint:fix",
-    "format": "lerna run format",
-    "preview": "lerna run preview"
+    "test": "lerna run test --stream",
+    "typecheck": "lerna run typecheck --stream"
   },
   "workspaces": [
     "packages/*"
@@ -36,6 +44,7 @@
     "jest": "^29.7.0",
     "lerna": "^6.6.2",
     "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.4.0"

@@ -3,6 +3,7 @@ dist/
 build/
 coverage/
 tmp/
+pg_data/
 
 logs/
 *.log
@@ -15,4 +16,3 @@ Thumbs.db
 *.swp
 
 .eslintcache
-.env
