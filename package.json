@@ -4,6 +4,7 @@
   "scripts": {
     "bootstrap": "yarn && lerna clean --yes && yarn && npm run docker-build",
     "build": "lerna run build",
+    "build:server": "lerna run build --scope=@waika_project/server",
     "dev": "npm run dev:client",
     "dev:client": "lerna run dev --scope=@waika_project/client",
     "dev:server": "lerna run dev --scope=@waika_project/server",

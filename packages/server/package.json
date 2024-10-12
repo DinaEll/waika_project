@@ -1,10 +1,11 @@
 {
   "name": "@waika_project/server",
   "version": "1.0.0",
-  "description": "",
+  "description": "API server",
   "scripts": {
-    "build": "rimraf ./dist && ts-node esbuild.prod.ts",
-    "dev": "ts-node-dev --respawn index.ts",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && ts-node scripts/esbuild.prod.ts",
+    "dev": "npm run clean && ts-node scripts/esbuild.watch.ts",
     "preview": "npm run build && node ./dist/server.js",
     "format": "prettier --write .",
     "lint": "eslint .",

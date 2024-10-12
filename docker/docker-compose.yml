@@ -44,7 +44,6 @@ services:
     environment:
       - POSTGRES_HOST=postgres
     volumes:
-      - ../packages/server/src/:/app/packages/server/src/:ro
-      - ../packages/database/src/:/app/packages/database/src/:ro
+      - ../packages/server/dist/:/app/server/:ro
     networks:
       - localenv

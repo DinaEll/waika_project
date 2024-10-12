@@ -1,4 +1,6 @@
 import { isDevelopment } from '@waika_project/utils';
+// eslint-disable-next-line import/default
+import pg from 'pg';
 import { Sequelize } from 'sequelize-typescript';
 import {
   POSTGRES_DB,
@@ -20,5 +22,6 @@ export const createDatabaseClient = (): Sequelize => {
     // eslint-disable-next-line no-console
     logging: isDevelopment() ? (msg) => console.debug(msg) : undefined,
     models: [User],
+    dialectModule: pg,
   });
 };

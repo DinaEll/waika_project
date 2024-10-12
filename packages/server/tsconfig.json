@@ -7,6 +7,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json", "esbuild.prod.ts"],
+  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
   "exclude": ["dist"]
 }
