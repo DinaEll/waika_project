@@ -3,9 +3,9 @@ ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-alpine
 
-WORKDIR /app/server
+WORKDIR /app
 COPY packages/server/dist/ ./
 
 RUN npm install -g nodemon
 
-CMD ["nodemon", "server.js"]
+CMD ["nodemon", "--watch", "/app/**", "server.js"]
