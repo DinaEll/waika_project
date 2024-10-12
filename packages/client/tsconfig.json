@@ -9,8 +9,5 @@
     }
   },
   "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
-  "exclude": ["server/index.ts", "dist"],
-  "references": [
-    { "path": "./tsconfig.server.json" }
-  ]
+  "exclude": ["dist"]
 }
