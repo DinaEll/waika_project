@@ -1,6 +1,6 @@
 import { User } from '@waika_project/database';
-import { Comment, Topic } from '@waika_project/database/src';
-import { Router, type Request, type Response } from 'express';
+import { Comment, Reply, Topic } from '@waika_project/database/src';
+import { NextFunction, Router, type Request, type Response } from 'express';
 
 export const forum = Router();
 
@@ -9,20 +9,22 @@ forum.get('/users', async (_: Request, res: Response) => {
   res.send(users);
 });
 
-forum.post('/user', async (_: Request, res: Response) => {
+forum.post('/user', async (_: Request, res: Response, next: NextFunction) => {
   try {
     const user = await User.create({
-      first_name: 'John',
-      second_name: 'Doe',
-      display_name: 'John Doe',
-      login: 'John Doe',
-      email: 'john1@example.com',
-      phone: 'John Doe',
-      avatar: 'john@example1.com',
+      first_name: '1John',
+      second_name: '1Doe',
+      display_name: '1John Doe',
+      login: '1John Doe',
+      email: '1john1@example.com',
+      phone: '1John Doe',
+      // avatar: '1john@example1.com',
     });
     res.json(user);
   } catch (error) {
-    res.send(error);
+    // res.status(error.status).send(error);
+    console.log(error);
+    next(error);
   }
 });
 
@@ -43,9 +45,22 @@ forum.post('/topic', async (_: Request, res: Response) => {
 forum.post('/comment', async (_: Request, res: Response) => {
   try {
     const topic = await Comment.create({
-      content: 'comment 1',
+      content: 'comment 2',
       user_id: 1,
-      topic_id: 5,
+      topic_id: 1,
+    });
+    res.send(topic);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+forum.post('/reply', async (_: Request, res: Response) => {
+  try {
+    const topic = await Reply.create({
+      content: 'reply 1',
+      user_id: 1,
+      comment_id: 6,
     });
     res.send(topic);
   } catch (error) {

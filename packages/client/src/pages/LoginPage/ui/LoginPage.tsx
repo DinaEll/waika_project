@@ -63,7 +63,7 @@ export const LoginPage: FC = () => {
     axios
       .post('http://localhost:3001/forum/user')
       .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   return (

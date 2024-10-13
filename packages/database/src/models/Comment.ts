@@ -1,7 +1,6 @@
 import {
   BelongsTo,
   Column,
-  CreatedAt,
   DataType,
   ForeignKey,
   Model,
@@ -48,7 +47,4 @@ export class Comment extends Model {
 
   @BelongsTo(() => User)
   declare user: User;
-
-  @CreatedAt
-  declare created_at: Date;
 }
