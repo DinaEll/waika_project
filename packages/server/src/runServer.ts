@@ -8,7 +8,9 @@ export async function runServer() {
 
     const server = createServer();
     server.listen(SERVER_PORT, () => {
-      console.log(`  ➜ 🎸 Server is listening on: ${SERVER_PORT}`);
+      console.log(
+        `  ➜ 🎸 Server is listening on: http://localhost:${SERVER_PORT}`,
+      );
     });
   } catch (error) {
     console.error(error);

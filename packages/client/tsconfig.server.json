@@ -1,14 +1,12 @@
 {
+  "extends": "../../tsconfigs/tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "target": "es2019",
-    "module": "commonjs",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "lib": ["es2019", "DOM"],
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "incremental": null
+    "lib": ["ESNext", "DOM"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2021",
+    "outDir": "dist",
+    "noEmit": false
   },
   "include": ["server/index.ts"]
 }

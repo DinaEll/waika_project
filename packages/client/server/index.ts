@@ -1,24 +1,20 @@
 import fs from 'fs/promises';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import { config as dotenvConfig } from 'dotenv';
 import express, {
   static as expressStatic,
   Request as ExpressRequest,
   Response as ExpressResponse,
 } from 'express';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-
-dotenvConfig();
+import { isDev, CLIENT_PORT } from '../env';
 
 type RenderFunc = (
   req: ExpressRequest,
   res: ExpressResponse,
 ) => Promise<{ html: string; initialState: unknown }>;
 
-const port = process.env.PORT ?? 80;
 const clientPath = path.join(__dirname, '..');
-const isDev = process.env.NODE_ENV === 'development';
 
 async function createServer() {
   const app = express();
@@ -107,8 +103,8 @@ async function createServer() {
     })();
   });
 
-  app.listen(port, () => {
-    console.log(`Client is listening on port: ${port}`);
+  app.listen(CLIENT_PORT, () => {
+    console.log(`  ➜ 🎸 SSR is listening on: http://localhost:${CLIENT_PORT}`);
   });
 }
 

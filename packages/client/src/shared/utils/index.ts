@@ -1,6 +1,5 @@
 export {
   isDefined,
-  isDevelopment,
   isError,
   isEven,
   isNull,

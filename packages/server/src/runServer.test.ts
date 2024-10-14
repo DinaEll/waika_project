@@ -39,7 +39,7 @@ describe('runServer', () => {
       expect.any(Function),
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `  ➜ 🎸 Server is listening on: ${SERVER_PORT}`,
+      `  ➜ 🎸 Server is listening on: http://localhost:${SERVER_PORT}`,
     );
   });
 

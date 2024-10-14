@@ -5,7 +5,8 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 
 1. Убедитесь что у вас установлен `node` и `docker`
 2. Выполните команду `npm run bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `npm run dev`
+3. Выполните команду `npm run docker-up` - это database & server
+4. Выполните команду `npm run dev` - это режим разработки
 
 
 ### Как добавить зависимости?
@@ -35,6 +36,10 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 
 ```yarn lint```
 
+### Проверка типов
+
+```yarn typecheck```
+
 ### Форматирование prettier
 
 ```yarn format```
@@ -45,9 +50,13 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 
 И чтобы посмотреть что получилось
 
+`yarn preview`
 
-`yarn preview --scope @waika_projectclient`
-`yarn preview --scope @waika_projectserver`
+Или раздельно
+
+`yarn preview --scope @waika_project/client`
+
+`yarn preview --scope @waika_project/server`
 
 ## Хуки
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
@@ -57,21 +66,15 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 
 Откройте issue, я приду :)
 
-## Автодеплой статики на vercel
-Зарегистрируйте аккаунт на [vercel](https://vercel.com/)
-Следуйте [инструкции](https://vitejs.dev/guide/static-deploy.html#vercel-for-git)
-В качестве `root directory` укажите `packages/client`
-
-Все ваши PR будут автоматически деплоиться на vercel. URL вам предоставит деплоящий бот
-
 ## Production окружение в докере
 
-`docker compose up` - запустит три сервиса
-1. nginx, раздающий клиентскую статику (client)
-2. node, ваш сервер (server)
-3. postgres, вашу базу данных (postgres)
+`yarn docker-up` - запустит два сервиса
+1. node, ваш сервер (server)
+2. postgres, вашу базу данных (postgres)
 
-Если вам понадобится только один сервис, просто уточните какой в команде
-`docker compose up {sevice_name}`, например `docker compose up server`
+`yarn docker-down` - остановит сервисы
+
+`yarn docker-adminer-up` - запустит adminer
+`yarn docker-adminer-down` - остановит adminer
 
 [Документация](docs/README.md)

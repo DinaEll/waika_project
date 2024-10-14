@@ -1,6 +1,5 @@
+import { isError, logError } from '@waika_project/utils';
 import { getReasonMessage } from './getReasonMessage';
-import { isError } from './isError';
-import { logError } from './logError';
 import { showMessage } from './showMessage';
 
 export function showErrorMessage(error: unknown) {
