@@ -5,8 +5,8 @@ https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx
 
 1. Убедитесь что у вас установлен `node` и `docker`
 2. Выполните команду `npm run bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `npm run docker-up` - это database & server
-4. Выполните команду `npm run dev` - это режим разработки
+3. Выполните команду `npm run dev` - это режим разработки
+4. Выполните команду `npm run docker-up` - это database & server
 
 
 ### Как добавить зависимости?
