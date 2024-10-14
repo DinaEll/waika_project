@@ -4,10 +4,12 @@ import {
   CreatedAt,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
+import { Reply } from './Reply';
 import { Topic } from './Topic';
 import { User } from './User';
 
@@ -49,6 +51,9 @@ export class Comment extends Model {
 
   @BelongsTo(() => User)
   declare user: User;
+
+  @HasMany(() => Reply)
+  declare replies: Reply[];
 
   @CreatedAt
   declare created_at: Date;

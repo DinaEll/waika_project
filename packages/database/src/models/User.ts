@@ -8,6 +8,7 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
+import { Reply } from './Reply';
 import { Topic } from './Topic';
 @Table({
   tableName: 'users',
@@ -69,6 +70,9 @@ export class User extends Model {
 
   @HasMany(() => Comment)
   declare comments: Comment[];
+
+  @HasMany(() => Reply)
+  declare replies: Reply[];
 
   @CreatedAt
   declare created_at: Date;

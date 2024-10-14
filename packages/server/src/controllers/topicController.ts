@@ -1,4 +1,4 @@
-import { Comment, Topic } from '@waika_project/database/src';
+import { Comment, Topic, User } from '@waika_project/database/src';
 import { NextFunction, Request, Response } from 'express';
 import { ApiError } from '../middlewares/error';
 
@@ -44,7 +44,7 @@ class TopicController {
 
       topics = await Topic.findOne({
         where: topic_id ? { topic_id } : { title },
-        include: [Comment],
+        include: [User],
       });
 
       res.json(topics);
