@@ -6,6 +6,7 @@ import {
   ForeignKey,
   Model,
   Table,
+  UpdatedAt,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
 import { User } from './User';
@@ -51,4 +52,7 @@ export class Reply extends Model {
 
   @CreatedAt
   declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
 }

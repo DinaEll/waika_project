@@ -1,10 +1,12 @@
 import {
   BelongsTo,
   Column,
+  CreatedAt,
   DataType,
   ForeignKey,
   Model,
   Table,
+  UpdatedAt,
 } from 'sequelize-typescript';
 import { Topic } from './Topic';
 import { User } from './User';
@@ -47,4 +49,10 @@ export class Comment extends Model {
 
   @BelongsTo(() => User)
   declare user: User;
+
+  @CreatedAt
+  declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
 }

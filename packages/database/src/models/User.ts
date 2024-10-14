@@ -1,4 +1,12 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+} from 'sequelize-typescript';
 import { Comment } from './Comment';
 import { Topic } from './Topic';
 @Table({
@@ -61,4 +69,10 @@ export class User extends Model {
 
   @HasMany(() => Comment)
   declare comments: Comment[];
+
+  @CreatedAt
+  declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
 }

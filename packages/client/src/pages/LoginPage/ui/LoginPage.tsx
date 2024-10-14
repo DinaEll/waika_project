@@ -61,7 +61,15 @@ export const LoginPage: FC = () => {
 
   const handleClick = () => {
     axios
-      .post('http://localhost:3001/forum/user')
+      .post('http://localhost:3001/forum/user', {
+        first_name: 'string',
+        second_name: 'string',
+        display_name: 'string',
+        login: 'string',
+        email: 'string',
+        phone: 'string',
+        avatar: 'string',
+      })
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
   };

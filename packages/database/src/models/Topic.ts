@@ -6,6 +6,8 @@ import {
   HasMany,
   ForeignKey,
   BelongsTo,
+  CreatedAt,
+  UpdatedAt,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
 import { User } from './User';
@@ -21,36 +23,43 @@ export class Topic extends Model {
     autoIncrement: true,
     allowNull: false,
   })
-  topic_id!: number;
+  declare topic_id: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   })
-  title!: string;
+  declare title: string;
 
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  user_id!: number;
+  declare user_id: number;
 
   @BelongsTo(() => User)
-  user!: User;
+  declare user: User;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  views!: number;
+  declare views: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  content!: string;
+  declare content: string;
 
-  @HasMany(() => Comment)
-  comments?: Comment[];
+  @HasMany(() => Comment, { as: 'comments' })
+  declare comments: Comment[];
+
+  @CreatedAt
+  declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
 }
