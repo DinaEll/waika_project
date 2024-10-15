@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import axios from 'axios';
 import { FC } from 'react';
 import RulesImg from '@/shared/assets/images/rules.png';
 import { MainContainer } from '@/widgets';
@@ -9,8 +10,20 @@ interface Props {
 }
 
 export const GameStartup: FC<Props> = ({ onStartClick }) => {
+  const handleClick = () => {
+    axios
+      .get('http://localhost:3001/forum/users', {
+        withCredentials: true,
+      })
+      .then((res) => console.log(res))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <MainContainer title="Start game">
+      <button onClick={handleClick}>asdasdas</button>
       <div className={cls.wrapper}>
         <div className={cls.rules}>
           <img src={RulesImg} alt="Rules" className={cls.rulesImg} />

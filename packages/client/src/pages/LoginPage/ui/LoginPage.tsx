@@ -1,7 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
 import axios from 'axios';
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
@@ -32,6 +32,16 @@ export const LoginPage: FC = () => {
 
   const isUserAuth = useAppSelector(isUserAuthSelector);
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/forum/users', {
+        withCredentials: true,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   if (isUserAuth) {
     return <Navigate to={getPageUrl('main')} replace />;
   }
@@ -57,21 +67,6 @@ export const LoginPage: FC = () => {
           showErrorMessage(error);
         }
       });
-  };
-
-  const handleClick = () => {
-    axios
-      .post('http://localhost:3001/forum/user', {
-        first_name: 'string',
-        second_name: 'string',
-        display_name: 'string',
-        login: 'string',
-        email: 'string',
-        phone: 'string',
-        avatar: 'string',
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.error(error));
   };
 
   return (
@@ -137,10 +132,6 @@ export const LoginPage: FC = () => {
           <NavLink to={getPageUrl('registration')}>
             <Button type="link">Sign Up</Button>
           </NavLink>
-
-          <Button type="link" onClick={handleClick}>
-            create user
-          </Button>
         </Form.Item>
       </Form>
     </MainContainer>

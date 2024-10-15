@@ -32,6 +32,7 @@ class ReplyController {
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     const { comment_id } = req.query;
+
     if (!comment_id) {
       throw new ApiError(400, 'Query params should have topic_id');
     }

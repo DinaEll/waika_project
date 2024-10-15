@@ -3,12 +3,13 @@ import { commentController } from '../controllers/commentController';
 import { replyController } from '../controllers/replyController';
 import { topicController } from '../controllers/topicController';
 import { userController } from '../controllers/userController';
+import { authMiddleware } from '../middlewares/auth';
 
 export const forum = Router();
 
 forum.post('/user', userController.create);
 forum.get('/user', userController.getOne); // ?user_id=
-forum.get('/users', userController.getAll);
+forum.get('/users', authMiddleware, userController.getAll);
 
 forum.post('/topic', topicController.create);
 forum.get('/topic', topicController.getOne); // ?topic_id= || ?title=
