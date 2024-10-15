@@ -12,7 +12,7 @@
     "stylelint:fix": "stylelint \"**/*.scss\" --fix",
     "test": "jest .",
     "typecheck": "tsc -p ./tsconfig.json",
-    "wipedist": "rimraf ./dist/*"
+    "wipedist": "rimraf dist/* --glob"
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",

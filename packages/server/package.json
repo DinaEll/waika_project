@@ -11,7 +11,7 @@
     "lint:fix": "eslint . --fix",
     "test": "jest .",
     "typecheck": "tsc -p ./tsconfig.json",
-    "wipedist": "rimraf ./dist/*"
+    "wipedist": "rimraf dist/* --glob"
   },
   "dependencies": {
     "@waika_project/database": "1.0.0",
