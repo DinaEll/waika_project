@@ -34,7 +34,7 @@ services:
       dockerfile: docker/Dockerfile.server
       args:
         SERVER_PORT: ${SERVER_PORT}
-    depends_on: 
+    depends_on:
       postgres:
         condition: service_healthy
     ports:
