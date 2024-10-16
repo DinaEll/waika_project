@@ -31,19 +31,6 @@ class CommentController {
     }
   };
 
-  // getAll = async (req: Request, res: Response, next: NextFunction) => {
-  //   const { topic_id } = req.query;
-  //   if (!topic_id) {
-  //     throw new ApiError(400, 'Query params should have topic_id');
-  //   }
-  //   try {
-  //     const comments = await Comment.findAll({ where: { topic_id } });
-  //     res.json(comments);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // };
-
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     const { topic_id } = req.query;
     if (!topic_id) {
