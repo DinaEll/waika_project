@@ -27,7 +27,10 @@
     "typecheck": "lerna run typecheck --stream"
   },
   "workspaces": [
-    "packages/*"
+    "packages/client",
+    "packages/database",
+    "packages/server",
+    "packages/utils"
   ],
   "engines": {
     "node": "20.12.2"
