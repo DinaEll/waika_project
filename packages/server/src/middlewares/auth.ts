@@ -1,22 +1,26 @@
 import { NextFunction, Request, Response } from 'express';
-// import { ApiError } from "./error";
 
 export const authMiddleware = (
   req: Request,
-  _: Response,
+  res: Response,
   next: NextFunction,
 ) => {
-  console.log(req.cookies);
+  const cookies = req.headers.cookie ?? '';
 
-  // fetch('https://ya-praktikum.tech/api/v2/auth/user', {
-  //   credentials: "same-origin"
-  // })
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
-  next();
+  fetch('https://ya-praktikum.tech/api/v2/auth/user', {
+    headers: {
+      cookie: cookies,
+    },
+  })
+    .then((result) => {
+      console.log('STATUS', result.status);
+      if (result.status === 401) {
+        res.sendStatus(403);
+      } else {
+        next();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

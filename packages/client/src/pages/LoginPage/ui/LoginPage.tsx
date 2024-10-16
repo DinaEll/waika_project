@@ -1,7 +1,6 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
-import axios from 'axios';
-import { useEffect, type FC } from 'react';
+import { type FC } from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
 import { getPageUrl } from '@/shared/config';
@@ -23,6 +22,7 @@ import cls from './LoginPage.module.scss';
 const loginInitialState = {
   login: '',
   password: '',
+  asdads: '',
 };
 
 export const LoginPage: FC = () => {
@@ -32,16 +32,6 @@ export const LoginPage: FC = () => {
 
   const isUserAuth = useAppSelector(isUserAuthSelector);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/forum/users', {
-        withCredentials: true,
-      })
-      .then((res) => console.log(res.data))
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
   if (isUserAuth) {
     return <Navigate to={getPageUrl('main')} replace />;
   }
