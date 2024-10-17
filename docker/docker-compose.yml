@@ -47,3 +47,19 @@ services:
       - ../packages/server/dist/:/app/:ro
     networks:
       - localenv
+
+  nginx:
+    container_name: waika_project_nginx
+    image: nginx:1.27.2-alpine-slim
+    restart: always
+    depends_on:
+      - server 
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - ./nginx/includes/:/etc/nginx/includes/:ro
+      - ./nginx/certs/:/etc/nginx/certs/:ro
+    networks:
+      - localenv
