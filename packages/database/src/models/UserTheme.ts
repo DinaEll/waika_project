@@ -1,5 +1,4 @@
 import {
-  AllowNull,
   AutoIncrement,
   Column,
   DataType,
@@ -10,30 +9,32 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { SiteTheme } from './SiteTheme';
-import { User } from './User';
 
 @Table({
-  timestamps: false,
-  paranoid: true,
+  timestamps: true,
   tableName: 'user_theme',
 })
-export class UserTheme extends Model<UserTheme> {
+export class UserTheme extends Model {
   @AutoIncrement
   @PrimaryKey
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   externalId!: number; // Идентификатор записи
 
   @ForeignKey(() => SiteTheme)
-  @AllowNull(false)
   @Index
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   themeId!: number; // Внешний ключ на SiteTheme
 
-  @ForeignKey(() => User)
-  @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
     field: 'owner_id',
+    allowNull: false,
   })
-  ownerId!: string; // Идентификатор пользователя
+  ownerId!: number; // Идентификатор пользователя
 }

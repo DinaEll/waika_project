@@ -1,34 +1,32 @@
 import {
-  AllowNull,
   AutoIncrement,
   Column,
   DataType,
-  HasMany,
   Index,
   Model,
   PrimaryKey,
   Table,
   Unique,
 } from 'sequelize-typescript';
-import { UserTheme } from './UserTheme';
 
 @Table({
-  timestamps: false,
-  paranoid: true,
+  timestamps: true,
   tableName: 'site_theme',
 })
-export class SiteTheme extends Model<SiteTheme> {
+export class SiteTheme extends Model {
   @Index
   @AutoIncrement
   @PrimaryKey
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   themeId!: number; // Идентификатор темы
 
-  @AllowNull(false)
   @Unique
-  @Column(DataType.STRING)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   theme!: string; // Название темы
-
-  @HasMany(() => UserTheme)
-  userThemes!: UserTheme[] // Связь с UserTheme
 }
