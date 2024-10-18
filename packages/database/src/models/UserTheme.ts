@@ -1,5 +1,6 @@
 import {
   AutoIncrement,
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -9,6 +10,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { SiteTheme } from './SiteTheme';
+import { User } from './User';
 
 @Table({
   timestamps: true,
@@ -21,7 +23,7 @@ export class UserTheme extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  externalId!: number; // Идентификатор записи
+  declare externalId: number; // Идентификатор записи
 
   @ForeignKey(() => SiteTheme)
   @Index
@@ -29,12 +31,16 @@ export class UserTheme extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  themeId!: number; // Внешний ключ на SiteTheme
+  declare themeId: number; // Внешний ключ на SiteTheme
 
+  @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
-    field: 'owner_id',
+    field: 'user_id',
     allowNull: false,
   })
-  ownerId!: number; // Идентификатор пользователя
+  declare user_id: number; // Идентификатор пользователя
+
+  @BelongsTo(() => User)
+  declare user: User;
 }

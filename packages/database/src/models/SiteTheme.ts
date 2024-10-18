@@ -2,12 +2,14 @@ import {
   AutoIncrement,
   Column,
   DataType,
+  HasMany,
   Index,
   Model,
   PrimaryKey,
   Table,
   Unique,
 } from 'sequelize-typescript';
+import { UserTheme } from './UserTheme';
 
 @Table({
   timestamps: true,
@@ -21,12 +23,15 @@ export class SiteTheme extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  themeId!: number; // Идентификатор темы
+  declare themeId: number; // Идентификатор темы
 
   @Unique
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  theme!: string; // Название темы
+  declare theme: string; // Название темы
+
+  @HasMany(() => UserTheme)
+  userThemes!: UserTheme[]; // Связь с UserTheme
 }

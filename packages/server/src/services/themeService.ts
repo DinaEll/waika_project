@@ -14,7 +14,7 @@ class ThemeService {
     try {
       const userTheme = await UserTheme.findOne({
         raw: true,
-        where: { ownerId: userId },
+        where: { user_id: userId },
       });
       if (userTheme) {
         return SiteTheme.findByPk(userTheme.themeId);
@@ -26,9 +26,9 @@ class ThemeService {
     }
   };
 
-  createTheme = async (userId: number, theme: string) => {
+  addThemeToUser = async (userId: number, theme: string) => {
     try {
-      // Ищем тему в списке
+      // Поиск выбранной темы в списке
       const selectedTheme = await SiteTheme.findOne({
         raw: true,
         where: { theme },
@@ -38,54 +38,30 @@ class ThemeService {
         return null;
       }
 
-      //Если тема существует, устанавливаем ее юзеру
-      await UserTheme.create({
-        themeId: selectedTheme.themeId,
-        ownerId: userId,
-      });
-      return selectedTheme;
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new Error('Error creating theme: ' + errorMessage);
-    }
-  };
-
-  updatedTheme = async (userId: number, newTheme: string) => {
-    try {
-      // Поиск выбранной темы в списке
-      const selectedTheme = await SiteTheme.findOne({
-        raw: true,
-        where: { theme: newTheme },
-      });
-
-      if (!selectedTheme) {
-        return null;
-      }
-
       // Поиск текущей темы юзера по userId
-      const userTheme = await UserTheme.findOne({
-        raw: true,
-        where: { ownerId: userId },
+      const currentUserThemeInst = await UserTheme.findOne({
+        where: { user_id: userId },
       });
 
-      if (!userTheme) {
+      if (!currentUserThemeInst) {
         // Если записи у юзера нет, то создаем новую
         await UserTheme.create({
           themeId: selectedTheme.themeId,
-          ownerId: userId,
+          user_id: userId,
         });
 
         return selectedTheme;
       }
 
-      // Если запись по юзеру есть, обновляем UserTheme с новым themeId
-      userTheme.themeId = selectedTheme.themeId;
-      await userTheme.save();
+      // Если запись у юзера есть, обновляем UserTheme с новым themeId
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      currentUserThemeInst.dataValues.themeId = selectedTheme.themeId;
+      await currentUserThemeInst.save();
 
       return selectedTheme;
     } catch (error) {
       const errorMessage = (error as Error).message;
-      throw new Error('Error updating theme: ' + errorMessage);
+      throw new Error('Adding theme error: ' + errorMessage);
     }
   };
 }

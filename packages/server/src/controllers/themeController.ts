@@ -50,7 +50,7 @@ class ThemeController {
     }
 
     try {
-      const newTheme = await themeService.createTheme(Number(userId), theme);
+      const newTheme = await themeService.addThemeToUser(Number(userId), theme);
 
       if (newTheme) {
         res.status(200).json(newTheme);
@@ -74,7 +74,7 @@ class ThemeController {
     }
 
     try {
-      const updatedTheme = await themeService.updatedTheme(
+      const updatedTheme = await themeService.addThemeToUser(
         Number(userId),
         theme,
       );
