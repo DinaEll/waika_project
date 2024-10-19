@@ -6,6 +6,7 @@ import { usePage } from '@/shared/hooks';
 import { UserAvatar } from '@/shared/ui';
 import { initPageBase } from '@/shared/utils';
 import { MainContainer } from '@/widgets';
+import { ButtonReaction } from '@/widgets/ButtonReaction';
 import {
   forumPageDataMock,
   initialReplyFormData,
@@ -48,6 +49,7 @@ export const ForumTopicPage: FC = () => {
         }
         className={cls.main}
       />
+
       <div className={cls.repliesCount}>
         <Typography.Text>
           {forumPageData.comments.length} Replies
@@ -56,23 +58,26 @@ export const ForumTopicPage: FC = () => {
 
       <div className={cls.replies}>
         {forumPageData.comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            author={<a>{comment.author.name}</a>}
-            avatar={
-              <div className={cls.replyAvatar}>
-                <UserAvatar src={comment.author.avatarSrc} />
-              </div>
-            }
-            content={<p>{comment.description}</p>}
-            datetime={
-              <Tooltip
-                title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
-              >
-                <span>{moment(comment.date).fromNow()}</span>
-              </Tooltip>
-            }
-          />
+          <div key={comment.id}>
+            <Comment
+              author={<a>{comment.author.name}</a>}
+              avatar={
+                <div className={cls.replyAvatar}>
+                  <UserAvatar src={comment.author.avatarSrc} />
+                </div>
+              }
+              content={<p>{comment.description}</p>}
+              datetime={
+                <Tooltip
+                  title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
+                >
+                  <span>{moment(comment.date).fromNow()}</span>
+                </Tooltip>
+              }
+            />
+
+            <ButtonReaction comment_id={comment.id} />
+          </div>
         ))}
       </div>
 
