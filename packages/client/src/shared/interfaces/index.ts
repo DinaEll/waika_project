@@ -8,3 +8,4 @@ export type {
   GetServiceIdOauthYandexResponse,
   SignInOauthYandexRequest,
 } from './OauthYandex';
+export type { ReactionRequest } from './Reaction';
