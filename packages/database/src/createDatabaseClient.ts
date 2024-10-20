@@ -9,7 +9,7 @@ import {
   POSTGRES_PORT,
   POSTGRES_USER,
 } from '../env';
-import { User } from './models';
+import { User, Topic, Comment, Reply } from './models';
 
 export const createDatabaseClient = (): Sequelize => {
   return new Sequelize({
@@ -21,7 +21,7 @@ export const createDatabaseClient = (): Sequelize => {
     database: POSTGRES_DB,
     // eslint-disable-next-line no-console
     logging: isDevelopment() ? (msg) => console.debug(msg) : undefined,
-    models: [User],
+    models: [User, Topic, Comment, Reply],
     dialectModule: pg,
   });
 };
