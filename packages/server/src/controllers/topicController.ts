@@ -47,6 +47,9 @@ class TopicController {
         include: [User],
       });
 
+      if (!topics) {
+        throw new ApiError(404, 'Topic not found');
+      }
       res.json(topics);
     } catch (error) {
       next(error);

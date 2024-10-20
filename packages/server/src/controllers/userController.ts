@@ -54,6 +54,9 @@ class UserController {
     }
     try {
       const user = await User.findOne({ where: { user_id } });
+      if (!user) {
+        throw new ApiError(404, 'User not found');
+      }
       res.json(user);
     } catch (error) {
       next(error);

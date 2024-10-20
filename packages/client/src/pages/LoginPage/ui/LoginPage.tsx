@@ -22,7 +22,6 @@ import cls from './LoginPage.module.scss';
 const loginInitialState = {
   login: '',
   password: '',
-  asdads: '',
 };
 
 export const LoginPage: FC = () => {
