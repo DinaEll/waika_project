@@ -1,14 +1,21 @@
+import { TopicFieldEnum } from '@/shared/enums/TopicField.enum';
+
 export interface ReactionRequest {
-  comment_id?: number;
+  id: number;
+  field: TopicField;
   user_id: number;
   reaction: string;
 }
 
 export interface getAllReactionsRequest {
-  comment_id: number;
+  id: number;
+  field: TopicField;
 }
 
 export interface ReactionResponse {
-  count: number;
   emoji: string;
+  count: number;
+  userIds: number[];
 }
+
+export type TopicField = TopicFieldEnum;

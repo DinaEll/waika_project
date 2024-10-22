@@ -2,7 +2,10 @@ import { Comment } from '@ant-design/compatible';
 import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { type FC, useEffect, useState } from 'react';
+import { TopicFieldEnum } from '@/shared/enums/TopicField.enum';
 import { usePage } from '@/shared/hooks';
+import { useAppSelector } from '@/shared/store/hooks';
+import { userSelector } from '@/shared/store/user/user.selector';
 import { UserAvatar } from '@/shared/ui';
 import { initPageBase } from '@/shared/utils';
 import { MainContainer } from '@/widgets';
@@ -17,10 +20,12 @@ import cls from './ForumTopicPage.module.scss';
 export const ForumTopicPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('');
   const [forumPageData] = useState(forumPageDataMock);
+  const user = useAppSelector(userSelector);
 
   usePage({ initPage: initPageBase });
   useEffect(() => {
     setPageTitle('Doom 666');
+    // todo получить ответ от сервера со списком комментариев и ответов со вложенными реакциями(emojis)
   }, []);
 
   const [form] = Form.useForm();
@@ -76,7 +81,12 @@ export const ForumTopicPage: FC = () => {
               }
             />
 
-            <ButtonReaction comment_id={comment.id} />
+            <ButtonReaction
+              id={comment.id}
+              topicField={TopicFieldEnum.comments}
+              initialReactions={comment.reactions}
+              currentUserId={user?.id}
+            />
           </div>
         ))}
       </div>

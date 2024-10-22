@@ -1,1 +1,1 @@
-export { setReaction, getAllReactions } from './reaction';
+export { addReaction, getAllReactions } from './reaction';

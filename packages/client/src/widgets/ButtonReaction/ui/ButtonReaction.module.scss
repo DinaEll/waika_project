@@ -33,3 +33,8 @@
   display: flex;
   gap: 12px;
 }
+
+.reactionImage:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
