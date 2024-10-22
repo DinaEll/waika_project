@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { App } from './app/App';
+import { isDefined } from './shared/utils';
 import '@/shared/assets/themes/vars-colors.scss';
 import '@/shared/assets/themes/vars-common.scss';
 import '@/shared/assets/themes/styles.scss';
 
-if (typeof window !== 'undefined') {
+if (isDefined(window)) {
   const rootNode = document.getElementById('root');
   if (rootNode) {
     hydrateRoot(

@@ -2,7 +2,11 @@
   "extends": "../../tsconfigs/tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ES2021"
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"]
+  "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
+  "exclude": ["dist"]
 }

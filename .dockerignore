@@ -1,0 +1,11 @@
+.DS_Store
+.git
+.husky
+.vscode
+coverage
+docker
+jest
+**/jest
+node_modules
+node_modules/*
+**/node_modules
