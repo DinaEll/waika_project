@@ -1,19 +1,28 @@
 import { Button, Form, Input } from 'antd';
-import { useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { appConfig } from '@/shared/config';
+import { usePage } from '@/shared/hooks';
 import { useAppSelector } from '@/shared/store/hooks';
+import { userSelector } from '@/shared/store/user/user.selector';
 import { UserAvatar } from '@/shared/ui';
-import { validationRules, Field } from '@/utils/validationRules';
-import { MainContainer } from '@/widgets/MainContainer';
+import {
+  validationRules,
+  Field,
+  isDefined,
+  initPageBase,
+} from '@/shared/utils';
+import { MainContainer } from '@/widgets';
 import { AvatarChangeModal } from './AvatarChangeModal/AvatarChangeModal';
 import { PasswordChangeModal } from './PasswordChangeModal/PasswordChangeModal';
 import cls from './ProfilePage.module.scss';
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
   const [form] = Form.useForm();
   const [passwordChangeModalOpen, setPasswordChangeModalOpen] = useState(false);
   const [avatarChangeModalOpen, setAvatarChangeModalOpen] = useState(false);
-  const { data } = useAppSelector((state) => state.user);
+  const user = useAppSelector(userSelector);
+
+  usePage({ initPage: initPageBase });
 
   const closePasswordChangeModal = () => {
     setPasswordChangeModalOpen(false);
@@ -24,8 +33,8 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
-    form.setFieldsValue(data);
-  }, [data, form]);
+    form.setFieldsValue(user);
+  }, [user, form]);
 
   return (
     <>
@@ -35,7 +44,9 @@ export const ProfilePage = () => {
           <UserAvatar
             className={cls.profileAvatar}
             src={
-              data?.avatar ? `${appConfig.baseUrl}/resources${data.avatar}` : ''
+              isDefined(user?.avatar)
+                ? `${appConfig.baseUrl}/resources${user.avatar}`
+                : ''
             }
           />
         }
@@ -113,8 +124,7 @@ export const ProfilePage = () => {
               },
               {
                 pattern: validationRules[Field.Email],
-                message:
-                  'The email must be a valid email address.',
+                message: 'The email must be a valid email address.',
               },
             ]}
             validateTrigger="onBlur"

@@ -68,8 +68,16 @@ const eslintConfig = {
         ignoreRestSiblings: true,
       },
     ],
+    '@typescript-eslint/no-floating-promises': [
+      'error',
+      {
+        ignoreVoid: true,
+        ignoreIIFE: true,
+      },
+    ],
+    //'no-console': 'error',
   },
-  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs'],
+  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs', 'dist'],
 };
 
 module.exports = eslintConfig;

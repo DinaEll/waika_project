@@ -1,7 +1,6 @@
-import { Modal, Typography } from 'antd';
+import { Typography } from 'antd';
 import {
   isValidElement,
-  type ComponentProps,
   type FC,
   type PropsWithChildren,
   type ReactElement,
@@ -9,27 +8,23 @@ import {
 import { Logo } from '@/shared/ui';
 import cls from './MainContainer.module.scss';
 
-type Props = {
+interface Props {
   title: string | ReactElement;
   logo?: ReactElement;
-} & ComponentProps<typeof Modal>;
+  width?: number;
+}
 
 export const MainContainer: FC<PropsWithChildren<Props>> = ({
   children,
   title,
   logo,
+  width = 500,
   ...modalProps
 }) => {
   return (
-    <Modal
-      footer={null}
-      mask={false}
-      transitionName={undefined}
-      closable={false}
+    <div
       className={cls.mainContainer}
-      open
-      centered
-      width={500}
+      style={{ width }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
     >
@@ -44,6 +39,6 @@ export const MainContainer: FC<PropsWithChildren<Props>> = ({
         )}
       </header>
       {children}
-    </Modal>
+    </div>
   );
 };

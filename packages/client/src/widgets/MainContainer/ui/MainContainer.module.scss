@@ -1,5 +1,20 @@
 .mainContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  border: 0;
+  border-radius: 8px;
   margin-top: var(--header-height);
+  background-clip: padding-box;
+  background-color: #fff;
+  box-shadow:
+    0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 3px 6px -4px rgb(0 0 0 / 12%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
 }
 
 .mainContainerHeader {

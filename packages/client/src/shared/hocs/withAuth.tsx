@@ -1,33 +1,58 @@
-import { ComponentType, FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getPageUrl, pagesPaths } from '@/shared/config';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { useState, type ComponentType, type FC } from 'react';
+import { Navigate } from 'react-router-dom';
+import { getPageUrl } from '@/shared/config';
+import { useEffectOnce } from '@/shared/hooks';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
-import { fetchUser } from '../store/user/user.action';
+import { fetchUser } from '@/shared/store/user/user.action';
+import { logError } from '@/shared/utils';
+import { CenteredOfPage, Loading } from '@/widgets';
+import { isUserAuthSelector } from '../store/user/user.selector';
 
-export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
-  const WithAuth: FC<P> = (props) => {
-    const navigate = useNavigate();
+export const withAuth = <P extends Record<string, string>>(
+  Component: ComponentType<P>,
+): FC<P> => {
+  const WrappedComponent: FC<P> = (props) => {
     const dispatch = useAppDispatch();
-    const user = useAppSelector((state) => state.user.data);
+    const isUserAuth = useAppSelector(isUserAuthSelector);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-      if (!user) {
-        dispatch(fetchUser()).catch(console.error);
-        return;
-      }
+    useEffectOnce(() => {
+      const controller = new AbortController();
+      dispatch(fetchUser({ signal: controller.signal }))
+        .then(unwrapResult)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          if (controller.signal.aborted) {
+            return;
+          }
 
-      const nonProtectedRoute = (
-        [pagesPaths.login, pagesPaths.registration] as string[]
-      ).includes(location.pathname);
+          setIsLoading(false);
+          logError(error);
+        });
 
-      if (nonProtectedRoute && user) {
-        navigate(getPageUrl('game'));
-      }
-    }, [dispatch, navigate, user]);
+      return () => {
+        controller.abort();
+      };
+    });
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    return <WrappedComponent {...props} />;
+    if (isLoading) {
+      return (
+        <CenteredOfPage>
+          <Loading />
+        </CenteredOfPage>
+      );
+    }
+
+    if (isUserAuth) {
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      return <Component {...props} />;
+    }
+
+    return <Navigate to={getPageUrl('login')} replace />;
   };
 
-  return WithAuth;
-}
+  return WrappedComponent;
+};

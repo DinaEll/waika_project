@@ -1,0 +1,13 @@
+{
+  "name": "@waika_project/utils",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest .",
+    "typecheck": "tsc -p ./tsconfig.json"
+  },
+  "license": "MIT"
+}

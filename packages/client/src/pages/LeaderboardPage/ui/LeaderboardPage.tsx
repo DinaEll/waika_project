@@ -1,13 +1,18 @@
 import { Empty, Typography } from 'antd';
+import { type FC } from 'react';
+import { usePage } from '@/shared/hooks';
 import { UserAvatar } from '@/shared/ui';
-import { MainContainer } from '@/widgets/MainContainer';
+import { initPageBase } from '@/shared/utils';
+import { MainContainer } from '@/widgets';
 import { players } from '../model';
 import cls from './LeaderboardPage.module.scss';
 import { LeaderboardPlayer } from './LeaderboardPlayer';
 
 const pageTitle = 'Leaderboard';
 
-export const LeaderboardPage = () => {
+export const LeaderboardPage: FC = () => {
+  usePage({ initPage: initPageBase });
+
   if (players.length === 0) {
     return (
       <MainContainer title={pageTitle}>

@@ -18,7 +18,6 @@ export const userSlice = createSlice({
         state.data.avatar = action.payload;
       }
     },
-
     clearState: (state) => {
       state.data = initialState.data;
     },
