@@ -6,10 +6,13 @@ import {
   HasMany,
   CreatedAt,
   UpdatedAt,
+  HasOne,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
 import { Reply } from './Reply';
 import { Topic } from './Topic';
+import { UserTheme } from './UserTheme';
+
 @Table({
   tableName: 'users',
   timestamps: true,
@@ -79,4 +82,7 @@ export class User extends Model {
 
   @UpdatedAt
   declare updated_at: Date;
+
+  @HasOne(() => UserTheme, 'themeId')
+  declare theme: UserTheme;
 }
