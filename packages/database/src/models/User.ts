@@ -1,4 +1,16 @@
-import { Table, Column, Model, DataType, HasOne } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+  HasOne,
+} from 'sequelize-typescript';
+import { Comment } from './Comment';
+import { Reply } from './Reply';
+import { Topic } from './Topic';
 import { UserTheme } from './UserTheme';
 
 @Table({
@@ -18,19 +30,58 @@ export class User extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  name!: string;
+  declare first_name: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  email!: string;
+  declare second_name: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
+  declare display_name: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare login: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare phone: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare avatar: string;
+
+  @HasMany(() => Topic)
+  declare topics: Topic[];
+
+  @HasMany(() => Comment)
+  declare comments: Comment[];
+
+  @HasMany(() => Reply)
+  declare replies: Reply[];
+
+  @CreatedAt
+  declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
 
   @HasOne(() => UserTheme, 'themeId')
   declare theme: UserTheme;
