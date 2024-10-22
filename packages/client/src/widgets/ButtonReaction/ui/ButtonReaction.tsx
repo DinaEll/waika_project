@@ -106,7 +106,7 @@ export const ButtonReaction: FC<Props> = ({
     }
   };
 
-  const handleEmojiRemove = async (
+  const handleRemoveReaction = async (
     emoji: EmojiClickData['emoji'],
   ): Promise<void> => {
     if (!currentUserId) {
@@ -177,7 +177,7 @@ export const ButtonReaction: FC<Props> = ({
             key={reaction.emoji}
             onClick={() =>
               currentUserId && reaction.userIds.includes(currentUserId)
-                ? void handleEmojiRemove(reaction.emoji)
+                ? void handleRemoveReaction(reaction.emoji)
                 : void handleAddReaction(reaction.emoji)
             }
             role="button"
