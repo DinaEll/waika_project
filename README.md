@@ -1,6 +1,9 @@
 ### Макеты
 https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx1EEb8Hr8Ab-1
 
+### Видео-обзор спринт 7-8
+https://disk.yandex.ru/i/VyisCNQw28JOjQ
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
