@@ -20,6 +20,18 @@ export const forumPageDataMock = {
       description:
         'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum perspiciatis consequatur ab enim odio voluptatem odit, quidem quisquam eligendi rem laboriosam. Corrupti neque cumque nam culpa maiores esse aliquid excepturi.',
       date: new Date(),
+      reactions: [
+        {
+          emoji: '🍋',
+          count: 3,
+          userIds: [1, 2, 3],
+        },
+        {
+          emoji: '😋️',
+          count: 2,
+          userIds: [1, 4],
+        },
+      ],
     },
     {
       id: 3,
@@ -30,6 +42,18 @@ export const forumPageDataMock = {
       description:
         'Мушвикитон бак тайм ту зэ гуд олд деейс ванна мама сын нос трусы пинал вы стресс даун.',
       date: new Date(),
+      reactions: [
+        {
+          emoji: '😀',
+          count: 3,
+          userIds: [1, 2, 3],
+        },
+        {
+          emoji: '🦧️',
+          count: 5,
+          userIds: [1, 4],
+        },
+      ],
     },
   ],
 };
