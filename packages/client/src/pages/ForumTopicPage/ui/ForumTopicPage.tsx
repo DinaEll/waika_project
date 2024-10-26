@@ -2,10 +2,14 @@ import { Comment } from '@ant-design/compatible';
 import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { type FC, useEffect, useState } from 'react';
+import { TopicFieldEnum } from '@/shared/enums/TopicField.enum';
 import { usePage } from '@/shared/hooks';
+import { useAppSelector } from '@/shared/store/hooks';
+import { userSelector } from '@/shared/store/user/user.selector';
 import { UserAvatar } from '@/shared/ui';
 import { initPageBase } from '@/shared/utils';
 import { MainContainer } from '@/widgets';
+import { ButtonReaction } from '@/widgets/ButtonReaction';
 import {
   forumPageDataMock,
   initialReplyFormData,
@@ -16,10 +20,12 @@ import cls from './ForumTopicPage.module.scss';
 export const ForumTopicPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('');
   const [forumPageData] = useState(forumPageDataMock);
+  const user = useAppSelector(userSelector);
 
   usePage({ initPage: initPageBase });
   useEffect(() => {
     setPageTitle('Doom 666');
+    // todo получить ответ от сервера со списком комментариев и ответов со вложенными реакциями(emojis)
   }, []);
 
   const [form] = Form.useForm();
@@ -48,6 +54,7 @@ export const ForumTopicPage: FC = () => {
         }
         className={cls.main}
       />
+
       <div className={cls.repliesCount}>
         <Typography.Text>
           {forumPageData.comments.length} Replies
@@ -56,23 +63,31 @@ export const ForumTopicPage: FC = () => {
 
       <div className={cls.replies}>
         {forumPageData.comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            author={<a>{comment.author.name}</a>}
-            avatar={
-              <div className={cls.replyAvatar}>
-                <UserAvatar src={comment.author.avatarSrc} />
-              </div>
-            }
-            content={<p>{comment.description}</p>}
-            datetime={
-              <Tooltip
-                title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
-              >
-                <span>{moment(comment.date).fromNow()}</span>
-              </Tooltip>
-            }
-          />
+          <div key={comment.id}>
+            <Comment
+              author={<a>{comment.author.name}</a>}
+              avatar={
+                <div className={cls.replyAvatar}>
+                  <UserAvatar src={comment.author.avatarSrc} />
+                </div>
+              }
+              content={<p>{comment.description}</p>}
+              datetime={
+                <Tooltip
+                  title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
+                >
+                  <span>{moment(comment.date).fromNow()}</span>
+                </Tooltip>
+              }
+            />
+
+            <ButtonReaction
+              id={comment.id}
+              topicField={TopicFieldEnum.comments}
+              initialReactions={comment.reactions}
+              currentUserId={user?.id}
+            />
+          </div>
         ))}
       </div>
 
