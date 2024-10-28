@@ -1,4 +1,5 @@
 import { get, post } from '@/shared/api';
+import { appConfig } from '@/shared/config';
 import type {
   SignInOauthYandexRequest,
   GetServiceIdOauthYandexRequest,
@@ -9,7 +10,10 @@ export const signInOauthYandex = async (
   data: SignInOauthYandexRequest,
   signal: AbortSignal,
 ) => {
-  return await post<void | undefined>('/oauth/yandex', { data, signal });
+  return await post<void | undefined>(appConfig.baseUrl + '/oauth/yandex', {
+    data,
+    signal,
+  });
 };
 
 export const getServiceIdOauthYandex = async (

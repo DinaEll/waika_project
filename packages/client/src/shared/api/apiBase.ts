@@ -1,5 +1,4 @@
 import axios, { type AxiosResponse } from 'axios';
-import { appConfig } from '@/shared/config';
 
 type Response<T = unknown> = T;
 type Request = Record<string, unknown>;
@@ -105,7 +104,7 @@ const baseRequest = async <T>(
   headers?: Record<string, string>,
   data?: HTTPRequest,
 ): Promise<AxiosResponse<T>> => {
-  return axios<T>(appConfig.baseUrl + url, {
+  return axios<T>(url, {
     method,
     headers,
     ...data,
