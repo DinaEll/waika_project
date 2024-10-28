@@ -1,4 +1,4 @@
-import { Comment, Topic, User } from '@waika_project/database/src';
+import { Comment, Reply, Topic, User } from '@waika_project/database/src';
 import { NextFunction, Request, Response } from 'express';
 import { ApiError } from '../middlewares/error';
 
@@ -44,7 +44,24 @@ class TopicController {
 
       topics = await Topic.findOne({
         where: topic_id ? { topic_id } : { title },
-        include: [User],
+        include: [
+          { model: User, attributes: ['user_id', 'display_name'] },
+          {
+            model: Comment,
+            where: {
+              topic_id: topic_id,
+            },
+            include: [
+              { model: User, attributes: ['user_id', 'display_name'] },
+              {
+                model: Reply,
+                include: [
+                  { model: User, attributes: ['user_id', 'display_name'] },
+                ],
+              },
+            ],
+          },
+        ],
       });
 
       if (!topics) {
