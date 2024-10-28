@@ -5,27 +5,6 @@ export interface ForumData {
   answers: number;
 }
 
-export const forumsListMock: ForumData[] = [
-  {
-    id: 1,
-    name: 'Новые игры',
-    themes: 99,
-    answers: 99,
-  },
-  {
-    id: 2,
-    name: 'Еще один форум',
-    themes: 0,
-    answers: 0,
-  },
-  {
-    id: 2,
-    name: 'И еще форум',
-    themes: 1,
-    answers: 2,
-  },
-];
-
 export interface ForumTopicData {
   id: string;
   title: string;
@@ -58,7 +37,6 @@ export const forumTopicsListMock: ForumTopicData[] = [
 ];
 
 export const enum ForumPageStages {
-  forumsList = 'forumsList',
   forumTopicsList = 'forumTopicsList',
   createThread = 'createThread',
 }

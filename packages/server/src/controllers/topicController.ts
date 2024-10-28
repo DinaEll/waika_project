@@ -74,7 +74,13 @@ class TopicController {
   };
   getAll = async (_: Request, res: Response, next: NextFunction) => {
     try {
-      const topics = await Topic.findAll({ include: [Comment] });
+      const topics = await Topic.findAll({
+        order: [['topic_id', 'ASC']],
+        include: [
+          Comment,
+          { model: User, attributes: ['user_id', 'display_name'] },
+        ],
+      });
       res.json(topics);
     } catch (error) {
       next(error);
