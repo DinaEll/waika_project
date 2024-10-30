@@ -6,7 +6,6 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest .",
     "typecheck": "tsc -p ./tsconfig.json"
   },
   "dependencies": {

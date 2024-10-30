@@ -1,8 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const dotenv = require('dotenv');
-dotenv.config();
-
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
