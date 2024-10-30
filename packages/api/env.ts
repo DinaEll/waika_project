@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { cleanEnv, port, str, host } from 'envalid';
 
 export const {
