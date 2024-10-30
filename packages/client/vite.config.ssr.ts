@@ -25,5 +25,6 @@ export default defineConfig({
   build: {
     emptyOutDir: false,
     outDir: 'dist',
+    ssr: 'src/entry-server.tsx',
   },
 });
