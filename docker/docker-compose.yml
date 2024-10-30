@@ -26,40 +26,24 @@ services:
     networks:
       - localenv
 
-  server:
-    container_name: waika_project_server
+  api:
+    container_name: waika_project_api
     restart: always
     build:
       context: ../
-      dockerfile: docker/Dockerfile.server
+      dockerfile: docker/Dockerfile.api
       args:
-        SERVER_PORT: ${SERVER_PORT}
+        API_PORT: ${API_PORT}
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${API_PORT}:${API_PORT}"
     env_file:
       - ../.env
     environment:
       - POSTGRES_HOST=postgres
     volumes:
-      - ../packages/server/dist/:/app/:ro
-    networks:
-      - localenv
-
-  nginx:
-    container_name: waika_project_nginx
-    image: nginx:1.27.2-alpine-slim
-    restart: always
-    depends_on:
-      - server 
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
-      - ./nginx/includes/:/etc/nginx/includes/:ro
-      - ./nginx/certs/:/etc/nginx/certs/:ro
+      - ../packages/api/dist/:/app/:ro
     networks:
       - localenv
