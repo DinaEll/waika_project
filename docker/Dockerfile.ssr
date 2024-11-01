@@ -1,5 +1,12 @@
-FROM waika_project_image
+ARG NODE_VERSION=20.12.2
+ARG CLIENT_PORT=3000
+
+FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app
+COPY packages/ssr/dist/ ./ssr/dist
+COPY packages/client/dist/ ./client/dist/
 
-CMD ["npm", "run", "dev:client"]
+WORKDIR ssr/dist/
+
+CMD ["node", "server.js"]
