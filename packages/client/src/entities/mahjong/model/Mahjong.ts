@@ -12,7 +12,6 @@ import {
   shufflePairs,
 } from '../lib';
 import { Tile } from './Tile';
-import { tilesSvgMap } from './tilesSvgMap';
 import type { MahjongField, MahjongFieldCell } from '../types';
 
 type Options = {
@@ -97,12 +96,9 @@ export class Mahjong extends Game {
   }
 
   loadAllImages(uniqueNumbers: number[]) {
-    const promises = uniqueNumbers.map((number) => {
-      if (tilesSvgMap[number]) {
-        return this.loadImage(tilesSvgMap[number], String(number));
-      }
-      return undefined;
-    });
+    const promises = uniqueNumbers.map((number) =>
+      this.loadImage(`/assets/tiles/MJ-${number}.svg`, String(number)),
+    );
 
     return Promise.all(promises);
   }
