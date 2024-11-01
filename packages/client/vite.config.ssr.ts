@@ -23,8 +23,13 @@ export default defineConfig({
     ],
   },
   build: {
-    emptyOutDir: false,
-    outDir: 'dist',
+    outDir: 'dist/server',
     ssr: 'src/entry-server.tsx',
+    rollupOptions: {
+      output: { format: 'esm', entryFileNames: '[name].mjs' },
+    },
+  },
+  ssr: {
+    noExternal: true,
   },
 });
