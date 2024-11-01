@@ -1,12 +1,11 @@
 import { type BuildOptions } from 'esbuild';
-import { isDev } from '../env';
 
 export const esBuildConfig: BuildOptions = {
   bundle: true,
   entryPoints: ['ssrProd.ts'],
   format: 'cjs',
   logLevel: 'info',
-  minify: !isDev,
+  minify: true,
   outfile: 'dist/server.js',
   platform: 'node',
   sourcemap: true,
