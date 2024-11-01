@@ -33,7 +33,7 @@ export function createServer({
   middlewares,
   routes,
   useHelmet,
-  useLogger,
+  useLogger = true,
   useStatic,
 }: Options): Express {
   const server = express();
