@@ -4,6 +4,7 @@ ARG CLIENT_PORT=3000
 FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app
+RUN ls -la
 COPY packages/client/dist/ ./dist/
 
 WORKDIR dist
