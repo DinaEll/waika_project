@@ -1,11 +1,13 @@
 {
   "name": "@waika_project/client",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "build": "npm run wipedist && run-p build:*",
     "build:client": "vite build --config ./vite.config.ts",
     "build:ssr": "vite build --config ./vite.config.ssr.ts",
+    "build:server": "ts-node ./server/esbuild.prod.ts",
+    "dev": "ts-node ./server/startDevServer.ts",
+    "preview": "npm run build && node ./dist/server.js",
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -20,6 +22,7 @@
     "@ant-design/icons": "^5.4.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/cookie-parser": "^1.4.7",
+    "@waika_project/server": "1.0.0",
     "@waika_project/utils": "1.0.0",
     "antd": "^5.20.2",
     "axios": "^1.7.7",
@@ -42,6 +45,7 @@
     "@waika_project/server": "1.0.0",
     "classnames": "^2.5.1",
     "envalid": "^8.0.0",
+    "esbuild": "^0.24.0",
     "eslint-plugin-boundaries": "^4.2.2",
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -52,6 +56,7 @@
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-order": "^6.0.4",
+    "ts-node": "^10.9.2",
     "vite": "^5.4.8",
     "whatwg-fetch": "^3.6.20"
   },
