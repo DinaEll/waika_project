@@ -4,8 +4,8 @@ ARG CLIENT_PORT=3000
 FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app
-COPY packages/client/dist/ ./client/dist/
+COPY packages/client/dist/ ./dist/
 
-WORKDIR client/dist/
+WORKDIR dist
 
 CMD ["node", "server.js"]

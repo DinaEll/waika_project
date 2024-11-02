@@ -6,6 +6,4 @@ FROM node:$NODE_VERSION-alpine
 WORKDIR /app
 COPY packages/api/dist/ ./
 
-RUN npm install -g nodemon
-
-CMD ["nodemon", "--watch", "/app/**", "server.js"]
+CMD ["node", "server.js"]

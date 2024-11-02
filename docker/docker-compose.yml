@@ -43,8 +43,6 @@ services:
       - ../.env
     environment:
       - POSTGRES_HOST=postgres
-    volumes:
-      - ../packages/api/dist/:/app/:ro
     networks:
       - localenv
 
@@ -62,7 +60,5 @@ services:
        - "${CLIENT_PORT}:${CLIENT_PORT}"
     env_file:
       - ../.env
-    volumes:
-      - ../packages/client/dist/:/packages/client/dist/:ro
     networks:
       - localenv
