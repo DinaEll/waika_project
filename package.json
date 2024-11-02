@@ -9,7 +9,7 @@
     "dev": "lerna run dev",
     "dev:api": "lerna run dev --scope=@waika_project/api",
     "dev:client": "lerna run dev --scope=@waika_project/client",
-    "preview": "cross-env NODE_ENV=production lerna run preview",
+    "preview": "cross-env NODE_ENV=production lerna run preview --stream --parallel",
     "preview:api": "cross-env NODE_ENV=production lerna run preview --scope=@waika_project/api",
     "preview:client": "cross-env NODE_ENV=production lerna run preview --scope=@waika_project/client",
     "docker-up": "docker-compose --env-file .env -f ./docker/docker-compose.yml up --build",
