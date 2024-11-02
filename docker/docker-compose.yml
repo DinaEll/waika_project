@@ -48,12 +48,12 @@ services:
     networks:
       - localenv
 
-  ssr:
-    container_name: waika_project_ssr
+  client:
+    container_name: waika_project_client
     restart: always
     build:
       context: ../
-      dockerfile: docker/Dockerfile.ssr
+      dockerfile: docker/Dockerfile.client
       args:
         CLIENT_PORT: ${CLIENT_PORT}
     depends_on:
@@ -64,6 +64,5 @@ services:
       - ../.env
     volumes:
       - ../packages/client/dist/:/packages/client/dist/:ro
-      - ../packages/ssr/dist/:/packages/ssr/dist/:ro
     networks:
       - localenv
