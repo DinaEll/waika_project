@@ -1,7 +1,11 @@
 resolver 127.0.0.11 valid=1s;
 
-upstream server {
-    server waika_project_server:3001;
+upstream api {
+    server waika_project_api:${API_PORT};
+}
+
+upstream client {
+    server waika_project_client:${CLIENT_PORT};
 }
 
 server {
@@ -12,7 +16,7 @@ server {
     #return 301 https://$server_name$request_uri;
 
     location / {
-        proxy_pass http://server;
+        proxy_pass http://client;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -21,22 +25,9 @@ server {
         proxy_cache_bypass $http_upgrade;
         proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
     }
-}
 
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-    server_name localhost;
-
-    ssl_certificate /etc/nginx/certs/default.cert;
-    ssl_certificate_key /etc/nginx/certs/default.key;
-
-    include /etc/nginx/includes/config.conf;
-    include /etc/nginx/includes/gzip.conf;
-    
-    location / {
-        proxy_pass http://server;
+    location /api {
+        proxy_pass http://api;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;

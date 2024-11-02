@@ -62,3 +62,22 @@ services:
       - ../.env
     networks:
       - localenv
+
+  proxy:
+    container_name: waika_project_proxy
+    image: nginx:1.27.2-alpine-slim
+    restart: always
+    depends_on:
+      - api
+      - client
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/templates/:/etc/nginx/templates/:rw,cached
+      - ./nginx/includes/:/etc/nginx/includes/:ro
+      - ./nginx/certs/:/etc/nginx/certs/:ro
+    environment:
+      - API_PORT=${API_PORT}
+      - CLIENT_PORT=${CLIENT_PORT}
+    networks:
+      - localenv
