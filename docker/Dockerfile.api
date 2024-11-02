@@ -4,7 +4,6 @@ ARG API_PORT=3001
 FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app
-RUN ls -la
 COPY packages/api/dist/ ./
 
 CMD ["node", "server.js"]
