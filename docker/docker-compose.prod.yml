@@ -1,5 +1,5 @@
 networks:
-  localenv:
+  prodenv:
     driver: bridge
 
 services:
@@ -24,7 +24,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - localenv
+      - prodenv
 
   api:
     container_name: waika_project_api
@@ -44,7 +44,7 @@ services:
     environment:
       - POSTGRES_HOST=postgres
     networks:
-      - localenv
+      - prodenv
 
   client:
     container_name: waika_project_client
@@ -61,7 +61,7 @@ services:
     env_file:
       - ../.env
     networks:
-      - localenv
+      - prodenv
 
   proxy:
     container_name: waika_project_proxy
@@ -82,4 +82,4 @@ services:
       - API_PORT=${API_PORT}
       - CLIENT_PORT=${CLIENT_PORT}
     networks:
-      - localenv
+      - prodenv
