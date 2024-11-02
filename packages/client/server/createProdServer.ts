@@ -30,9 +30,6 @@ export const createProdServer = async (): Server => {
           `<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`,
         );
 
-      console.log(req);
-      console.log(res);
-
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
       next(e);
