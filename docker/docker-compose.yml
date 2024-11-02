@@ -72,7 +72,9 @@ services:
       - client
     ports:
       - 80:80
+      - 443:443
     volumes:
+      - ../packages/client/dist/client/:/etc/nginx/html/:ro
       - ./nginx/templates/:/etc/nginx/templates/:rw,cached
       - ./nginx/includes/:/etc/nginx/includes/:ro
       - ./nginx/certs/:/etc/nginx/certs/:ro
