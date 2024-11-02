@@ -1,3 +1,3 @@
-import { runServer } from './src';
+import { startApiServer } from './src';
 
-void runServer();
+void startApiServer();

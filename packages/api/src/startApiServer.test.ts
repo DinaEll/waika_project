@@ -1,7 +1,7 @@
 import { connectDatabase } from '@waika_project/database';
 import { createServer } from '@waika_project/server';
 import { API_PORT } from '../env';
-import { runServer } from './runServer';
+import { startApiServer } from './startApiServer';
 
 jest.mock('@waika_project/database', () => ({
   connectDatabase: jest.fn(),
@@ -32,7 +32,7 @@ describe('runServer', () => {
     };
     (createServer as jest.Mock).mockReturnValue(mockServer);
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe('runServer', () => {
     const error = new Error('Database connection failed');
     (connectDatabase as jest.Mock).mockRejectedValue(error);
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(consoleErrorSpy).toHaveBeenCalledWith(error);
@@ -62,7 +62,7 @@ describe('runServer', () => {
       throw error;
     });
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();

@@ -9,7 +9,7 @@ import {
   POSTGRES_USER,
 } from '../env';
 
-export async function runServer() {
+export async function startApiServer() {
   try {
     await connectDatabase({
       database: POSTGRES_DB,
