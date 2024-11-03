@@ -23,6 +23,7 @@
     "cross-env": "^7.0.3",
     "envalid": "^8.0.0",
     "esbuild": "^0.24.0",
+    "http-proxy-middleware": "^3.0.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0"
   },
