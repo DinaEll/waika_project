@@ -3,6 +3,7 @@ import { Form, Button, Input } from 'antd';
 import { type FC } from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignUp } from '@/shared/api';
+import { addUserToDb } from '@/shared/api/user/addUserToDb';
 import { getPageUrl } from '@/shared/config';
 import { usePage } from '@/shared/hooks/';
 import type { SignUpRequest } from '@/shared/interfaces';
@@ -44,9 +45,15 @@ export const RegistrationPage: FC = () => {
     userSignUp(values)
       .then((res) => {
         if (res.id) {
+          navigate(getPageUrl('main'));
           dispatch(fetchUser())
             .then(unwrapResult)
-            .then(() => {
+            .then(async (result) => {
+              try {
+                await addUserToDb(result);
+              } catch (error) {
+                console.error(error);
+              }
               navigate(getPageUrl('main'), { replace: true });
             })
             .catch((error) => {
