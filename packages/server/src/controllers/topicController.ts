@@ -97,6 +97,21 @@ class TopicController {
       next(error);
     }
   };
+
+  incrementViews = async (req: Request, res: Response, next: NextFunction) => {
+    const { topic_id } = req.query;
+    try {
+      if (!topic_id) {
+        throw new ApiError(400, 'Query params should have topic_id');
+      }
+      const topic = await Topic.increment('views', {
+        where: { topic_id: topic_id },
+      });
+      res.json(topic);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export const topicController = new TopicController();

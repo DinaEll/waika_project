@@ -13,6 +13,7 @@ forum.get('/users', userController.getAll);
 forum.post('/topic', topicController.create);
 forum.get('/topic', topicController.getOne); // ?topic_id= || ?title=
 forum.get('/topics', topicController.getAll);
+forum.put('/topic/increment-views', topicController.incrementViews); // ?topic_id=
 
 forum.post('/comment', commentController.create);
 forum.get('/comments', commentController.getAll); // ?topic_id=

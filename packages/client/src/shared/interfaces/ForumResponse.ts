@@ -6,7 +6,8 @@ export interface BaseUserInfo {
   avatar: string;
 }
 export interface Reply {
-  topic_id: number;
+  reply_id: number;
+  comment_id: number;
   title: string;
   user_id: number;
   views: number;
