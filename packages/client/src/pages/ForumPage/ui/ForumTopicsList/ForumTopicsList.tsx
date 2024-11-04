@@ -22,6 +22,7 @@ export const ForumTopicsList: FC<Props> = ({ changeStage }) => {
     getAllTopics()
       .then((response) => {
         setForumTopicsList(response);
+        console.log(response);
       })
       .catch((error) => {
         console.error(error);

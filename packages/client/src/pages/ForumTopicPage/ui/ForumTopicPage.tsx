@@ -1,9 +1,12 @@
 import { Comment } from '@ant-design/compatible';
 import { Button, Form, Input, Tooltip, Typography } from 'antd';
 import moment from 'moment';
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getTopic } from '@/shared/api/forum/getTopic';
 import { TopicFieldEnum } from '@/shared/enums/TopicField.enum';
-import { usePage } from '@/shared/hooks';
+import { useEffectOnce, usePage } from '@/shared/hooks';
+import { TopicResponse } from '@/shared/interfaces/ForumResponse';
 import { useAppSelector } from '@/shared/store/hooks';
 import { userSelector } from '@/shared/store/user/user.selector';
 import { UserAvatar } from '@/shared/ui';
@@ -21,14 +24,25 @@ export const ForumTopicPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('');
   const [forumPageData] = useState(forumPageDataMock);
   const user = useAppSelector(userSelector);
+  const params = useParams() as { topicId: string };
+  const [forumTopic, setForumTopic] = useState<TopicResponse | null>(null);
 
   usePage({ initPage: initPageBase });
-  useEffect(() => {
-    setPageTitle('Doom 666');
-    // todo получить ответ от сервера со списком комментариев и ответов со вложенными реакциями(emojis)
-  }, []);
 
   const [form] = Form.useForm();
+
+  useEffectOnce(() => {
+    setPageTitle('Doom 666');
+
+    getTopic(params.topicId)
+      .then((response) => {
+        setForumTopic(response);
+        console.log(forumTopic, response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   const handleCreateThread = (values: replyFormData) => {
     // todo загрузить ответ на сервер и добавить к списку

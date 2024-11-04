@@ -1,5 +1,3 @@
-// TODO добавить для интерфейсы для других моделей
-
 export interface BaseUserInfo {
   user_id: number;
   display_name: string;

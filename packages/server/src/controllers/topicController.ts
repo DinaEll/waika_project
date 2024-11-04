@@ -33,24 +33,22 @@ class TopicController {
   };
 
   getOne = async (req: Request, res: Response, next: NextFunction) => {
-    const { topic_id, title } = req.query;
+    const { topic_id } = req.query;
     try {
       let topics;
       topics = 1;
+      console.log(topic_id, 'TOPICID');
 
-      if (!topic_id && !title) {
+      if (!topic_id) {
         throw new ApiError(400, 'Query params should have title or topic_id');
       }
 
       topics = await Topic.findOne({
-        where: topic_id ? { topic_id } : { title },
+        where: { topic_id: topic_id },
         include: [
           { model: User, attributes: ['user_id', 'display_name'] },
           {
             model: Comment,
-            where: {
-              topic_id: topic_id,
-            },
             include: [
               { model: User, attributes: ['user_id', 'display_name'] },
               {
@@ -77,6 +75,7 @@ class TopicController {
       const topics = await Topic.findAll({
         order: [['topic_id', 'ASC']],
         include: [
+          // TODO заменить комменты их количеством
           Comment,
           { model: User, attributes: ['user_id', 'display_name'] },
         ],
