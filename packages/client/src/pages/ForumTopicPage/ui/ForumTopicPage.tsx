@@ -4,28 +4,24 @@ import moment from 'moment';
 import { type FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getTopic } from '@/shared/api/forum/getTopic';
-import { TopicFieldEnum } from '@/shared/enums/TopicField.enum';
+import { appConfig } from '@/shared/config';
 import { useEffectOnce, usePage } from '@/shared/hooks';
-import { TopicResponse } from '@/shared/interfaces/ForumResponse';
+import { BaseUserInfo, TopicResponse } from '@/shared/interfaces/ForumResponse';
 import { useAppSelector } from '@/shared/store/hooks';
 import { userSelector } from '@/shared/store/user/user.selector';
 import { UserAvatar } from '@/shared/ui';
-import { initPageBase } from '@/shared/utils';
+import { initPageBase, isDefined } from '@/shared/utils';
 import { MainContainer } from '@/widgets';
-import { ButtonReaction } from '@/widgets/ButtonReaction';
-import {
-  forumPageDataMock,
-  initialReplyFormData,
-  replyFormData,
-} from '../model/forumTopicData';
+import { initialReplyFormData, replyFormData } from '../model/forumTopicData';
 import cls from './ForumTopicPage.module.scss';
 
 export const ForumTopicPage: FC = () => {
   const [pageTitle, setPageTitle] = useState('');
-  const [forumPageData] = useState(forumPageDataMock);
   const user = useAppSelector(userSelector);
+  console.log(user);
+
   const params = useParams() as { topicId: string };
-  const [forumTopic, setForumTopic] = useState<TopicResponse | null>(null);
+  const [topic, setTopic] = useState<TopicResponse | null>(null);
 
   usePage({ initPage: initPageBase });
 
@@ -36,71 +32,80 @@ export const ForumTopicPage: FC = () => {
 
     getTopic(params.topicId)
       .then((response) => {
-        setForumTopic(response);
-        console.log(forumTopic, response);
+        setTopic(response);
+        console.log(topic, response);
       })
       .catch((error) => {
         console.error(error);
       });
   });
 
-  const handleCreateThread = (values: replyFormData) => {
+  const handleCreateComment = (values: replyFormData) => {
     // todo загрузить ответ на сервер и добавить к списку
     console.log('Success:', values);
+  };
+
+  const name = (user: BaseUserInfo | undefined) => {
+    if (!user) {
+      return '';
+    }
+    return user.display_name
+      ? user.display_name
+      : user.first_name + ' ' + user.second_name;
   };
 
   return (
     <MainContainer title={pageTitle}>
       <Comment
-        author={<p>{forumPageData.author.name}</p>}
+        author={<p>{name(topic?.user)}</p>}
         avatar={
           <div className={cls.replyAvatar}>
-            <UserAvatar src={forumPageData.author.avatarSrc} />
+            <UserAvatar src={topic?.user.avatar} />
           </div>
         }
-        content={<p>{forumPageData.description}</p>}
+        content={<p>{topic?.content}</p>}
         datetime={
           <Tooltip
-            title={moment(forumPageData.date).format('DD-MM-YYYY HH:mm:ss')}
+            title={moment(topic?.created_at).format('DD-MM-YYYY HH:mm:ss')}
           >
-            <span>{moment(forumPageData.date).fromNow()}</span>
+            <span>{moment(topic?.created_at).fromNow()}</span>
           </Tooltip>
         }
         className={cls.main}
       />
 
       <div className={cls.repliesCount}>
-        <Typography.Text>
-          {forumPageData.comments.length} Replies
-        </Typography.Text>
+        <Typography.Text>{topic?.comments.length} Replies</Typography.Text>
       </div>
 
       <div className={cls.replies}>
-        {forumPageData.comments.map((comment) => (
-          <div key={comment.id}>
+        {topic?.comments.map((comment) => (
+          <div key={comment.comment_id}>
             <Comment
-              author={<a>{comment.author.name}</a>}
+              author={<a>{name(comment.user)}</a>}
               avatar={
                 <div className={cls.replyAvatar}>
-                  <UserAvatar src={comment.author.avatarSrc} />
+                  <UserAvatar src={comment.user.avatar} />
                 </div>
               }
-              content={<p>{comment.description}</p>}
+              content={<p>{comment.content}</p>}
               datetime={
                 <Tooltip
-                  title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}
+                  title={moment(comment.created_at).format(
+                    'YYYY-MM-DD HH:mm:ss',
+                  )}
                 >
-                  <span>{moment(comment.date).fromNow()}</span>
+                  <span>{moment(comment.created_at).fromNow()}</span>
                 </Tooltip>
               }
             />
 
-            <ButtonReaction
-              id={comment.id}
+            {/* <ButtonReaction
+              id={comment.comment_id}
               topicField={TopicFieldEnum.comments}
               initialReactions={comment.reactions}
               currentUserId={user?.id}
-            />
+            /> */}
           </div>
         ))}
       </div>
@@ -108,13 +113,19 @@ export const ForumTopicPage: FC = () => {
       <div className={cls.replyFormWrapper}>
         {/* todo загружать аватар текущего пользователя */}
         <div className={cls.replyAvatar}>
-          <UserAvatar src="" />
+          <UserAvatar
+            src={
+              isDefined(user?.avatar)
+                ? `${appConfig.baseUrl}/resources${user.avatar}`
+                : ''
+            }
+          />
         </div>
 
         <Form
           className={cls.replyForm}
           layout="vertical"
-          onFinish={handleCreateThread}
+          onFinish={handleCreateComment}
           form={form}
           initialValues={initialReplyFormData}
         >

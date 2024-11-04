@@ -69,7 +69,11 @@ export const ForumTopicsList: FC<Props> = ({ changeStage }) => {
 
           <div className={cls.listContent}>
             <Typography.Text className={cls.author}>
-              {forumTopic.user.display_name}
+              {forumTopic.user.display_name
+                ? forumTopic.user.display_name
+                : forumTopic.user.first_name +
+                  ' ' +
+                  forumTopic.user.second_name}
             </Typography.Text>
 
             <div className={cls.badgeWrapper}>

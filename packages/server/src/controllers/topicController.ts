@@ -5,7 +5,6 @@ import { ApiError } from '../middlewares/error';
 interface CreateTopicRequest {
   title: string;
   user_id: number;
-  views: number;
   content: string;
 }
 
@@ -15,15 +14,15 @@ class TopicController {
     res: Response,
     next: NextFunction,
   ) => {
-    const { title, user_id, views, content } = req.body as CreateTopicRequest;
+    const { title, user_id, content } = req.body as CreateTopicRequest;
     try {
-      if (!title || !user_id || !views || !content) {
+      if (!title || !user_id || !content) {
         throw new ApiError(400, 'All fields are required');
       }
       const topic = await Topic.create({
         title,
         user_id,
-        views,
+        views: 0,
         content,
       });
       res.json(topic);
@@ -37,7 +36,14 @@ class TopicController {
     try {
       let topics;
       topics = 1;
-      console.log(topic_id, 'TOPICID');
+
+      const userAttributes = [
+        'user_id',
+        'display_name',
+        'first_name',
+        'second_name',
+        'avatar',
+      ];
 
       if (!topic_id) {
         throw new ApiError(400, 'Query params should have title or topic_id');
@@ -46,16 +52,14 @@ class TopicController {
       topics = await Topic.findOne({
         where: { topic_id: topic_id },
         include: [
-          { model: User, attributes: ['user_id', 'display_name'] },
+          { model: User, attributes: userAttributes },
           {
             model: Comment,
             include: [
-              { model: User, attributes: ['user_id', 'display_name'] },
+              { model: User, attributes: userAttributes },
               {
                 model: Reply,
-                include: [
-                  { model: User, attributes: ['user_id', 'display_name'] },
-                ],
+                include: [{ model: User, attributes: userAttributes }],
               },
             ],
           },
@@ -77,7 +81,15 @@ class TopicController {
         include: [
           // TODO заменить комменты их количеством
           Comment,
-          { model: User, attributes: ['user_id', 'display_name'] },
+          {
+            model: User,
+            attributes: [
+              'user_id',
+              'display_name',
+              'first_name',
+              'second_name',
+            ],
+          },
         ],
       });
       res.json(topics);

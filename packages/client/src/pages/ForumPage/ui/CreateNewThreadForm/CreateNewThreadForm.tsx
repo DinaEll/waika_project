@@ -1,5 +1,9 @@
 import { Button, Form, Input, Space } from 'antd';
 import { FC } from 'react';
+import { createTopic } from '@/shared/api/forum/createTopic';
+import { CreateTopicReq } from '@/shared/interfaces/ForumResponse';
+import { useAppSelector } from '@/shared/store/hooks';
+import { userSelector } from '@/shared/store/user/user.selector';
 import {
   ForumPageStages,
   initialNewThreadFormData,
@@ -13,10 +17,24 @@ interface Props {
 
 export const CreateNewThreadForm: FC<Props> = ({ changeStage }) => {
   const [form] = Form.useForm();
+  const user = useAppSelector(userSelector);
 
-  const handleCreateThread = (values: newThreadFormData) => {
-    console.log('Success:', values);
-    console.log(form.getFieldsValue());
+  const handleCreateThread = async (values: newThreadFormData) => {
+    if (!user) {
+      return;
+    }
+    const topicData: CreateTopicReq = {
+      user_id: user?.id,
+      title: values.title,
+      content: values.descr,
+      views: 0,
+    };
+    try {
+      await createTopic(topicData);
+      changeStage(ForumPageStages.forumTopicsList);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onCancelBtnClick = () => {
@@ -27,7 +45,7 @@ export const CreateNewThreadForm: FC<Props> = ({ changeStage }) => {
   return (
     <Form
       layout="vertical"
-      onFinish={handleCreateThread}
+      onFinish={(values: newThreadFormData) => void handleCreateThread(values)}
       form={form}
       initialValues={initialNewThreadFormData}
     >
