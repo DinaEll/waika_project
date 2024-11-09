@@ -1,5 +1,0 @@
-FROM waika_project_image
-
-WORKDIR /app
-
-CMD ["npm", "run", "dev:client"]

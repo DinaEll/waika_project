@@ -8,6 +8,14 @@ describe('connectDatabase', () => {
   let mockConsoleLog: jest.SpyInstance;
   let mockConsoleError: jest.SpyInstance;
 
+  const databaseConfig: Parameters<typeof connectDatabase>[0] = {
+    database: '',
+    host: '',
+    password: '',
+    port: 123,
+    username: '',
+  };
+
   beforeEach(() => {
     mockSync = jest.fn();
     (createDatabaseClient as jest.Mock).mockReturnValue({ sync: mockSync });
@@ -22,7 +30,7 @@ describe('connectDatabase', () => {
   it('should successfully connect to the database', async () => {
     mockSync.mockResolvedValue(undefined);
 
-    await connectDatabase();
+    await connectDatabase(databaseConfig);
 
     expect(createDatabaseClient).toHaveBeenCalled();
     expect(mockSync).toHaveBeenCalledWith({ force: false });
@@ -36,7 +44,7 @@ describe('connectDatabase', () => {
     const error = new Error('Connection failed');
     mockSync.mockRejectedValue(error);
 
-    await connectDatabase();
+    await connectDatabase(databaseConfig);
 
     expect(createDatabaseClient).toHaveBeenCalled();
     expect(mockSync).toHaveBeenCalledWith({ force: false });

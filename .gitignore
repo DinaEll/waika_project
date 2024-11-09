@@ -4,6 +4,7 @@ build/
 coverage/
 tmp/
 pg_data/
+certs/
 
 logs/
 *.log

@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const dotenv = require('dotenv');
-dotenv.config();
-
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
@@ -15,4 +11,7 @@ module.exports = {
       'jest-transform-stub',
   },
   setupFiles: ['whatwg-fetch'],
+  globals: {
+    __APP_NAME__: 'Test',
+  },
 };

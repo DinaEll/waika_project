@@ -1,0 +1,11 @@
+ARG NODE_VERSION=20.12.2
+ARG CLIENT_PORT=3000
+
+FROM node:$NODE_VERSION-alpine
+
+WORKDIR /app
+COPY packages/client/dist/ ./dist/
+
+WORKDIR dist
+
+CMD ["node", "server.js"]
