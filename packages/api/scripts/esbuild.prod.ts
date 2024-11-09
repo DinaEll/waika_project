@@ -1,6 +1,6 @@
-import { type BuildOptions } from 'esbuild';
+import { build as buildApiServer } from 'esbuild';
 
-export const esBuildConfig: BuildOptions = {
+buildApiServer({
   bundle: true,
   entryPoints: ['index.ts'],
   format: 'cjs',
@@ -8,7 +8,10 @@ export const esBuildConfig: BuildOptions = {
   minify: true,
   outfile: 'dist/server.js',
   platform: 'node',
-  sourcemap: false,
+  sourcemap: true,
   target: ['node20'],
   treeShaking: true,
-};
+}).catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

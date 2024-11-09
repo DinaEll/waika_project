@@ -1,53 +1,6 @@
 ### Макеты
 https://www.figma.com/design/3sLJFxrTF5GnV5Phje9ZZm/Waijong?node-id=0-1&t=0J4qOx1EEb8Hr8Ab-1
 
-### Cпринт 7-8
-https://disk.yandex.ru/i/VyisCNQw28JOjQ
-
-
-Настроить Express для Server Side Rendering (без Redux, просто отдавать React-страничку)
-
-https://github.com/DinaEll/waika_project/blob/main/packages/client/server/index.ts
-
-
-Настроить Redux и Router в SSR
-
-https://github.com/DinaEll/waika_project/blob/main/packages/client/src/entry-server.tsx
-
-
-Добавить OAuth-авторизацию в проект
-
-https://github.com/DinaEll/waika_project/blob/main/packages/client/src/shared/hocs/withOauth.tsx
-
-
-Добавить ещё одно WEB API (кроме Canvas, Fetch)
-
-https://github.com/DinaEll/waika_project/blob/main/packages/client/src/pages/GamePage/ui/Game/Game.tsx
-
-
-Добавить в проект MEMORYLEAKS.md или новый раздел в README.md, в котором описаны, какие утечки были и как они исправлены
-
-https://github.com/DinaEll/waika_project/blob/main/docs/MEMORYLEAKS.md
-
-
-Серверная инфраструктура для форума, эмодзи и темизации
-
-https://github.com/DinaEll/waika_project/blob/main/packages/database/index.ts
-
-https://github.com/DinaEll/waika_project/blob/main/packages/server/index.ts
-
-
-Реализовать API для форума
-
-https://github.com/DinaEll/waika_project/blob/main/packages/server/src/routes/forum.ts
-
-
-Переключение темы (бэкенд)
-
-https://github.com/DinaEll/waika_project/blob/main/packages/server/src/routes/themes.ts
-
-
-
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`

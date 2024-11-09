@@ -2,11 +2,8 @@
   "extends": "../../tsconfigs/tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "moduleResolution": "Node",
+    "module": "CommonJS",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },

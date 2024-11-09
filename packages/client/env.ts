@@ -1,9 +1,6 @@
 import 'dotenv/config';
-import { cleanEnv, port, str } from 'envalid';
+import { cleanEnv, port } from 'envalid';
 
-export const { CLIENT_PORT, isDev, NODE_ENV } = cleanEnv(process.env, {
-  NODE_ENV: str({
-    choices: ['development', 'test', 'production', 'staging'] as const,
-  }),
+export const { CLIENT_PORT, isDev } = cleanEnv(process.env, {
   CLIENT_PORT: port({ devDefault: 3000 }),
 });

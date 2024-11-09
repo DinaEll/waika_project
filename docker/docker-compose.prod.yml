@@ -1,0 +1,85 @@
+networks:
+  prodenv:
+    driver: bridge
+
+services:
+  postgres:
+    container_name: waika_project_postgres
+    image: postgres:17
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: 134217728 # 128*2^20 bytes = 128Mb
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    env_file:
+      - ../.env
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - prodenv
+
+  api:
+    container_name: waika_project_api
+    restart: always
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.api
+      args:
+        API_PORT: ${API_PORT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    env_file:
+      - ../.env
+    environment:
+      - POSTGRES_HOST=postgres
+    networks:
+      - prodenv
+
+  client:
+    container_name: waika_project_client
+    restart: always
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.client
+      args:
+        CLIENT_PORT: ${CLIENT_PORT}
+    depends_on:
+      - api
+    ports:
+       - "${CLIENT_PORT}:${CLIENT_PORT}"
+    env_file:
+      - ../.env
+    networks:
+      - prodenv
+
+  proxy:
+    container_name: waika_project_proxy
+    image: nginx:1.27.2-alpine-slim
+    restart: always
+    depends_on:
+      - api
+      - client
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ../packages/client/dist/client/:/etc/nginx/html/:ro
+      - ./nginx/templates/:/etc/nginx/templates/:rw,cached
+      - ./nginx/includes/:/etc/nginx/includes/:ro
+      - ./nginx/certs/:/etc/nginx/certs/:ro
+    environment:
+      - API_PORT=${API_PORT}
+      - CLIENT_PORT=${CLIENT_PORT}
+    networks:
+      - prodenv

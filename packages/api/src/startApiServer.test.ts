@@ -1,12 +1,14 @@
 import { connectDatabase } from '@waika_project/database';
-import { SERVER_PORT } from '../env';
-import { createServer } from './createServer';
-import { runServer } from './runServer';
+import { createServer } from '@waika_project/server';
+import { API_PORT } from '../env';
+import { startApiServer } from './startApiServer';
 
 jest.mock('@waika_project/database', () => ({
   connectDatabase: jest.fn(),
 }));
-jest.mock('./createServer');
+jest.mock('@waika_project/server', () => ({
+  createServer: jest.fn(),
+}));
 
 describe('runServer', () => {
   let consoleLogSpy: jest.SpyInstance;
@@ -30,16 +32,16 @@ describe('runServer', () => {
     };
     (createServer as jest.Mock).mockReturnValue(mockServer);
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();
     expect(mockServer.listen).toHaveBeenCalledWith(
-      SERVER_PORT,
+      API_PORT,
       expect.any(Function),
     );
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `  ➜ 🎸 Server is listening on: http://localhost:${SERVER_PORT}`,
+      `  ➜ 🎸 API is listening on: http://localhost:${API_PORT}`,
     );
   });
 
@@ -47,7 +49,7 @@ describe('runServer', () => {
     const error = new Error('Database connection failed');
     (connectDatabase as jest.Mock).mockRejectedValue(error);
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(consoleErrorSpy).toHaveBeenCalledWith(error);
@@ -60,7 +62,7 @@ describe('runServer', () => {
       throw error;
     });
 
-    await runServer();
+    await startApiServer();
 
     expect(connectDatabase).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();
