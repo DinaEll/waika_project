@@ -8,6 +8,7 @@ import {
   POSTGRES_PORT,
   POSTGRES_USER,
 } from '../env';
+import { yandexProxyMiddleware } from './middlewares';
 
 export async function startApiServer() {
   try {
@@ -19,7 +20,15 @@ export async function startApiServer() {
       username: POSTGRES_USER,
     });
 
-    const server = createServer({ routes, useLogger: true });
+    const server = createServer({
+      routes,
+      useLogger: true,
+      useCors: {
+        credentials: true,
+        origin: 'http://localhost:3000',
+      },
+      middlewares: [yandexProxyMiddleware],
+    });
 
     server.listen(API_PORT, () => {
       console.log(`  ➜ 🎸 API is listening on: http://localhost:${API_PORT}`);
