@@ -77,7 +77,7 @@ const eslintConfig = {
     ],
     //'no-console': 'error',
   },
-  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs', 'dist'],
+  ignorePatterns: ['.eslintrc.js', '.eslintrc.cjs', 'dist', 'generate-cert.ts'],
 };
 
 module.exports = eslintConfig;

@@ -1,8 +1,0 @@
-FROM nginx:1.27.2-alpine-slim
-
-RUN apk --no-cache add openssl
-
-RUN mkdir /etc/nginx/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/nginx/ssl/default.key -out /etc/nginx/ssl/default.crt \
-    -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"

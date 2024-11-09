@@ -1,7 +1,3 @@
-import {
-  Request as ExpressRequest,
-  Response as ExpressResponse,
-} from 'express';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-dom';
@@ -14,8 +10,9 @@ import { routes } from './app/router/model/routes';
 import { createFetchRequest, createUrl } from './entry-server.utils';
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssr.slice';
 import { store } from './shared/store/store';
+import type { Request, Response } from '@waika_project/server';
 
-export const render = async (req: ExpressRequest, res: ExpressResponse) => {
+export const renderClient = async (req: Request, res: Response) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { query, dataRoutes } = createStaticHandler(routes);
   const fetchRequest = createFetchRequest(req);
@@ -56,7 +53,7 @@ export const render = async (req: ExpressRequest, res: ExpressResponse) => {
             ctx: req.headers.cookie ?? '',
           });
         } catch (e) {
-          console.log('Инициализация страницы произошла с ошибкой', e);
+          console.log('Page initialization failed with an error', e);
         }
       }
     }),

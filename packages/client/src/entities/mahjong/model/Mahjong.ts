@@ -97,10 +97,7 @@ export class Mahjong extends Game {
 
   loadAllImages(uniqueNumbers: number[]) {
     const promises = uniqueNumbers.map((number) =>
-      this.loadImage(
-        `/src/shared/assets/game-tiles/MJ-${number}.svg`,
-        String(number),
-      ),
+      this.loadImage(`/assets/tiles/MJ-${number}.svg`, String(number)),
     );
 
     return Promise.all(promises);

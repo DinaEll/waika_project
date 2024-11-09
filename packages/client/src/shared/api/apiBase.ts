@@ -105,6 +105,7 @@ const baseRequest = async <T>(
   data?: HTTPRequest,
 ): Promise<AxiosResponse<T>> => {
   return axios<T>(url, {
+
     method,
     headers,
     ...data,
