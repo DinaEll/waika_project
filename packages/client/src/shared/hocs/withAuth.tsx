@@ -5,9 +5,9 @@ import { getPageUrl } from '@/shared/config';
 import { useEffectOnce } from '@/shared/hooks';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { fetchUser } from '@/shared/store/user/user.action';
+import { isUserAuthSelector } from '@/shared/store/user/user.selector';
 import { logError } from '@/shared/utils';
 import { CenteredOfPage, Loading } from '@/widgets';
-import { isUserAuthSelector } from '../store/user/user.selector';
 
 export const withAuth = <P extends Record<string, string>>(
   Component: ComponentType<P>,
@@ -15,7 +15,7 @@ export const withAuth = <P extends Record<string, string>>(
   const WrappedComponent: FC<P> = (props) => {
     const dispatch = useAppDispatch();
     const isUserAuth = useAppSelector(isUserAuthSelector);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffectOnce(() => {
       const controller = new AbortController();

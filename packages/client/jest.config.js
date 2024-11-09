@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
@@ -11,4 +11,7 @@ export default {
       'jest-transform-stub',
   },
   setupFiles: ['whatwg-fetch'],
+  globals: {
+    __APP_NAME__: 'Test',
+  },
 };

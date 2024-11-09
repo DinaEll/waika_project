@@ -1,0 +1,1 @@
+export { yandexProxyMiddleware } from './yandexProxy';
