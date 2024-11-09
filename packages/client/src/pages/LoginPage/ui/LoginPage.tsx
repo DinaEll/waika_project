@@ -1,8 +1,11 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
+import { AxiosError } from 'axios';
 import { type FC } from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { userSignIn } from '@/shared/api';
+import { addUserToDb } from '@/shared/api/user/addUserToDb';
+import { getUserFromDb } from '@/shared/api/user/getUserFromDb';
 import { getPageUrl } from '@/shared/config';
 import { usePage } from '@/shared/hooks';
 import type { SignInRequest } from '@/shared/interfaces';
@@ -40,8 +43,17 @@ export const LoginPage: FC = () => {
       .then(() => {
         dispatch(fetchUser())
           .then(unwrapResult)
-          .then((res) => {
+          .then(async (res) => {
             if (res.id) {
+              try {
+                await getUserFromDb(String(res.id));
+              } catch (error) {
+                if (error instanceof AxiosError && error.status === 404) {
+                  await addUserToDb(res);
+                } else {
+                  console.error(error);
+                }
+              }
               navigate(getPageUrl('main'));
             }
           })

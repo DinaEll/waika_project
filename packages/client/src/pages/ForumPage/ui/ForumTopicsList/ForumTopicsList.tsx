@@ -1,20 +1,32 @@
 import { Badge, Button, List, Typography } from 'antd';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAllTopics } from '@/shared/api/forum/getAllTopics';
 import { getPageUrl } from '@/shared/config';
-import { ForumPageStages, ForumTopicData } from '../../model/forumData';
+import { useEffectOnce } from '@/shared/hooks';
+import { TopicsListResponse } from '@/shared/interfaces/ForumResponse';
+import { ForumPageStages } from '../../model/forumData';
 import cls from '../ForumPage.module.scss';
 
 interface Props {
   changeStage: (stage: ForumPageStages) => void;
-  forumTopicsList: ForumTopicData[];
 }
 
-export const ForumTopicsList: FC<Props> = ({
-  changeStage,
-  forumTopicsList,
-}) => {
+export const ForumTopicsList: FC<Props> = ({ changeStage }) => {
   const navigate = useNavigate();
+  const [forumTopicsList, setForumTopicsList] = useState<TopicsListResponse[]>(
+    [],
+  );
+
+  useEffectOnce(() => {
+    getAllTopics()
+      .then((response) => {
+        setForumTopicsList(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   return (
     <List
@@ -44,7 +56,9 @@ export const ForumTopicsList: FC<Props> = ({
       renderItem={(forumTopic) => (
         <List.Item
           onClick={() =>
-            navigate(getPageUrl('forum-topic', { topicId: forumTopic.id }))
+            navigate(
+              getPageUrl('forum-topic', { topicId: forumTopic.topic_id }),
+            )
           }
           className={cls.listItem}
         >
@@ -54,12 +68,16 @@ export const ForumTopicsList: FC<Props> = ({
 
           <div className={cls.listContent}>
             <Typography.Text className={cls.author}>
-              {forumTopic.author}
+              {forumTopic.user.display_name
+                ? forumTopic.user.display_name
+                : forumTopic.user.first_name +
+                  ' ' +
+                  forumTopic.user.second_name}
             </Typography.Text>
 
             <div className={cls.badgeWrapper}>
               <Badge
-                count={forumTopic.replies}
+                count={forumTopic.comments.length}
                 showZero
                 overflowCount={99}
                 className={cls.badge}

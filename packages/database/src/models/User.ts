@@ -40,7 +40,6 @@ export class User extends Model {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
   })
   declare display_name: string;
 
@@ -64,7 +63,6 @@ export class User extends Model {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
   })
   declare avatar: string;
 

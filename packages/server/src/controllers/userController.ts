@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ApiError } from '../middlewares/error';
 
 interface CreateUserRequest {
+  id?: number;
   first_name: string;
   second_name: string;
   display_name: string;
@@ -19,6 +20,7 @@ class UserController {
     next: NextFunction,
   ) => {
     const {
+      id,
       first_name,
       second_name,
       display_name,
@@ -28,10 +30,11 @@ class UserController {
       avatar,
     } = req.body as CreateUserRequest;
     try {
-      if (!first_name || !second_name || !display_name || !login || !email) {
+      if (!first_name || !second_name || !login || !email) {
         throw new ApiError(400, 'All fields are required');
       }
       const user = await User.create({
+        user_id: id,
         first_name,
         second_name,
         display_name,

@@ -104,7 +104,8 @@ const baseRequest = async <T>(
   headers?: Record<string, string>,
   data?: HTTPRequest,
 ): Promise<AxiosResponse<T>> => {
-  return axios<T>(__API_BASE_URL__ + url, {
+  return axios<T>(url, {
+
     method,
     headers,
     ...data,
