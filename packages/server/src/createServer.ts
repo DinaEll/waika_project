@@ -88,5 +88,22 @@ export function createServer({
   server.use(routes);
   server.use(notFound);
 
+  if (useStatic) {
+    if (isObject(useStatic)) {
+      const { path, options } = useStatic;
+      server.use(expressStatic(path, options));
+    } else {
+      server.use(expressStatic(useStatic));
+    }
+  }
+
+  middlewares?.forEach((middleware) => {
+    server.use(middleware);
+  });
+
+  server.use(routes);
+
+  server.use(notFound);
+
   return server;
 }
