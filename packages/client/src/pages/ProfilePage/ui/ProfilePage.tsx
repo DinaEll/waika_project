@@ -44,7 +44,7 @@ export const ProfilePage: FC = () => {
             className={cls.profileAvatar}
             src={
               isDefined(user?.avatar)
-                ? `${__API_BASE_URL__}/resources${user.avatar}`
+                ? `${__API_PRACTICUM_URL__}/resources${user.avatar}`
                 : ''
             }
           />

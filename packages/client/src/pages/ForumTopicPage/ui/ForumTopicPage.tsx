@@ -7,7 +7,6 @@ import { createComment } from '@/shared/api/forum/createComment';
 import { createReply } from '@/shared/api/forum/createReply';
 import { getTopic } from '@/shared/api/forum/getTopic';
 import { incrementViews } from '@/shared/api/forum/incrementViews';
-import { appConfig } from '@/shared/config';
 import { useEffectOnce, usePage } from '@/shared/hooks';
 import { BaseUserInfo, TopicResponse } from '@/shared/interfaces/ForumResponse';
 import { useAppSelector } from '@/shared/store/hooks';
@@ -235,7 +234,7 @@ export const ForumTopicPage: FC = () => {
                             <UserAvatar
                               src={
                                 isDefined(user?.avatar)
-                                  ? `${appConfig.baseUrl}/resources/${user.avatar}`
+                                  ? `${__API_PRACTICUM_URL__}/resources/${user.avatar}`
                                   : ''
                               }
                             />
@@ -275,7 +274,7 @@ export const ForumTopicPage: FC = () => {
           <UserAvatar
             src={
               isDefined(user?.avatar)
-                ? `${appConfig.baseUrl}/resources${user.avatar}`
+                ? `${__API_PRACTICUM_URL__}/resources${user.avatar}`
                 : ''
             }
           />

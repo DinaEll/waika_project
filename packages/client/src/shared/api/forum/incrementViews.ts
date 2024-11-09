@@ -3,6 +3,6 @@ import { TopicResponse } from '@/shared/interfaces/ForumResponse';
 
 export const incrementViews = async (topicId: string) => {
   return await put<TopicResponse>(
-    `http://localhost:3001/forum/topic/increment-views?topic_id=${topicId}`,
+    `${__API_BASE_URL__}/forum/topic/increment-views?topic_id=${topicId}`,
   );
 };
