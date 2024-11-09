@@ -1,6 +1,5 @@
 import { Button, Form, Input } from 'antd';
 import { type FC, useEffect, useState } from 'react';
-import { appConfig } from '@/shared/config';
 import { usePage } from '@/shared/hooks';
 import { useAppSelector } from '@/shared/store/hooks';
 import { userSelector } from '@/shared/store/user/user.selector';
@@ -45,7 +44,7 @@ export const ProfilePage: FC = () => {
             className={cls.profileAvatar}
             src={
               isDefined(user?.avatar)
-                ? `${appConfig.baseUrl}/resources${user.avatar}`
+                ? `${__API_BASE_URL__}/resources${user.avatar}`
                 : ''
             }
           />
