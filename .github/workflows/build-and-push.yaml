@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - WAI-72
 
 jobs:
   build-and-push:
