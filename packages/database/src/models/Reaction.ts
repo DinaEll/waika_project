@@ -1,46 +1,53 @@
 import {
-  BelongsTo,
-  Column,
-  CreatedAt,
-  DataType,
-  ForeignKey,
-  HasMany,
-  Model,
   Table,
-  UpdatedAt,
+  Column,
+  Model,
+  DataType,
+  BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
-import { Reaction } from './Reaction';
+import { Reply } from './Reply';
 import { User } from './User';
 
 @Table({
-  tableName: 'replies',
-  timestamps: true,
+  tableName: 'reactions',
+  timestamps: false,
 })
-export class Reply extends Model {
+export class Reaction extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   })
-  declare reply_id: number;
+  declare reaction_id: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  declare content: string;
+  declare reaction: string;
 
   @ForeignKey(() => Comment)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   declare comment_id: number;
 
   @BelongsTo(() => Comment)
   declare comment: Comment;
+
+  @ForeignKey(() => Reply)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  declare reply_id: number;
+
+  @BelongsTo(() => Reply)
+  declare reply: Reply;
 
   @ForeignKey(() => User)
   @Column({
@@ -51,13 +58,4 @@ export class Reply extends Model {
 
   @BelongsTo(() => User)
   declare user: User;
-
-  @HasMany(() => Reaction)
-  declare reactions: Reaction[];
-
-  @CreatedAt
-  declare created_at: Date;
-
-  @UpdatedAt
-  declare updated_at: Date;
 }

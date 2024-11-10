@@ -9,6 +9,7 @@ import {
   HasOne,
 } from 'sequelize-typescript';
 import { Comment } from './Comment';
+import { Reaction } from './Reaction';
 import { Reply } from './Reply';
 import { Topic } from './Topic';
 import { UserTheme } from './UserTheme';
@@ -74,6 +75,9 @@ export class User extends Model {
 
   @HasMany(() => Reply)
   declare replies: Reply[];
+
+  @HasMany(() => Reaction)
+  declare reactions: Reaction[];
 
   @CreatedAt
   declare created_at: Date;

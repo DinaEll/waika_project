@@ -4,3 +4,4 @@ export { SiteTheme } from './SiteTheme';
 export { Topic } from './Topic';
 export { User } from './User';
 export { UserTheme } from './UserTheme';
+export { Reaction } from './Reaction';

@@ -2,7 +2,15 @@
 import pg from 'pg';
 import { Sequelize } from 'sequelize-typescript';
 import { isDev } from '../env';
-import { Comment, Reply, SiteTheme, Topic, User, UserTheme } from './models';
+import {
+  Comment,
+  Reply,
+  SiteTheme,
+  Topic,
+  User,
+  UserTheme,
+  Reaction,
+} from './models';
 
 interface Config {
   host: string;
@@ -18,7 +26,7 @@ export const createDatabaseClient = (config: Config): Sequelize => {
     dialect: 'postgres',
     // eslint-disable-next-line no-console
     logging: isDev ? (msg) => console.debug(msg) : undefined,
-    models: [Comment, Reply, SiteTheme, Topic, User, UserTheme],
+    models: [Comment, Reply, SiteTheme, Topic, User, UserTheme, Reaction],
     dialectModule: pg,
   });
 };
