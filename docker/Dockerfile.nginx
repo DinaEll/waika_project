@@ -3,3 +3,4 @@ FROM nginx:1.27.2-alpine-slim
 WORKDIR /app
 
 COPY docker/nginx/ /etc/nginx/
+COPY packages/client/dist/client/ /etc/nginx/html
