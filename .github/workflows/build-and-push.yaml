@@ -60,11 +60,3 @@ jobs:
           file: docker/Dockerfile.nginx
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/nginx:${{ github.sha }}
-
-      - name: Build and push certbot image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: docker/Dockerfile.certbot
-          push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/certbot:${{ github.sha }}

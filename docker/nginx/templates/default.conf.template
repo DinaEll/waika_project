@@ -63,8 +63,8 @@ server {
     http2 on;
     server_name waika-mahjong-41.ya-praktikum.tech www.waika-mahjong-41.ya-praktikum.tech;
 
-    #ssl_certificate /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/fullchain.pem;
-    #ssl_certificate_key /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/privkey.pem;
 
     include /etc/nginx/includes/gzip.conf;
 
