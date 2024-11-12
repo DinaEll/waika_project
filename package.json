@@ -20,7 +20,6 @@
     "docker-prod-down": "docker-compose -f ./docker/docker-compose.prod.yml down",
     "docker-build": "docker build -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
     "docker-rebuild": "docker build --no-cache -f ./docker/Dockerfile.builder -t waika_project_image --compress .",
-    "generate:certs": "ts-node ./scripts/generate-cert.ts",
     "format": "lerna run format",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
