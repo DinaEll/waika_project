@@ -1,6 +1,0 @@
-FROM nginx:1.27.2-alpine-slim
-
-WORKDIR /app
-
-COPY ./includes /etc/nginx/includes
-COPY ./templates /etc/nginx/templates
