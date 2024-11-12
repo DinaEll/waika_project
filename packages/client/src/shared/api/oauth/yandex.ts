@@ -9,7 +9,7 @@ export const signInOauthYandex = async (
   data: SignInOauthYandexRequest,
   signal: AbortSignal,
 ) => {
-  return await post<void | undefined>(__API_PRACTICUM_URL__ + '/oauth/yandex', {
+  return await post<void | undefined>('/oauth/yandex', {
     data,
     signal,
   });

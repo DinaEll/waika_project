@@ -234,7 +234,7 @@ export const ForumTopicPage: FC = () => {
                             <UserAvatar
                               src={
                                 isDefined(user?.avatar)
-                                  ? `${__API_PRACTICUM_URL__}/resources/${user.avatar}`
+                                  ? `${__API_BASE_URL__}/resources/${user.avatar}`
                                   : ''
                               }
                             />
@@ -274,7 +274,7 @@ export const ForumTopicPage: FC = () => {
           <UserAvatar
             src={
               isDefined(user?.avatar)
-                ? `${__API_PRACTICUM_URL__}/resources${user.avatar}`
+                ? `${__API_BASE_URL__}/resources${user.avatar}`
                 : ''
             }
           />

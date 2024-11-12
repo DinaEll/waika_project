@@ -11,15 +11,12 @@ export const addReaction = async (data: ReactionRequest) => {
 
 export const getAllReactions = async (data: getAllReactionsRequest) => {
   return await get<ReactionResponse[] | []>(
-    `${__API_PRACTICUM_URL__}/${data.field}/${data.id}/reactions`,
+    `$/${data.field}/${data.id}/reactions`,
   );
 };
 
 export const deleteReaction = async (data: ReactionRequest) => {
-  return await put<ReactionResponse[] | []>(
-    `${__API_PRACTICUM_URL__}/reaction`,
-    {
-      data,
-    },
-  );
+  return await put<ReactionResponse[] | []>(`$/reaction`, {
+    data,
+  });
 };

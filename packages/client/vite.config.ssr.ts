@@ -1,13 +1,7 @@
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import {
-  API_BASE_URL,
-  API_PRACTICUM_URL,
-  APP_NAME,
-  CLIENT_PORT,
-  isDev,
-} from './env';
+import { API_BASE_URL, APP_NAME, CLIENT_PORT, isDev } from './env';
 
 const srcPath = path.join(__dirname, 'src');
 
@@ -17,7 +11,6 @@ export default defineConfig({
   },
   define: {
     __API_BASE_URL__: JSON.stringify(API_BASE_URL),
-    __API_PRACTICUM_URL__: JSON.stringify(API_PRACTICUM_URL),
     __APP_NAME__: JSON.stringify(APP_NAME),
     __CLIENT_PORT__: CLIENT_PORT,
     __isDev__: isDev,
