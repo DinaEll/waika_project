@@ -70,10 +70,6 @@ export function createServer({
     }
   }
 
-  middlewares?.forEach((middleware) => {
-    server.use(middleware);
-  });
-
   if (useStatic) {
     if (isObject(useStatic)) {
       const { path, options } = useStatic;
@@ -84,6 +80,10 @@ export function createServer({
   }
 
   server.use(json());
+
+  middlewares?.forEach((middleware) => {
+    server.use(middleware);
+  });
 
   server.use(routes);
 
