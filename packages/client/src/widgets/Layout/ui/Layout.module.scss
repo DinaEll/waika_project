@@ -1,7 +1,7 @@
 .layout {
   display: grid;
-  width: 100dvw;
-  height: 100dvh;
+  min-height: calc(100dvh - var(--header-height));
+  padding-bottom: var(--header-height);
   background-color: var(--primary-green);
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -12,5 +12,7 @@
 }
 
 .content {
+  display: flex;
+  overflow: auto;
   min-height: 100%;
 }
