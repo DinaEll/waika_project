@@ -57,6 +57,14 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: docker/Dockerfile.nginx
+          file: docker/nginx/Dockerfile.nginx
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/nginx:${{ github.sha }}
+
+      - name: Build and push cerbot image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: docker/cerbot/Dockerfile.cerbot
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/cerbot:${{ github.sha }}
