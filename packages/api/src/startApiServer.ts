@@ -25,7 +25,7 @@ export async function startApiServer() {
       useLogger: true,
       useCors: {
         credentials: true,
-        origin: 'http://localhost:3000',
+        origin: 'http://51.250.97.207:3000',
       },
       middlewares: [yandexProxyMiddleware],
     });
