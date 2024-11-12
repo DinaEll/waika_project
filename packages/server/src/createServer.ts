@@ -47,28 +47,19 @@ export function createServer({
 
   server.disable('x-powered-by');
 
-  server.use(error);
-  server.use(cookieParser());
-
   if (useLogger) {
     server.use(logger);
   }
 
   if (useHelmet) {
-    if (isObject(useHelmet)) {
-      helmet(useHelmet);
-    } else {
-      helmet();
-    }
+    server.use(isObject(useHelmet) ? helmet(useHelmet) : helmet());
   }
 
   if (useCors) {
-    if (isObject(useCors)) {
-      server.use(cors(useCors));
-    } else {
-      server.use(cors());
-    }
+    server.use(isObject(useCors) ? cors(useCors) : cors());
   }
+
+  server.use(cookieParser());
 
   if (useStatic) {
     if (isObject(useStatic)) {
@@ -79,15 +70,14 @@ export function createServer({
     }
   }
 
-  server.use(json());
-
   middlewares?.forEach((middleware) => {
     server.use(middleware);
   });
 
+  server.use(json());
   server.use(routes);
-
   server.use(notFound);
+  server.use(error);
 
   return server;
 }
