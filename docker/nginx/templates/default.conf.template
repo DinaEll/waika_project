@@ -52,5 +52,8 @@ server {
 
     include /etc/nginx/includes/assets.conf;
 
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
     
 }

@@ -1,0 +1,8 @@
+ARG NODE_VERSION=20.12.2
+ARG CLIENT_PORT=3000
+ARG API_BASE_URL
+
+FROM node:$NODE_VERSION-alpine
+
+WORKDIR /app
+COPY docker/nginx/ ./nginx/
