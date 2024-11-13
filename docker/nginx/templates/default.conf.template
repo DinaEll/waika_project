@@ -1,7 +1,5 @@
 resolver 127.0.0.11 valid=1s;
 
-set $domain waika-mahjong-41.ya-praktikum.tech;
-
 upstream api {
     server waika_project_api:${API_PORT};
 }
@@ -12,6 +10,7 @@ upstream client {
 
 server {
     listen [::]:80 backlog=2048 ipv6only=off; 
+    set $domain waika-mahjong-41.ya-praktikum.tech;
 
     include /etc/nginx/includes/listen.conf;
     include /etc/nginx/includes/common.conf;
@@ -28,6 +27,7 @@ server {
 
 server {
     listen [::]:443 backlog=2048 ipv6only=off; 
+    set $domain waika-mahjong-41.ya-praktikum.tech;
 
     include /etc/nginx/includes/listen.conf;
     include /etc/nginx/includes/ssl.conf;
