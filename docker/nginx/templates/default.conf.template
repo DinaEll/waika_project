@@ -24,10 +24,6 @@ server {
 server {
     listen [::]:443 backlog=2048 ipv6only=off; 
 
-    if ($host ~ '^www\.') {
-        return 301 https://waika-mahjong-41.ya-praktikum.tech$request_uri; 
-    }
-
     include mime.types;
     include /etc/nginx/includes/listen.conf;
     include /etc/nginx/includes/ssl.conf;
