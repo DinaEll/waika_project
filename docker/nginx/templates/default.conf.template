@@ -22,7 +22,7 @@ server {
 }
 
 server {
-    listen [::]:443 backlog=2048 ipv6only=off; 
+    listen [::]:443 ssl backlog=2048 ipv6only=off; 
 
     include mime.types;
     include /etc/nginx/includes/listen.conf;
