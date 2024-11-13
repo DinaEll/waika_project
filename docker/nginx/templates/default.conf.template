@@ -10,13 +10,8 @@ upstream client {
 
 server {
     listen [::]:80 backlog=2048 ipv6only=off; 
-
-    include mime.types;
+    
     include /etc/nginx/includes/listen.conf;
-    include /etc/nginx/includes/common.conf;
-    include /etc/nginx/includes/gzip.conf;
-    include /etc/nginx/includes/client.conf;
-    include /etc/nginx/includes/assets.conf;
 
     return 301 https://$server_name$request_uri;
 }
@@ -30,5 +25,6 @@ server {
     include /etc/nginx/includes/common.conf;
     include /etc/nginx/includes/gzip.conf;
     include /etc/nginx/includes/client.conf;
+    include /etc/nginx/includes/api.conf;
     include /etc/nginx/includes/assets.conf;
 }
