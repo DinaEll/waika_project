@@ -70,7 +70,6 @@ export const renderClient = async (req: Request, res: Response) => {
         <Provider store={store}>
           <StaticRouterProvider router={router} context={context} />
         </Provider>
-        ,
       </StyleProvider>,
     ),
     initialState: store.getState(),
