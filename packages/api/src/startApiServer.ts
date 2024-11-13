@@ -25,7 +25,10 @@ export async function startApiServer() {
       useLogger: true,
       useCors: {
         credentials: true,
-        origin: 'http://localhost:3000',
+        origin: [
+          'http://localhost:3000',
+          'https://waika-mahjong-41.ya-praktikum.tech',
+        ],
       },
       middlewares: [yandexProxyMiddleware],
     });

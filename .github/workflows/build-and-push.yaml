@@ -44,6 +44,8 @@ jobs:
           file: docker/Dockerfile.client
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/client:${{ github.sha }}
+          build-args: |
+            API_BASE_URL=https://waika-mahjong-41.ya-praktikum.tech/api
 
       - name: Build and push api image
         uses: docker/build-push-action@v2
@@ -52,3 +54,13 @@ jobs:
           file: docker/Dockerfile.api
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/api:${{ github.sha }}
+          build-args: |
+            API_BASE_URL=https://waika-mahjong-41.ya-praktikum.tech/api
+
+      - name: Build and push nginx image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: docker/Dockerfile.nginx
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/nginx:${{ github.sha }}

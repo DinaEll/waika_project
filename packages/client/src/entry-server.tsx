@@ -1,3 +1,4 @@
+import { createCache, StyleProvider } from '@ant-design/cssinjs';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-dom';
@@ -11,6 +12,8 @@ import { createFetchRequest, createUrl } from './entry-server.utils';
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssr.slice';
 import { store } from './shared/store/store';
 import type { Request, Response } from '@waika_project/server';
+
+const antCache = createCache();
 
 export const renderClient = async (req: Request, res: Response) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -63,9 +66,11 @@ export const renderClient = async (req: Request, res: Response) => {
 
   return {
     html: renderToString(
-      <Provider store={store}>
-        <StaticRouterProvider router={router} context={context} />
-      </Provider>,
+      <StyleProvider cache={antCache}>
+        <Provider store={store}>
+          <StaticRouterProvider router={router} context={context} />
+        </Provider>
+      </StyleProvider>,
     ),
     initialState: store.getState(),
   };
