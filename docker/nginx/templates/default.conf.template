@@ -10,33 +10,29 @@ upstream client {
 
 server {
     listen [::]:80 backlog=2048 ipv6only=off; 
-    set $domain waika-mahjong-41.ya-praktikum.tech;
 
+    include mime.types;
     include /etc/nginx/includes/listen.conf;
     include /etc/nginx/includes/common.conf;
     include /etc/nginx/includes/gzip.conf;
     include /etc/nginx/includes/client.conf;
     include /etc/nginx/includes/assets.conf;
 
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-
-    #return 301 https://$server_name$request_uri;
+    return 301 https://$server_name$request_uri;
 }
 
 server {
     listen [::]:443 backlog=2048 ipv6only=off; 
-    set $domain waika-mahjong-41.ya-praktikum.tech;
 
+    if ($host ~ '^www\.') {
+        return 301 https://waika-mahjong-41.ya-praktikum.tech$request_uri; 
+    }
+
+    include mime.types;
     include /etc/nginx/includes/listen.conf;
     include /etc/nginx/includes/ssl.conf;
     include /etc/nginx/includes/common.conf;
     include /etc/nginx/includes/gzip.conf;
     include /etc/nginx/includes/client.conf;
     include /etc/nginx/includes/assets.conf;
-
-    if ($host ~ '^www\.') {
-        return 301 https://$domain$request_uri; 
-    }
 }
