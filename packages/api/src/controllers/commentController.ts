@@ -1,7 +1,6 @@
-import { User } from '@waika_project/database';
-import { Comment, Reply } from '@waika_project/database/src';
-import { NextFunction, Request, Response } from 'express';
-import { ApiError } from '../middlewares/error';
+import { User, Comment, Reply } from '@waika_project/database';
+import { ApiError } from '@waika_project/server';
+import type { NextFunction, Request, Response } from '@waika_project/server';
 
 interface CreateCommentRequest {
   content: string;

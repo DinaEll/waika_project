@@ -1,5 +1,5 @@
 import { connectDatabase } from '@waika_project/database';
-import { createServer, routes } from '@waika_project/server';
+import { createServer } from '@waika_project/server';
 import {
   API_PORT,
   POSTGRES_DB,
@@ -9,6 +9,7 @@ import {
   POSTGRES_USER,
 } from '../env';
 import { yandexProxyMiddleware } from './middlewares';
+import { routes } from './routes';
 
 export async function startApiServer() {
   try {

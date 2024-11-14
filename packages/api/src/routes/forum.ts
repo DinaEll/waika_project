@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from '@waika_project/server';
 import { commentController } from '../controllers/commentController';
 import { replyController } from '../controllers/replyController';
 import { topicController } from '../controllers/topicController';

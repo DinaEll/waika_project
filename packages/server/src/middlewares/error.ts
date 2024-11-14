@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { logError } from '@waika_project/utils';
-import type { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from '@waika_project/server';
 
 export class ApiError extends Error {
   status: number;

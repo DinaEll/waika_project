@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from '@waika_project/server';
 import { forum } from './forum';
 import { themes } from './themes';
 

@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
 import { themeService } from '../services';
+import type { NextFunction, Request, Response } from '@waika_project/server';
 
 interface ThemeRequestBody {
   theme: string;
