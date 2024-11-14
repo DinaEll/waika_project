@@ -8,6 +8,12 @@ jest.mock('@waika_project/database', () => ({
 }));
 jest.mock('@waika_project/server', () => ({
   createServer: jest.fn(),
+  Router: jest.fn(() => ({
+    post: jest.fn(),
+    get: jest.fn(),
+    put: jest.fn(),
+    use: jest.fn(),
+  })),
 }));
 
 describe('runServer', () => {
