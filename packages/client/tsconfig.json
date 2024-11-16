@@ -9,5 +9,5 @@
     }
   },
   "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
-  "exclude": ["dist"]
+  "exclude": ["**/dist/*"]
 }
