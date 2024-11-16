@@ -30,9 +30,14 @@ export const createDevServer = async (): Server => {
     try {
       template = await vite.transformIndexHtml(url, template);
 
-      const { html: appHtml, initialState } = await renderClient(req, res);
+      const {
+        html: appHtml,
+        initialState,
+        styles,
+      } = await renderClient(req, res);
 
       const html = template
+        .replace('<!--ssr-styles-->', styles)
         .replace('<!--ssr-outlet-->', appHtml)
         .replace(
           '<!--ssr-initial-state-->',

@@ -8,7 +8,11 @@ import {
   StaticRouterProvider,
 } from 'react-router-dom/server';
 import { routes } from './app/router/model/routes';
-import { createFetchRequest, createUrl } from './entry-server.utils';
+import {
+  createFetchRequest,
+  createUrl,
+  getStylePath,
+} from './entry-server.utils';
 import { setPageHasBeenInitializedOnServer } from './shared/store/ssr/ssr.slice';
 import { store } from './shared/store/store';
 import type { Request, Response } from '@waika_project/server';
@@ -64,6 +68,10 @@ export const renderClient = async (req: Request, res: Response) => {
 
   const router = createStaticRouter(dataRoutes, context);
 
+  const stylePath = await getStylePath({
+    cache: antCache,
+  });
+
   return {
     html: renderToString(
       <StyleProvider cache={antCache}>
@@ -73,5 +81,6 @@ export const renderClient = async (req: Request, res: Response) => {
       </StyleProvider>,
     ),
     initialState: store.getState(),
+    styles: `<link rel="stylesheet" href="${stylePath}" />`,
   };
 };
