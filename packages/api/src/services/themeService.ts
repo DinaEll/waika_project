@@ -1,4 +1,4 @@
-import { SiteTheme, UserTheme } from '@waika_project/database/src';
+import { SiteTheme, UserTheme } from '@waika_project/database';
 
 class ThemeService {
   getThemes = async () => {

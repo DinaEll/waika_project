@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
+import { API_PRACTICUM_URL } from '../../env';
+import type { NextFunction, Request, Response } from '@waika_project/server';
 
 export const authMiddleware = (
   req: Request,
@@ -7,7 +8,7 @@ export const authMiddleware = (
 ) => {
   const cookies = req.headers.cookie ?? '';
 
-  fetch('https://ya-praktikum.tech/api/v2/auth/user', {
+  fetch(`${API_PRACTICUM_URL}/auth/user`, {
     headers: {
       cookie: cookies,
     },

@@ -1,6 +1,6 @@
-import { Reply, User } from '@waika_project/database/src';
-import { NextFunction, Request, Response } from 'express';
-import { ApiError } from '../middlewares/error';
+import { Reply, User } from '@waika_project/database';
+import { ApiError } from '@waika_project/server';
+import type { NextFunction, Request, Response } from '@waika_project/server';
 
 interface CreateReplyRequest {
   content: string;

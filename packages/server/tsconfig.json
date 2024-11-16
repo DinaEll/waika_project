@@ -1,12 +1,8 @@
 {
-  "extends": "../../tsconfigs/tsconfig.base.json",
+  "extends": "../../tsconfigs/tsconfig.node.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "moduleResolution": "Node",
-    "module": "CommonJS",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "baseUrl": "."
   },
   "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.json"],
-  "exclude": ["dist"]
+  "exclude": ["**/dist/*"]
 }

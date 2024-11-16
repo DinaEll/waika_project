@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from '@waika_project/server';
 import { themeController } from '../controllers/themeController';
 
 export const themes = Router();
