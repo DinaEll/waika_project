@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-const VERSION = 'v3';
-const CACHE_NAME = `waika-project-cache-${VERSION}`;
+const cacheVersion = 'v4';
+const cacheName = `waika-project-cache-${cacheVersion}`;
 
-const URLS = [
+const urls = [
   '/',
   '/assets/tiles/MJ-1.svg',
   '/assets/tiles/MJ-2.svg',
@@ -55,8 +55,8 @@ const URLS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
-      .open(CACHE_NAME)
-      .then((cache) => cache.addAll(URLS))
+      .open(cacheName)
+      .then((cache) => cache.addAll(urls))
       .catch((error) => {
         console.log('SW cache error:', error);
         throw error;
@@ -65,7 +65,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+  const cacheWhitelist = [cacheName];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -88,7 +88,7 @@ self.addEventListener('fetch', (event) => {
         }
 
         const responseToCache = response.clone();
-        await caches.open(CACHE_NAME).then(async (cache) => {
+        await caches.open(cacheName).then(async (cache) => {
           if (
             event.request.url.startsWith('http') ||
             event.request.url.startsWith('https')
