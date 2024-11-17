@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { createServer, Router } from '@waika_project/server';
+import { saveToFile } from './helpers';
 import type { EntryServerRender } from './types';
 
 type Server = Promise<ReturnType<typeof createServer>>;
@@ -21,9 +22,17 @@ export const createProdServer = async (): Server => {
 
   routes.get('*', async (req, res, next) => {
     try {
-      const { html: appHtml, initialState } = await renderClient(req, res);
+      const { html: appHtml, initialState, css } = await renderClient(req, res);
+
+      const cssPath = path.resolve(__dirname, './client/assets/antd.min.css');
+
+      await saveToFile(cssPath, css);
 
       const html = template
+        .replace(
+          '<!--ssr-initial-styles-->',
+          `<link rel="stylesheet" href="/assets/antd.min.css"/>`,
+        )
         .replace('<!--ssr-outlet-->', appHtml)
         .replace(
           '<!--ssr-initial-state-->',

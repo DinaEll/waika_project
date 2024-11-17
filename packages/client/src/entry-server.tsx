@@ -1,4 +1,4 @@
-import { createCache, StyleProvider } from '@ant-design/cssinjs';
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-dom';
@@ -40,7 +40,7 @@ export const renderClient = async (req: Request, res: Response) => {
   const foundRoutes = matchRoutes(routes, url);
 
   if (!foundRoutes) {
-    throw new Error('Страница не найдена!');
+    throw new Error('Page not found!');
   }
 
   store.dispatch(setPageHasBeenInitializedOnServer(true));
@@ -73,5 +73,6 @@ export const renderClient = async (req: Request, res: Response) => {
       </StyleProvider>,
     ),
     initialState: store.getState(),
+    css: extractStyle(antCache, true),
   };
 };
