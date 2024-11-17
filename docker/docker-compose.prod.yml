@@ -2,6 +2,9 @@ networks:
   prodenv:
     driver: bridge
 
+volumes:
+  static_files:
+
 services:
   postgres:
     container_name: waika_project_postgres
@@ -14,72 +17,82 @@ services:
         target: /dev/shm
         tmpfs:
           size: 134217728 # 128*2^20 bytes = 128Mb
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
-    env_file:
-      - ../.env
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'postgres']
       interval: 5s
       timeout: 5s
       retries: 5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: localhost
+    networks:
+      - prodenv
+
+  nginx:
+    container_name: waika_project_nginx
+    image: ghcr.io/dinaell/waika_project/nginx:fab4e3f71802d0218b4bf3d3addbddf90cb2db30
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - API_PORT=3001
+      - CLIENT_PORT=3000
+      - DOMAIN=waika-mahjong-41.ya-praktikum.tech
+    volumes:
+      - /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /etc/letsencrypt/live/waika-mahjong-41.ya-praktikum.tech/privkey.pem:/etc/nginx/ssl/privkey.pem:ro
+      - static_files:/etc/nginx/html/
     networks:
       - prodenv
 
   api:
     container_name: waika_project_api
+    image: ghcr.io/dinaell/waika_project/api:fab4e3f71802d0218b4bf3d3addbddf90cb2db30
     restart: always
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.api
-      args:
-        API_PORT: ${API_PORT}
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "${API_PORT}:${API_PORT}"
-    env_file:
-      - ../.env
+      - "3001:3001"
     environment:
+      - API_PORT=3001
+      - API_BASE_URL=https://waika-mahjong-41.ya-praktikum.tech/api
+      - API_PRACTICUM_URL=https://ya-praktikum.tech/api/v2
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
       - POSTGRES_HOST=postgres
     networks:
       - prodenv
 
   client:
     container_name: waika_project_client
-    restart: always
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.client
-      args:
-        CLIENT_PORT: ${CLIENT_PORT}
-    depends_on:
-      - api
-    ports:
-       - "${CLIENT_PORT}:${CLIENT_PORT}"
-    env_file:
-      - ../.env
-    networks:
-      - prodenv
-
-  proxy:
-    container_name: waika_project_proxy
-    image: nginx:1.27.2-alpine-slim
+    image: ghcr.io/dinaell/waika_project/client:fab4e3f71802d0218b4bf3d3addbddf90cb2db30
     restart: always
     depends_on:
+      - nginx
       - api
-      - client
     ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ../packages/client/dist/client/:/etc/nginx/html/:ro
-      - ./nginx/templates/:/etc/nginx/templates/:rw,cached
-      - ./nginx/includes/:/etc/nginx/includes/:ro
-      - ./nginx/certs/:/etc/nginx/certs/:ro
+       - "3000:3000"
     environment:
-      - API_PORT=${API_PORT}
-      - CLIENT_PORT=${CLIENT_PORT}
+      - APP_NAME=Mahjong by Шaika
+      - API_PORT=3001
+      - API_BASE_URL=https://waika-mahjong-41.ya-praktikum.tech/api
+      - API_PRACTICUM_URL=https://ya-praktikum.tech/api/v2
+      - CLIENT_PORT=3000
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=postgres
+    volumes:
+      - static_files:/app/dist/client/
     networks:
       - prodenv
